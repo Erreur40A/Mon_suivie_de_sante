@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+    <string name="logo_app">Logo de l\'application</string>
+    <string name="coucher">Vous vous êtes couchez à :</string>
+    <string name="reveil">Vous vous êtes réveiller à :</string>
+    <string name="objectif_sommeil">Votre objectif était de ce couchez à :</string>
+    <string name="qualite_sommeil">La qualité de votre sommeil est :</string>
+    <string name="demande_reveil">Vous voulez vous réveillez à :</string>
+    <string name="demande_coucher">Vous voulez vous couchez à :</string>
+    <string name="image_de_motivation">image de motivation</string>
+    <string name="heure_coucher_dft">22h00</string>
+    <string name="heure_reveil_dft">8h00</string>
 </resources>
