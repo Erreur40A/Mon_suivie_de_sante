@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/view_sommeil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SommeilActivity">
@@ -47,9 +47,8 @@
         android:ems="10"
         android:labelFor="@id/heure_coucher"
         android:textSize="20sp"
-        android:inputType="date"
+        android:inputType="time"
         android:text="@string/heure_coucher_dft"
-        android:accessibility
         app:layout_constraintStart_toEndOf="@+id/heure_coucher"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -91,4 +90,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/qualite_sommeil"
         app:srcCompat="@drawable/motivation" />
+
+    <include
+        layout="@layout/toolbar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

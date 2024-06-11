@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="70sp"
+    android:layout_alignParentEnd="true"
+    android:background="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <ImageButton
+        android:id="@+id/bouton_mes_info"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="28dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/desc_bouton_mes_informations"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mes_informations" />
+
+    <ImageButton
+        android:id="@+id/bouton_pas"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@+id/bouton_mes_info"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/desc_bouton_pas"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/bouton_calories"
+        app:layout_constraintStart_toEndOf="@+id/bouton_mes_info"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pas" />
+
+    <ImageButton
+        android:id="@+id/bouton_calories"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="60dp"
+        android:layout_toEndOf="@+id/bouton_pas"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/desc_bouton_calories"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/bouton_sommeil"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/calories" />
+
+    <ImageButton
+        android:id="@+id/bouton_sommeil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/bouton_calories"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/desc_bouton_sommeil"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sommeil" />
+
+    <TextView
+        android:id="@+id/titre_bouton_mes_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bouton_mes_info"
+        android:layout_alignParentStart="true"
+        android:text="@string/mes_informations"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bouton_mes_info" />
+
+    <TextView
+        android:id="@+id/pas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bouton_pas"
+        android:layout_alignParentBottom="false"
+        android:layout_toEndOf="@+id/titre_bouton_mes_info"
+        android:text="@string/pas"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/calories"
+        app:layout_constraintHorizontal_bias="0.403"
+        app:layout_constraintStart_toEndOf="@+id/titre_bouton_mes_info"
+        app:layout_constraintTop_toBottomOf="@+id/bouton_pas" />
+
+    <TextView
+        android:id="@+id/calories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bouton_calories"
+        android:layout_marginEnd="60dp"
+        android:layout_toEndOf="@+id/pas"
+        android:text="@string/calories"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/sommeil"
+        app:layout_constraintTop_toBottomOf="@+id/bouton_calories" />
+
+    <TextView
+        android:id="@+id/sommeil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bouton_sommeil"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/calories"
+        android:text="@string/sommeil"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bouton_sommeil" />
+</androidx.constraintlayout.widget.ConstraintLayout>
