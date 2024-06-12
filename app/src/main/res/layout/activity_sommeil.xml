@@ -12,10 +12,10 @@
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginStart="1dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/logo_app"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:adjustViewBounds="true"
         app:srcCompat="@drawable/logo_app" />
 
     <TextView
@@ -30,68 +30,53 @@
         app:layout_constraintStart_toEndOf="@+id/logo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heure_coucher"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/info_sommeil"
+        android:id="@+id/info_sommeil"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/coucher"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintBottom_toTopOf="@id/msg_motivation"
+        android:layout_marginTop="30dp" />
 
-    <EditText
-        android:id="@+id/val_heure_coucher"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/msg_motivation"
+        layout="@layout/msg_motivation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:labelFor="@id/heure_coucher"
-        android:textSize="20sp"
-        android:inputType="time"
-        android:text="@string/heure_coucher_dft"
-        app:layout_constraintStart_toEndOf="@+id/heure_coucher"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        android:layout_marginTop="25sp"
+        app:layout_constraintEnd_toStartOf="@id/objectif_sommeil"
+        app:layout_constraintStart_toEndOf="@id/info_sommeil"
+        app:layout_constraintTop_toBottomOf="@id/info_sommeil" />
 
-    <TextView
-        android:id="@+id/heure_reveil"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/objectif_sommeil"
+        layout="@layout/objectif_sommeil"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/demande_reveil"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heure_coucher" />
-
-    <TextView
-        android:id="@+id/objectif_heure_coucher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/objectif_sommeil"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heure_reveil" />
-
-    <TextView
-        android:id="@+id/qualite_sommeil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/qualite_sommeil"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/objectif_heure_coucher" />
+        app:layout_constraintBottom_toTopOf="@id/img_motivation"
+        app:layout_constraintTop_toBottomOf="@id/msg_motivation"
+        android:layout_marginBottom="0dp" />
 
     <ImageView
         android:id="@+id/img_motivation"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/image_de_motivation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qualite_sommeil"
+        app:layout_constraintBottom_toTopOf="@+id/include_toolbar"
+        app:layout_constraintEnd_toStartOf="@id/include_toolbar"
+        app:layout_constraintStart_toEndOf="@id/objectif_sommeil"
         app:srcCompat="@drawable/motivation" />
 
     <include
-        layout="@layout/toolbar"/>
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
