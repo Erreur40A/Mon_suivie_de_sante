@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+    <string name="pop_up_text_obj_journalier">Quelle est votre objectif de pas journalier ?</string>
+    <string name="pop_up_hint_obj_journalier">2000 pas</string>
+    <string name="pop_up_text_obj_mensuelle">Quelle est votre objectif de pas mensuelle ?</string>
+    <string name="pop_up_hint_obj_mensuelle">28000 pas</string>
+    <string name="pop_up_text_obj_hebdomadaire">Quelle est votre objectif de pas hebdomadaire ?</string>
+    <string name="pop_up_hint_obj_hebdomadaire">7000 pas</string>
 </resources>
