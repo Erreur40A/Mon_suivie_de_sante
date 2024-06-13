@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/page_de_connexion"
+    android:id="@+id/page_inscription"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
@@ -16,12 +16,12 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="16dp">
 
             <ImageView
                 android:layout_width="80dp"
@@ -35,94 +35,52 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textAlignment="center"
-                />
+                android:textAlignment="center"/>
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/icon_account_circle"
-            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Se connecter"
-            android:textSize="20sp"
-            android:layout_marginTop="8dp" />
+            android:text="Créer votre compte"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
 
         <EditText
+            android:id="@+id/identifiant_inscription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:hint="Identifiant"
-
-            android:textSize="20sp"
-
-            android:padding="18dp"
-            android:inputType="text"
-            android:id="@+id/identifiant_connexion"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_horizontal"/>
 
         <EditText
+            android:id="@+id/password_inscription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:hint="Mot de passe"
-            android:textSize="20sp"
-            android:padding="18dp"
             android:inputType="textPassword"
-            android:id="@+id/password_connexion"
-            />
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_horizontal"/>
 
         <Button
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Se connecter"
-            android:backgroundTint="@color/black"
-            android:textColor="#FFFFFF"
-            android:padding="20dp"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vous n'avez pas de compte? Inscrivez-vous"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <Button
-            android:id="@+id/inscription1"
+            android:id="@+id/inscription2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="S'inscrire"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"
             android:padding="20dp"
-            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_gravity="center_horizontal"
-            />
-
-
+            android:layout_gravity="center_horizontal"/>
 
 
     </LinearLayout>
-
-
 
 </RelativeLayout>
