@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="@string/calorie_consome"
-            android:textColor="@color/gray"
+            android:textColor="@color/gray_light"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,17 +52,18 @@
 
     <Button
         android:id="@+id/bouton_ok"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:text="@string/validation"
+        android:textSize="18sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/black"
         app:layout_constraintTop_toBottomOf="@id/entrer_calorie_consomme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 

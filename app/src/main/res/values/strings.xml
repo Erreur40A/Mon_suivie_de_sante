@@ -30,6 +30,6 @@
     <string name="demande_activite">Quelle activité avez vous faites ?</string>
     <string name="champ_modif_activite">Choisissez une activité</string>
     <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
-    <string name="demende_duree_activite">Pendant combien de temps ?</string>
+    <string name="demande_duree_activite">Pendant combien de temps ?</string>
     <string name="champ_modification_dure_activite">1:00</string>
 </resources>
