@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Mon Suivi de Sante</string>
+    <string name="app_name">Mon suivi de Santé</string>
+    <string name="genre_prompt">Genre</string>
+    <string name="vous_etes_prompt">Vous êtes ?</string>
+
+    <string-array name="genre_array">
+        <item>Genre</item>
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
+
+    <string-array name="vous_etes_array">
+        <item>Vous êtes ?</item>
+        <item>Sédentaire</item>
+        <item>Sportif</item>
+        <item>Actif</item>
+    </string-array>
 </resources>
