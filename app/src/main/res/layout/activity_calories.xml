@@ -7,4 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".CaloriesActivity">
 
+    <include
+        layout="@layout/entete"
+        android:id="@+id/entete"/>
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
