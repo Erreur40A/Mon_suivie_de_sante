@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+    <string name="pop_up_text_nom">Quelle est votre nouveau nom ?</string>
+    <string name="pop_up_hint_nom">Entrez votre nouveau nom ici</string>
+    <string name="pop_up_text_prenom">Quelle est votre nouveau prénom ?</string>
+    <string name="pop_up_hint_prenom">Entrez votre nouveau prénom ici</string>
+    <string name="pop_up_text_taille">Quelle est votre taille ?</string>
+    <string name="pop_up_hint_taille">Entrez votre taille ici (en cm)</string>
+    <string name="pop_up_text_age">Quelle est votre âge ?</string>
+    <string name="pop_up_hint_age">Entrez votre âge ici</string>
+    <string name="pop_up_text_poids">Combien pesez vous ?</string>
+    <string name="pop_up_hint_poids">Entrez votre poids ici (en kg)</string>
 </resources>
