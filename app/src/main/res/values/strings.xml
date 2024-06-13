@@ -32,4 +32,6 @@
     <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
     <string name="demande_duree_activite">Pendant combien de temps ?</string>
     <string name="champ_modification_dure_activite">1:00</string>
+    <string name="pop_up_text_calorie">Vous avez consommé combien de calories ?</string>
+    <string name="pop_up_hint_calories">Entrez la quantité consommé en kcal</string>
 </resources>
