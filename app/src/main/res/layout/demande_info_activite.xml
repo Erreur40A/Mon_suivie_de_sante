@@ -40,6 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--A remplacer, voir bouton_liste_deroulante.xml-->
         <include
             android:id="@+id/bouton_liste_activite"
             layout="@layout/bouton_liste_deroulante"
@@ -85,6 +86,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--A remplacer, voir bouton_liste_deroulante.xml-->
         <include
             android:id="@+id/bouton_liste_deroulante"
             layout="@layout/bouton_liste_deroulante"

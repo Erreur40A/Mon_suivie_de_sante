@@ -1,10 +1,14 @@
 package com.example.monsuividesante;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +22,16 @@ public class CaloriesActivity extends AppCompatActivity {
     private String calories_depense; //en kcal a afficher dans le rectangle vert
     private String calories_depense_reel; //en kcal a afficher dans le rectangle rouge
     private ConstraintLayout toolar;
-    private ImageButton bouton_edit_calories_consome;
+    private  CaloriesActivity activity_calories;
+    private ImageButton bouton_edit_calories_consomme;
     private Spinner liste_deroulante_choix_activite;
     private Spinner liste_deroulante_duree_activite;
     private Button bouton_calories_consome_ok;
     private Button bouton_activite_ok;
-    private Button mes_info;
-    private Button pas;
-    private Button calories;
-    private Button sommeil;
+    private ImageButton mes_info;
+    private ImageButton pas;
+    private ImageButton calories;
+    private ImageButton sommeil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +44,102 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
-        TextView tmp;
-        tmp = findViewById(R.id.calories_depense).findViewById(R.id.text_calorie_depense);
-        calories_depense = tmp.getText().toString();
+        activity_calories = this;
 
-        tmp=findViewById(R.id.calories_depense_reel).findViewById(R.id.calories_depense_reel);
-        calories_depense = tmp.getText().toString();
+        TextView tmp_textView;
+        tmp_textView = findViewById(R.id.calories_depense).findViewById(R.id.text_calorie_depense);
+        calories_depense = tmp_textView.getText().toString();
+
+        tmp_textView=findViewById(R.id.calories_depense_reel).findViewById(R.id.text_calorie_depense_reel);
+        calories_depense = tmp_textView.getText().toString();
 
         toolar = findViewById(R.id.toolbar);
 
-        bouton_edit_calories_consome = findViewById(R.id.demande_calorie_comsomme)
-                                       .findViewById(R.id.entrer_calorie_consomme)
-                                       .findViewById(R.id.bouton_modifications);
+        ConstraintLayout tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
+        ConstraintLayout enter_calorie_consomme = tmp_CL.findViewById(R.id.entrer_calorie_consomme);
+        bouton_edit_calories_consomme = enter_calorie_consomme.findViewById(R.id.bouton_modifications);
 
+        bouton_edit_calories_consomme.setOnClickListener(this::setOnClickListenerBoutonCaloriesConsomme);
+        enter_calorie_consomme.setOnClickListener(this::setOnClickListenerBoutonCaloriesConsomme);
+
+        bouton_calories_consome_ok = tmp_CL.findViewById(R.id.bouton_ok);
+        bouton_calories_consome_ok.setOnClickListener(this::setOnClickListenerBoutonConsommeOK);
+
+        tmp_CL = findViewById(R.id.demande_info_activite);
+        bouton_activite_ok = tmp_CL.findViewById(R.id.bouton_ok_activite);
+        bouton_activite_ok.setOnClickListener(this::setOnClickListenerBoutonActiviteOK);
+
+        pas = toolar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
+        pas.setOnClickListener(this::setOnClickListenerBoutonPas);
+
+        mes_info = toolar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
+        mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
+
+        calories = toolar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        calories.setOnClickListener(this::setOnClickListenerBoutonCalorie);
+
+        sommeil = toolar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
+        sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
+
+    }
+
+    public void setOnClickListenerBoutonCaloriesConsomme(View view){
+        AlertDialog.Builder pop_up_calorie_consomme = new AlertDialog.Builder(activity_calories, R.style.PopUpArrondi);
+
+        pop_up_calorie_consomme.setView(R.layout.pop_up_calorie);
+
+        AlertDialog pop_up = pop_up_calorie_consomme.create();
+        pop_up.show();
+
+        Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
+        assert bouton_ok != null;
+        bouton_ok.setOnClickListener(v -> {
+            /*A compléter*/
+
+            pop_up.dismiss();
+        });
+
+        Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
+        assert bouton_annuler != null;
+        bouton_annuler.setOnClickListener(v -> {
+            /*A compléter*/
+
+            pop_up.dismiss();
+        });
+    }
+
+    public void setOnClickListenerBoutonPas(View view){
+        /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
+        Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void setOnClickListenerBoutonCalorie(View view){
+        /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
+        Intent intent = new Intent(CaloriesActivity.this, CaloriesActivity.class);
+        startActivity(intent);
+    }
+
+    public void setOnClickListenerBoutonMesInfo(View view){
+        /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
+        Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void setOnClickListenerBoutonSommeil(View view){
+        /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
+        Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void setOnClickListenerBoutonConsommeOK(View view){
+        /*A MODIFIER*/
+        Toast.makeText(getApplicationContext(), "bouton ok consomme clique", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setOnClickListenerBoutonActiviteOK(View view){
+        /*A MODIFIER*/
+        Toast.makeText(getApplicationContext(), "bouton ok activite clique", Toast.LENGTH_SHORT).show();
     }
 }
