@@ -2,6 +2,7 @@
     <string name="app_name">Mon suivi de Santé</string>
     <string name="genre_prompt">Genre</string>
     <string name="vous_etes_prompt">Vous êtes ?</string>
+    <string name="entrer_information">Saisir vos informations</string>
 
     <string-array name="genre_array">
         <item>Genre</item>
@@ -10,9 +11,24 @@
     </string-array>
 
     <string-array name="vous_etes_array">
-        <item>Vous êtes ?</item>
+        <item>Vous etes</item>
         <item>Sédentaire</item>
         <item>Sportif</item>
         <item>Actif</item>
     </string-array>
+
+
+    <string name="content_description_logo_app">Logo App</string>
+    <string name="mes_informations">Mes informations</string>
+    <string name="utilite">Ces informations sont utiles au bon fonctionnement de l\'application</string>
+    <string name="age">Age</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">Prénom</string>
+    <string name="poids">Poids</string>
+    <string name="taille">Taille</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="creercompte">Créer votre compte</string>
+    <string name="idenfiant">Identifiant</string>
+    <string name="sinscrire">S\'inscrire</string>
+    <string name="motdepass">Mot de passe</string>
 </resources>

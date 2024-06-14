@@ -26,12 +26,13 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/logo_app" />
+                android:src="@drawable/logo_app"
+                android:contentDescription="@string/content_description_logo_app"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mon suivi de Santé"
+                android:text="@string/app_name"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -41,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Créer votre compte"
+            android:text="@string/creercompte"
             android:textSize="18sp"
             android:layout_marginTop="16dp" />
 
@@ -49,28 +50,31 @@
             android:id="@+id/identifiant_inscription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Identifiant"
+            android:hint="@string/idenfiant"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:inputType="textPersonName"
+            android:autofillHints="username"
             android:layout_gravity="center_horizontal"/>
 
         <EditText
             android:id="@+id/password_inscription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mot de passe"
+            android:hint="@string/motdepass"
             android:inputType="textPassword"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:autofillHints="password"
             android:layout_gravity="center_horizontal"/>
 
         <Button
             android:id="@+id/inscription2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="S'inscrire"
+            android:text="@string/sinscrire"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"

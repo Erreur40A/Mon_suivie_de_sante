@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/info_perso_inscription"
+    android:id="@+id/mesinfo_inscription"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
@@ -26,12 +26,13 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/content_description_logo_app"
                 android:src="@drawable/logo_app" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mon suivi de Santé"
+                android:text="@string/app_name"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -39,56 +40,73 @@
                 />
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Entrez vos informations"
+            android:text="@string/entrer_information"
             android:textSize="18sp"
             android:layout_marginTop="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ces informations sont utiles au bon fonctionnement de l'application"
+            android:text="@string/utilite"
             android:textSize="14sp"
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/nom"
+            android:id="@+id/nom_mesinfo_inscr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nom"
+            android:hint="@string/nom"
+            android:inputType="textPersonName"
+            android:autofillHints="name"
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/prenom"
+            android:id="@+id/prenom_mesinfo_inscr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Prénom"
+            android:hint="@string/prenom"
+            android:inputType="textPersonName"
+            android:autofillHints="givenName"
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/age"
+            android:id="@+id/age_mesinfo_inscr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Age"
+            android:hint="@string/age"
             android:inputType="number"
+            android:layout_marginTop="8dp"
+            android:autofillHints="birthDateDay|birthDateMonth|birthDateYear"/>
+
+        <EditText
+            android:id="@+id/poids_mesinfo_inscr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/poids"
+            android:inputType="number"
+            android:autofillHints="weight"
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/poids"
+            android:id="@+id/taille_mesinfo_inscr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Poids"
+            android:hint="@string/taille"
             android:inputType="number"
-            android:layout_marginTop="8dp" />
-
-        <EditText
-            android:id="@+id/taille"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Taille"
-            android:inputType="number"
+            android:autofillHints="height"
             android:layout_marginTop="8dp" />
 
         <Spinner
@@ -96,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/genre_array"
+
             android:prompt="@string/genre_prompt" />
 
 
@@ -108,14 +127,21 @@
 
 
         <Button
-            android:id="@+id/boutto_nconfirmer"
+            android:id="@+id/boutton_conf_mesinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirmer"
+            android:text="@string/confirmer"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"
             android:padding="20dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+
+    </LinearLayout>
 
 
 

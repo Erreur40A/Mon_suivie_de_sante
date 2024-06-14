@@ -8,14 +8,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityInscription extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.inscription_mes_info);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mesinfo_inscription), (v, insets) -> {
+        setContentView(R.layout.activity_inscription);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.page_inscription), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
