@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+    <string name="icone_sante">Health Icon</string>
+    <string name="icon_account">Icon Account</string>
+    <string name="seconnceter">Se connecter</string>
+    <string name="inscription_invitation">Vous n\'avez pas de compte? Inscrivez-vous</string>
+    <string name="identifiant">Identifiant</string>
+    <string name="sinscrire">S\'inscrire</string>
+    <string name="motdepasse">Mot de passe</string>
 </resources>
