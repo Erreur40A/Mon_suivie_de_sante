@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,16 +23,19 @@ public class CaloriesActivity extends AppCompatActivity {
     private String calories_depense; //en kcal a afficher dans le rectangle vert
     private String calories_depense_reel; //en kcal a afficher dans le rectangle rouge
     private ConstraintLayout toolar;
-    private  CaloriesActivity activity_calories;
+    private CaloriesActivity activity_calories;
+    private LinearLayout pas;
+    private LinearLayout mes_info;
+    private LinearLayout sommeil;
     private ImageButton bouton_edit_calories_consomme;
     private Spinner liste_deroulante_choix_activite;
     private Spinner liste_deroulante_duree_activite;
     private Button bouton_calories_consome_ok;
     private Button bouton_activite_ok;
-    private ImageButton mes_info;
-    private ImageButton pas;
-    private ImageButton calories;
-    private ImageButton sommeil;
+    private ImageButton bouton_mes_info;
+    private ImageButton bouton_pas;
+    private ImageButton bouton_calories;
+    private ImageButton bouton_sommeil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,14 @@ public class CaloriesActivity extends AppCompatActivity {
 
         toolar = findViewById(R.id.toolbar);
 
+        pas = toolar.findViewById(R.id.pas);
+        mes_info = toolar.findViewById(R.id.mes_info);
+        sommeil = toolar.findViewById(R.id.sommeil);
+
+        pas.setAlpha(0.5F);
+        mes_info.setAlpha(0.5F);
+        sommeil.setAlpha(0.5F);
+
         ConstraintLayout tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
         ConstraintLayout enter_calorie_consomme = tmp_CL.findViewById(R.id.entrer_calorie_consomme);
@@ -70,17 +82,17 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_activite_ok = tmp_CL.findViewById(R.id.bouton_ok_activite);
         bouton_activite_ok.setOnClickListener(this::setOnClickListenerBoutonActiviteOK);
 
-        pas = toolar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
-        pas.setOnClickListener(this::setOnClickListenerBoutonPas);
+        bouton_pas = pas.findViewById(R.id.bouton_pas);
+        bouton_pas.setOnClickListener(this::setOnClickListenerBoutonPas);
 
-        mes_info = toolar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
-        mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
+        bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
+        bouton_mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
 
-        calories = toolar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
-        calories.setOnClickListener(this::setOnClickListenerBoutonCalorie);
+        bouton_calories = toolar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        bouton_calories.setOnClickListener(this::setOnClickListenerBoutonCalorie);
 
-        sommeil = toolar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
-        sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
+        bouton_sommeil = sommeil.findViewById(R.id.bouton_sommeil);
+        bouton_sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
 
     }
 
