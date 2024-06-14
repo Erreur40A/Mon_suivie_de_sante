@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/activity_mes_informations"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -18,19 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             android:gravity="center">
 
             <!-- ImageView for the health app icon -->
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/icone_sante"
                 android:src="@drawable/logo_app" />
 
             <!-- TextView for the title -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mon suivi de Santé"
+                android:text="@string/app_name"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -45,7 +47,7 @@
             android:id="@+id/icon_hello"
             android:layout_width="80dp"
             android:layout_height="80dp"
-
+            android:contentDescription="@string/hello_icon"
             android:layout_marginTop="8dp"
             android:src="@drawable/hello" />
 
@@ -55,10 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/icon_hello"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:background="#FF00FF00"
             android:gravity="center"
-            android:text="Bienvenue (prénom de l'utilisateur)"
+            android:text="@string/bienvenue"
             android:textSize="18sp" />
 
         <!-- LinearLayout for user information inputs -->
@@ -77,58 +79,73 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Nom" />
+                android:inputType="textPersonName"
+                android:autofillHints="name"
+                android:hint="@string/nom" />
 
             <EditText
                 android:id="@+id/edit_firstname"
                 android:layout_width="match_parent"
-
+                android:inputType="textPersonName"
+                android:autofillHints="givenName"
                 android:layout_height="wrap_content"
-                android:hint="Prénom"
-                android:layout_marginTop="0dp" />
+                android:hint="@string/prenom"
+                android:layout_marginTop="2dp" />
 
             <EditText
                 android:id="@+id/edit_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Age"
-                android:layout_marginTop="0dp" />
+                android:hint="@string/age"
+                android:inputType="number"
+                android:autofillHints="birthDateDay"
+                android:layout_marginTop="2dp" />
 
             <EditText
                 android:id="@+id/edit_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Poids"
-                android:layout_marginTop="0dp" />
+                android:hint="@string/poids"
+                android:inputType="numberDecimal"
+                android:autofillHints="weight"
+                android:layout_marginTop="2dp" />
 
             <EditText
                 android:id="@+id/edit_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Taille"
-                android:layout_marginTop="0dp" />
+                android:hint="@string/taille"
+                android:inputType="number"
+                android:autofillHints="height"
+                android:layout_marginTop="2dp" />
 
-            <EditText
-                android:id="@+id/edit_gender"
+            <Spinner
+                android:id="@+id/spinner_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Genre"
-                android:layout_marginTop="0dp" />
+                android:entries="@array/genre_array"
+                android:layout_marginTop="2dp"
+                android:prompt="@string/genre_prompt" />
 
-            <EditText
-                android:id="@+id/edit_person_type"
+
+            <Spinner
+                android:id="@+id/spinner_vous_etes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Type de personne : (sportif...)"
-                android:layout_marginTop="0dp"
-                />
+                android:entries="@array/vous_etes_array"
+                android:layout_marginTop="4dp"
+                android:prompt="@string/vous_etes_prompt" />
         </LinearLayout>
 
+
+        <!-- Latout pour les 4 bouttons de menu en bas-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="12dp"
             android:gravity="center"
+            android:baselineAligned="false"
             android:weightSum="4">
 
             <!-- LinearLayout pour le bouton MesInformations -->
@@ -145,12 +162,12 @@
                     android:layout_height="80dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_mes_informations"
-                    android:contentDescription="Mes Informations" />
+                    android:contentDescription="@string/mesinformations" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mes informations"
+                    android:text="@string/mesinformations"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -168,12 +185,12 @@
                     android:layout_height="80dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_pas"
-                    android:contentDescription="Pas" />
+                    android:contentDescription="@string/pas" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pas"
+                    android:text="@string/pas"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -191,12 +208,12 @@
                     android:layout_height="80dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_calories"
-                    android:contentDescription="Calories" />
+                    android:contentDescription="@string/calories" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Calories"
+                    android:text="@string/calories"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -214,12 +231,12 @@
                     android:layout_height="80dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_sommeil"
-                    android:contentDescription="Sommeil" />
+                    android:contentDescription="@string/sommeil" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sommeil"
+                    android:text="@string/sommeil"
                     android:textAlignment="center" />
             </LinearLayout>
 
