@@ -22,7 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -34,9 +33,29 @@
         android:padding="3dp"
         android:inputType="time"
         app:layout_constraintTop_toBottomOf="@id/text_pop_up"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bouton_annuler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
+    <Button
+        android:id="@+id/bouton_annuler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/annulation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bouton_ok"
+        app:layout_constraintTop_toBottomOf="@id/saisie_user"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/bouton_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/validation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bouton_annuler"
+        app:layout_constraintTop_toBottomOf="@id/saisie_user"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,6 +27,7 @@
     <string name="demande_calories_consomme">Combien de calories avez-vous consommées lors de votre repas ?</string>
     <string name="calorie_consome">200 kcal</string>
     <string name="validation">OK</string>
+    <string name="annulation">Annuler</string>
     <string name="demande_activite">Quelle activité avez vous faites ?</string>
     <string name="champ_modif_activite">Choisissez une activité</string>
     <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
