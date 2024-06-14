@@ -62,7 +62,7 @@ public class SommeilActivity extends AppCompatActivity {
     }
 
     public void setOnClickListenerBoutonHeureCoucher(View view){
-        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil);
+        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil, R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
 
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
@@ -88,7 +88,7 @@ public class SommeilActivity extends AppCompatActivity {
     }
 
     public void setOnClickListenerBoutonHeureReveil(View view){
-        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil);
+        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil ,R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_reveil);
 
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_reveil);
