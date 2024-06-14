@@ -25,7 +25,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include layout="@layout/bouton_modification" />
+        <include
+            android:id="@+id/bouton_coucher"
+            layout="@layout/bouton_modification" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -51,7 +53,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include layout="@layout/bouton_modification" />
+        <include
+            android:id="@+id/bouton_reveil"
+            layout="@layout/bouton_modification" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

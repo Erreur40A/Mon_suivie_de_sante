@@ -24,5 +24,7 @@
     <string name="pop_up_affichage_reveil_dfl">08:00</string>
     <string name="pop_up_demande_heure_reveil">À quelle heure voulez vous vous reveillez ?</string>
     <string name="pop_up_affichage_coucher_dfl">22:00</string>
+    <string name="validation">OK</string>
+    <string name="annulation">Annuler</string>
 
 </resources>
