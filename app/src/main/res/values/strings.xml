@@ -6,4 +6,6 @@
     <string name="pop_up_hint_obj_mensuelle">28000 pas</string>
     <string name="pop_up_text_obj_hebdomadaire">Quelle est votre objectif de pas hebdomadaire ?</string>
     <string name="pop_up_hint_obj_hebdomadaire">7000 pas</string>
+    <string name="annulation">Annuler</string>
+    <string name="validation">OK</string>
 </resources>
