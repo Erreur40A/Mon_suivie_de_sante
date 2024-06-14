@@ -20,6 +20,9 @@ public class SommeilActivity extends AppCompatActivity {
     private ConstraintLayout toolbar;
     private ConstraintLayout objectif_sommeil;
     private SommeilActivity activity_sommeil;
+    private LinearLayout pas;
+    private LinearLayout mes_info;
+    private LinearLayout calories;
     private ImageButton bouton_mes_info;
     private ImageButton bouton_pas;
     private ImageButton bouton_calories;
@@ -41,14 +44,21 @@ public class SommeilActivity extends AppCompatActivity {
         activity_sommeil = this;
         objectif_sommeil = findViewById(R.id.objectif_sommeil);
         toolbar = findViewById(R.id.toolbar);
+        pas = toolbar.findViewById(R.id.pas);
+        mes_info = toolbar.findViewById(R.id.mes_info);
+        calories = toolbar.findViewById(R.id.calories);
 
-        bouton_mes_info = toolbar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
+        pas.setAlpha(0.5F);
+        mes_info.setAlpha(0.5F);
+        calories.setAlpha(0.5F);
+
+        bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
         bouton_mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
 
-        bouton_pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
+        bouton_pas = pas.findViewById(R.id.bouton_pas);
         bouton_pas.setOnClickListener(this::setOnClickListenerBoutonPas);
 
-        bouton_calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        bouton_calories = calories.findViewById(R.id.bouton_calories);
         bouton_calories.setOnClickListener(this::setOnClickListenerBoutonCalories);
 
         bouton_sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
