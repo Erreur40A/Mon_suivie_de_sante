@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mes_informations"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
+
+            <!-- ImageView for the health app icon -->
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/icone_sante"
+                android:src="@drawable/logo_app" />
+
+            <!-- TextView for the title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
+
+
+        </LinearLayout>
+
+        <!-- ImageView for the hello icon -->
+        <ImageView
+            android:id="@+id/icon_hello"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/hello_icon"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/hello" />
+
+        <!-- TextView for the welcome message -->
+        <TextView
+            android:id="@+id/text_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/icon_hello"
+            android:layout_marginTop="12dp"
+            android:background="#FF00FF00"
+            android:gravity="center"
+            android:text="@string/bienvenue"
+            android:textSize="18sp" />
+
+        <!-- LinearLayout for user information inputs -->
+        <LinearLayout
+            android:id="@+id/layout_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_welcome"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Repeated EditText for user information -->
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:autofillHints="name"
+                android:hint="@string/nom" />
+
+            <EditText
+                android:id="@+id/edit_firstname"
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:autofillHints="givenName"
+                android:layout_height="wrap_content"
+                android:hint="@string/prenom"
+                android:layout_marginTop="2dp" />
+
+            <EditText
+                android:id="@+id/edit_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/age"
+                android:inputType="number"
+                android:autofillHints="birthDateDay"
+                android:layout_marginTop="2dp" />
+
+            <EditText
+                android:id="@+id/edit_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/poids"
+                android:inputType="numberDecimal"
+                android:autofillHints="weight"
+                android:layout_marginTop="2dp" />
+
+            <EditText
+                android:id="@+id/edit_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/taille"
+                android:inputType="number"
+                android:autofillHints="height"
+                android:layout_marginTop="2dp" />
+
+            <Spinner
+                android:id="@+id/spinner_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/genre_array"
+                android:layout_marginTop="2dp"
+                android:prompt="@string/genre_prompt" />
+
+
+            <Spinner
+                android:id="@+id/spinner_vous_etes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/vous_etes_array"
+                android:layout_marginTop="4dp"
+                android:prompt="@string/vous_etes_prompt" />
+        </LinearLayout>
+
+
+        <!-- Latout pour les 4 bouttons de menu en bas-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:baselineAligned="false"
+            android:weightSum="4">
+
+            <!-- LinearLayout pour le bouton MesInformations -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/mes_info"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_mes_informations"
+                    android:contentDescription="@string/mesinformations" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesinformations"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Pas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/pas"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_pas"
+                    android:contentDescription="@string/pas" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pas"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Calories -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/calories"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_calories"
+                    android:contentDescription="@string/calories" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calories"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Sommeil -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/sommeil"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_sommeil"
+                    android:contentDescription="@string/sommeil" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sommeil"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
