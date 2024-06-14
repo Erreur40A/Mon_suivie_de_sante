@@ -32,12 +32,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/calories_depense"
-        app:layout_constraintBottom_toTopOf="@id/demande_calories_consomme"
+        app:layout_constraintBottom_toTopOf="@id/demande_calorie_consomme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <include
-        android:id="@+id/demande_calories_consomme"
+        android:id="@+id/demande_calorie_consomme"
         layout="@layout/demande_calories_consome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         layout="@layout/demande_info_activite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/demande_calories_consomme"
+        app:layout_constraintTop_toBottomOf="@id/demande_calorie_consomme"
         app:layout_constraintBottom_toTopOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
