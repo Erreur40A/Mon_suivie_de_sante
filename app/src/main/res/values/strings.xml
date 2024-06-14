@@ -10,4 +10,6 @@
     <string name="pop_up_hint_age">Entrez votre âge ici</string>
     <string name="pop_up_text_poids">Combien pesez vous ?</string>
     <string name="pop_up_hint_poids">Entrez votre poids ici (en kg)</string>
+    <string name="validation">OK</string>
+    <string name="annulation">Annuler</string>
 </resources>
