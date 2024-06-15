@@ -19,4 +19,6 @@
     <string name="nombre_de_pas_fait">Le nombre de pas que je fais :</string>
     <string name="pop_up_hint_calories">1000 kcal</string>
     <string name="pop_up_text_calorie">Quel est ton objectif ?</string>
+    <string name="annulation">Annuler</string>
+    <string name="validation">OK</string>
 </resources>
