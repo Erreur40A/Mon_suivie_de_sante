@@ -63,9 +63,9 @@ public class CaloriesActivity extends AppCompatActivity {
         mes_info = toolar.findViewById(R.id.mes_info);
         sommeil = toolar.findViewById(R.id.sommeil);
 
-        pas.setAlpha(0.5F);
-        mes_info.setAlpha(0.5F);
-        sommeil.setAlpha(0.5F);
+        pas.setAlpha(0.4F);
+        mes_info.setAlpha(0.4F);
+        sommeil.setAlpha(0.4F);
 
         ConstraintLayout tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
