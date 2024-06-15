@@ -6,4 +6,17 @@
     <string name="pop_up_hint_obj_mensuelle">28000 pas</string>
     <string name="pop_up_text_obj_hebdomadaire">Quelle est votre objectif de pas hebdomadaire ?</string>
     <string name="pop_up_hint_obj_hebdomadaire">7000 pas</string>
+    <string name="mesinformations">Mes Informations</string>
+    <string name="pas">Pas</string>
+    <string name="calories">Calories</string>
+    <string name="sommeil">Sommeil</string>
+    <string name="icone_sante">Health Icon</string>
+    <string name="message_motivation">Votre message de motivation ici</string>
+    <string name="mesobjectifsjournaliers">Mes objectifs journaliers :</string>
+    <string name="mesobjectifshebdo">Mes objectifs hebdomadaires :</string>
+    <string name="mesobjectifsMensuels">Mes objectifs mensuels :</string>
+    <string name="saisir_nb_pas">Saisir pas</string>
+    <string name="nombre_de_pas_fait">Le nombre de pas que je fais :</string>
+    <string name="pop_up_hint_calories">1000 kcal</string>
+    <string name="pop_up_text_calorie">Quel est ton objectif ?</string>
 </resources>

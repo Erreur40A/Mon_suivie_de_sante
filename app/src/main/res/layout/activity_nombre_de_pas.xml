@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_nb_pas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--En tete-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
+
+            <!-- ImageView for the health app icon -->
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/icone_sante"
+                android:src="@drawable/logo_app" />
+
+            <!-- TextView for the title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
+
+
+        </LinearLayout>
+
+        <!-- Box motivation-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textMotivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_motivation"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- Objectifs journaliers-->
+        <LinearLayout
+           android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical">
+
+            <!-- Ligne pour les objectifs journaliers -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesobjectifsjournaliers"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+
+                <EditText
+                    android:id="@+id/editObjectifsJournalier"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/saisir_nb_pas"
+                    android:inputType="number"
+                    android:paddingStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Ligne pour afficher le nombre de pas -->
+            <TextView
+                android:id="@+id/textPasFaitJournalier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/nombre_de_pas_fait"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+            <!-- Barre de progression -->
+            <ProgressBar
+                android:id="@+id/progressBarJour"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="25"/>
+
+        </LinearLayout>
+
+        <!-- Objectifs hebdomadaires-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <!-- Ligne pour les objectifs hebdo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesobjectifshebdo"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+
+                <EditText
+                    android:id="@+id/editObjectifsHebdo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/saisir_nb_pas"
+                    android:inputType="number"
+                    android:paddingStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Ligne pour afficher le nombre de pas -->
+            <TextView
+                android:id="@+id/textPasFaitHebdo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/nombre_de_pas_fait"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+            <!-- Barre de progression -->
+            <ProgressBar
+                android:id="@+id/progressBarHebdo"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="75"/>
+
+        </LinearLayout>
+
+        <!-- Objectifs mensuels -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <!-- Ligne pour les objectifs mensuels -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesobjectifsMensuels"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+
+                <EditText
+                    android:id="@+id/editObjectifsMensuels"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/saisir_nb_pas"
+                    android:inputType="number"
+                    android:paddingStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Ligne pour afficher le nombre de pas -->
+            <TextView
+                android:id="@+id/textPasFaitMensuels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/nombre_de_pas_fait"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+            <!-- Barre de progression -->
+            <ProgressBar
+                android:id="@+id/progressBarMensuel"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="90"/>
+
+        </LinearLayout>
+
+        <!-- Latout pour les 4 bouttons de menu en bas-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:baselineAligned="false"
+            android:weightSum="4">
+
+            <!-- LinearLayout pour le bouton MesInformations -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/mes_info"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_mes_informations"
+                    android:contentDescription="@string/mesinformations" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesinformations"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Pas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/pas"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:alpha="0.8"
+                    android:src="@drawable/icone_pas"
+                    android:contentDescription="@string/pas" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pas"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Calories -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/calories"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_calories"
+                    android:contentDescription="@string/calories" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calories"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <!-- LinearLayout pour le bouton Sommeil -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/sommeil"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:alpha="0.4"
+                    android:src="@drawable/icone_sommeil"
+                    android:contentDescription="@string/sommeil" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sommeil"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
