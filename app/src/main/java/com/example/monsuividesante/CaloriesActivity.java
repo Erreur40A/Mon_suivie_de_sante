@@ -13,10 +13,15 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.MenuPopupWindow;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CaloriesActivity extends AppCompatActivity {
 
@@ -36,6 +41,8 @@ public class CaloriesActivity extends AppCompatActivity {
     private ImageButton bouton_pas;
     private ImageButton bouton_calories;
     private ImageButton bouton_sommeil;
+    private SpinnerAdapter adapter_duree;
+    private SpinnerAdapter adapter_activite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +101,26 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_sommeil = sommeil.findViewById(R.id.bouton_sommeil);
         bouton_sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
 
+        liste_deroulante_duree_activite = tmp_CL.findViewById(R.id.liste_deroulante_duree);
+        /*La liste est à modifier*/
+        /*Peut-être créer une table qui contient plusieurs durée*/
+        ArrayList<String> l = new ArrayList<String>(Arrays.asList("00:15", "00:30", "1:00", "1:30", "2:00"));
+
+        adapter_duree = new SpinnerAdapter(getApplicationContext(), l, R.id.liste_deroulante_duree, "Choisissez une durée");
+        liste_deroulante_duree_activite.setAdapter(adapter_duree);
+
+        liste_deroulante_choix_activite = tmp_CL.findViewById(R.id.liste_deroulante_activite);
+        /*La liste est à modifier*/
+        /*Peut-être créer une table qui contient plusieurs activité*/
+        l = new ArrayList<String>(Arrays.asList("activité1", "activité2", "activité3", "activité4", "activité5"));
+
+        adapter_activite = new SpinnerAdapter(getApplicationContext(), l, R.id.liste_deroulante_activite, "Choisissez une activité");
+        liste_deroulante_choix_activite.setAdapter(adapter_activite);
+
+        SpinnerItemSelectListener listener = new SpinnerItemSelectListener();
+
+        liste_deroulante_choix_activite.setOnItemSelectedListener(listener);
+        liste_deroulante_duree_activite.setOnItemSelectedListener(listener);
     }
 
     public void setOnClickListenerBoutonCaloriesConsomme(View view){
@@ -152,6 +179,10 @@ public class CaloriesActivity extends AppCompatActivity {
 
     public void setOnClickListenerBoutonActiviteOK(View view){
         /*A MODIFIER*/
+        Toast.makeText(getApplicationContext(), "bouton ok activite clique", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setOnSelectedItemSpinner(View view){
         Toast.makeText(getApplicationContext(), "bouton ok activite clique", Toast.LENGTH_SHORT).show();
     }
 }

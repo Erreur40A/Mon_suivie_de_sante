@@ -16,39 +16,16 @@
         android:textStyle="bold"
         android:gravity="center"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/champ_modification_activite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <include
+        android:id="@+id/liste_deroulante_activite"
+        layout="@layout/liste_deroulante_activite"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/border"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/demande_activite">
-
-        <TextView
-            android:id="@+id/explication_liste_activite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="@string/champ_modif_activite"
-            android:textColor="@color/gray_light"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--A remplacer, voir bouton_liste_deroulante.xml-->
-        <include
-            android:id="@+id/bouton_liste_activite"
-            layout="@layout/bouton_liste_deroulante"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/demande_activite"/>
 
     <TextView
         android:id="@+id/demande_duree_activite"
@@ -57,44 +34,21 @@
         android:text="@string/demande_duree_activite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/champ_modification_activite"
+        app:layout_constraintTop_toBottomOf="@id/liste_deroulante_activite"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/champ_modification_duree_activite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <include
+        android:id="@+id/liste_deroulante_duree"
+        layout="@layout/liste_deroulante_duree"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/border"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/demande_duree_activite">
-
-        <TextView
-            android:id="@+id/explication_duree_activite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="@string/champ_modification_dure_activite"
-            android:textColor="@color/gray_light"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--A remplacer, voir bouton_liste_deroulante.xml-->
-        <include
-            android:id="@+id/bouton_liste_deroulante"
-            layout="@layout/bouton_liste_deroulante"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/demande_duree_activite"/>
 
     <Button
         android:id="@+id/bouton_ok_activite"
@@ -107,7 +61,7 @@
         android:layout_marginEnd="15dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/champ_modification_duree_activite"
+        app:layout_constraintTop_toBottomOf="@id/liste_deroulante_duree"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
