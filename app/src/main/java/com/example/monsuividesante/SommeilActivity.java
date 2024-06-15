@@ -48,9 +48,9 @@ public class SommeilActivity extends AppCompatActivity {
         mes_info = toolbar.findViewById(R.id.mes_info);
         calories = toolbar.findViewById(R.id.calories);
 
-        pas.setAlpha(0.5F);
-        mes_info.setAlpha(0.5F);
-        calories.setAlpha(0.5F);
+        pas.setAlpha(0.4F);
+        mes_info.setAlpha(0.4F);
+        calories.setAlpha(0.4F);
 
         bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
         bouton_mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
