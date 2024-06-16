@@ -6,7 +6,7 @@
     android:layout_width="48dp"
     android:layout_height="48dp"
     android:contentDescription="@string/desc_bouton_liste_deroulante"
-    android:scaleType="fitXY"
+    android:scaleType="centerInside"
     android:background="@drawable/border_radius"
     android:src="@drawable/fleche_bas"
     app:layout_constraintEnd_toEndOf="parent"

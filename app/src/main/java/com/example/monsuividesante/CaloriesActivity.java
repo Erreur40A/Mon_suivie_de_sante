@@ -3,17 +3,16 @@ package com.example.monsuividesante;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.MenuPopupWindow;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,7 +20,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class CaloriesActivity extends AppCompatActivity {
 
@@ -29,20 +27,24 @@ public class CaloriesActivity extends AppCompatActivity {
     private String calories_depense_reel; //en kcal a afficher dans le rectangle rouge
     private ConstraintLayout toolar;
     private CaloriesActivity activity_calories;
+    private ConstraintLayout liste_deroulante_choix_activite;
+    private ArrayList<String> items_choix_activite;
+    private AlertDialog pop_up_choix_activite;
+    private ConstraintLayout liste_deroulante_duree_activite;
+    private ArrayList<String> items_duree_activite;
+    private AlertDialog pop_up_duree_activite;
     private LinearLayout pas;
     private LinearLayout mes_info;
     private LinearLayout sommeil;
-    private ImageButton bouton_edit_calories_consomme;
-    private Spinner liste_deroulante_choix_activite;
-    private Spinner liste_deroulante_duree_activite;
     private Button bouton_calories_consome_ok;
     private Button bouton_activite_ok;
+    private ImageButton bouton_edit_calories_consomme;
+    private ImageButton bouton_liste_choix_activite;
+    private ImageButton bouton_liste_duree_activite;
     private ImageButton bouton_mes_info;
     private ImageButton bouton_pas;
     private ImageButton bouton_calories;
     private ImageButton bouton_sommeil;
-    private SpinnerAdapter adapter_duree;
-    private SpinnerAdapter adapter_activite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
+        pop_up_duree_activite = null;
+        pop_up_choix_activite = null;
         activity_calories = this;
 
         TextView tmp_textView;
@@ -79,8 +83,8 @@ public class CaloriesActivity extends AppCompatActivity {
         ConstraintLayout enter_calorie_consomme = tmp_CL.findViewById(R.id.entrer_calorie_consomme);
         bouton_edit_calories_consomme = enter_calorie_consomme.findViewById(R.id.bouton_modifications);
 
-        bouton_edit_calories_consomme.setOnClickListener(this::setOnClickListenerBoutonCaloriesConsomme);
-        enter_calorie_consomme.setOnClickListener(this::setOnClickListenerBoutonCaloriesConsomme);
+        bouton_edit_calories_consomme.setOnClickListener(this::setOnClickListenerCaloriesConsomme);
+        enter_calorie_consomme.setOnClickListener(this::setOnClickListenerCaloriesConsomme);
 
         bouton_calories_consome_ok = tmp_CL.findViewById(R.id.bouton_ok);
         bouton_calories_consome_ok.setOnClickListener(this::setOnClickListenerBoutonConsommeOK);
@@ -102,28 +106,24 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
 
         liste_deroulante_duree_activite = tmp_CL.findViewById(R.id.liste_deroulante_duree);
-        /*La liste est à modifier*/
-        /*Peut-être créer une table qui contient plusieurs durée*/
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList("00:15", "00:30", "1:00", "1:30", "2:00"));
-
-        adapter_duree = new SpinnerAdapter(getApplicationContext(), l, R.id.liste_deroulante_duree, "Choisissez une durée");
-        liste_deroulante_duree_activite.setAdapter(adapter_duree);
+        bouton_liste_duree_activite = liste_deroulante_duree_activite.findViewById(R.id.bouton_liste_deroulante);
+        /*La liste est à modifier
+        Peut-être créer une classe Utilitaire qui récupère tout les durée présent dans la db*/
+        items_duree_activite = new ArrayList<String>(Arrays.asList("00:15", "00:30", "1:00", "1:30", "2:00"));
+        liste_deroulante_duree_activite.setOnClickListener(this::setOnClickListenerActiviteDuree);
+        bouton_liste_duree_activite.setOnClickListener(this::setOnClickListenerActiviteDuree);
 
         liste_deroulante_choix_activite = tmp_CL.findViewById(R.id.liste_deroulante_activite);
-        /*La liste est à modifier*/
-        /*Peut-être créer une table qui contient plusieurs activité*/
-        l = new ArrayList<String>(Arrays.asList("activité1", "activité2", "activité3", "activité4", "activité5"));
+        bouton_liste_choix_activite = liste_deroulante_choix_activite.findViewById(R.id.bouton_liste_deroulante);
+        /*La liste est à modifier
+        Peut-être créer une classe Utilitaire qui récupère tout les activité présent dans la db*/
+        items_choix_activite = new ArrayList<String>(Arrays.asList("activité1", "activité2", "activité3", "activité4", "activité5"));
+        liste_deroulante_choix_activite.setOnClickListener(this::setOnClickListenerChoixActivite);
+        bouton_liste_choix_activite.setOnClickListener(this::setOnClickListenerChoixActivite);
 
-        adapter_activite = new SpinnerAdapter(getApplicationContext(), l, R.id.liste_deroulante_activite, "Choisissez une activité");
-        liste_deroulante_choix_activite.setAdapter(adapter_activite);
-
-        SpinnerItemSelectListener listener = new SpinnerItemSelectListener();
-
-        liste_deroulante_choix_activite.setOnItemSelectedListener(listener);
-        liste_deroulante_duree_activite.setOnItemSelectedListener(listener);
     }
 
-    public void setOnClickListenerBoutonCaloriesConsomme(View view){
+    public void setOnClickListenerCaloriesConsomme(View view){
         AlertDialog.Builder pop_up_calorie_consomme = new AlertDialog.Builder(activity_calories, R.style.PopUpArrondi);
 
         pop_up_calorie_consomme.setView(R.layout.pop_up_calorie);
@@ -146,6 +146,76 @@ public class CaloriesActivity extends AppCompatActivity {
 
             pop_up.dismiss();
         });
+    }
+
+    public void setOnClickListenerActiviteDuree(View view){
+        AlertDialog.Builder pop_up_activite_dure_builder = new AlertDialog.Builder(activity_calories, R.style.PopUpArrondi);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View view_pop_up = inflater.inflate(R.layout.pop_up_duree_activite, null);
+
+        LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.items_duree_activite_liste);
+
+        for (String item : items_duree_activite) {
+            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, null, false);
+
+            TextView textViewItem = view_item.findViewById(R.id.item);
+            textViewItem.setText(item);
+
+            textViewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setOnClickListenerItemListeDeroulante(view);
+
+                    if(pop_up_duree_activite != null && pop_up_duree_activite.isShowing())
+                        pop_up_duree_activite.dismiss();
+                }
+            });
+
+            liste_deroulante.addView(view_item);
+        }
+
+        pop_up_duree_activite = pop_up_activite_dure_builder.create();
+
+        pop_up_duree_activite.setView(view_pop_up);
+        pop_up_duree_activite.show();
+    }
+
+    public void setOnClickListenerChoixActivite(View view){
+        AlertDialog.Builder pop_up_activite_choix_builder = new AlertDialog.Builder(activity_calories, R.style.PopUpArrondi);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View view_pop_up = inflater.inflate(R.layout.pop_up_choix_activite, null);
+
+        LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.items_choix_activite_liste);
+
+        for (String item : items_choix_activite) {
+            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, null, false);
+
+            TextView textViewItem = view_item.findViewById(R.id.item);
+            textViewItem.setText(item);
+
+            textViewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setOnClickListenerItemListeDeroulante(view);
+
+                    if(pop_up_choix_activite != null && pop_up_choix_activite.isShowing())
+                        pop_up_choix_activite.dismiss();
+                }
+            });
+
+            liste_deroulante.addView(view_item);
+        }
+
+        pop_up_choix_activite = pop_up_activite_choix_builder.create();
+
+        pop_up_choix_activite.setView(view_pop_up);
+        pop_up_choix_activite.show();
+    }
+
+    public void setOnClickListenerItemListeDeroulante(View view){
+        Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
     }
 
     public void setOnClickListenerBoutonPas(View view){

@@ -4,8 +4,4 @@
         <item name="android:windowBackground">@drawable/background_pop_up</item>
         <item name="android:windowIsFloating">true</item>
     </style>
-    <style name="ListeDeroulanteArrondi">
-        <item name="android:background">@drawable/background_liste_deroulante</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
 </resources>

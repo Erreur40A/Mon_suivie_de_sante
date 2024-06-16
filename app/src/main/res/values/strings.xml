@@ -35,4 +35,6 @@
     <string name="champ_modification_dure_activite">1:00</string>
     <string name="pop_up_text_calorie">Vous avez consommé combien de calories ?</string>
     <string name="pop_up_hint_calories">Entrez la quantité consommé en kcal</string>
+    <string name="explication_choix_activite">Choisissez une activité</string>
+    <string name="explication_choix_duree">Choisissez une durée</string>
 </resources>
