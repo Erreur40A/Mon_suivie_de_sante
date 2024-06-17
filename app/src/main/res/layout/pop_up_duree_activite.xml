@@ -8,7 +8,7 @@
     android:background="@drawable/background_pop_up">
 
     <LinearLayout
-        android:id="@+id/items_duree_activite_liste"
+        android:id="@+id/liste_duree_activite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

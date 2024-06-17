@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!--Pas besion de : android:background="@drawable/background_blue"
+    car la pop-up le contient déja-->
     <TextView
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:background="@drawable/background_blue"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
