@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -53,25 +55,25 @@ public class SommeilActivity extends AppCompatActivity {
         calories.setAlpha(0.4F);
 
         bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
-        bouton_mes_info.setOnClickListener(this::setOnClickListenerBoutonMesInfo);
+        bouton_mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
 
         bouton_pas = pas.findViewById(R.id.bouton_pas);
-        bouton_pas.setOnClickListener(this::setOnClickListenerBoutonPas);
+        bouton_pas.setOnClickListener(this::onClickListenerBoutonPas);
 
         bouton_calories = calories.findViewById(R.id.bouton_calories);
-        bouton_calories.setOnClickListener(this::setOnClickListenerBoutonCalories);
+        bouton_calories.setOnClickListener(this::onClickListenerBoutonCalories);
 
         bouton_sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
-        bouton_sommeil.setOnClickListener(this::setOnClickListenerBoutonSommeil);
+        bouton_sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
 
         bouton_heure_coucher = objectif_sommeil.findViewById(R.id.bouton_coucher);
-        bouton_heure_coucher.setOnClickListener(this::setOnClickListenerBoutonHeureCoucher);
+        bouton_heure_coucher.setOnClickListener(this::onClickListenerHeureCoucher);
 
         bouton_heure_reveil = objectif_sommeil.findViewById(R.id.bouton_reveil);
-        bouton_heure_reveil.setOnClickListener(this::setOnClickListenerBoutonHeureReveil);
+        bouton_heure_reveil.setOnClickListener(this::onClickListenerHeureReveil);
     }
 
-    public void setOnClickListenerBoutonHeureCoucher(View view){
+    public void onClickListenerHeureCoucher(View view){
         AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil, R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
 
@@ -83,21 +85,22 @@ public class SommeilActivity extends AppCompatActivity {
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
         assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
-            /*A compléter*/
+            EditText saisie = pop_up.findViewById(R.id.saisie_user);
+            TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher);
+
+            String textChoix = String.valueOf(saisie.getText());
+
+            heure_coucher.setText(textChoix);
 
             pop_up.dismiss();
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
         assert bouton_annuler != null;
-        bouton_annuler.setOnClickListener(v -> {
-            /*A compléter*/
-
-            pop_up.dismiss();
-        });
+        bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 
-    public void setOnClickListenerBoutonHeureReveil(View view){
+    public void onClickListenerHeureReveil(View view){
         AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil ,R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_reveil);
 
@@ -123,25 +126,25 @@ public class SommeilActivity extends AppCompatActivity {
         });
     }
 
-    public void setOnClickListenerBoutonMesInfo(View view){
+    public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void setOnClickListenerBoutonPas(View view){
+    public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void setOnClickListenerBoutonCalories(View view){
+    public void onClickListenerBoutonCalories(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Calories)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void setOnClickListenerBoutonSommeil(View view){
+    public void onClickListenerBoutonSommeil(View view){
         Intent intent = new Intent(SommeilActivity.this, SommeilActivity.class);
         startActivity(intent);
     }
