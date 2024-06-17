@@ -21,7 +21,6 @@ public class SommeilActivity extends AppCompatActivity {
 
     private ConstraintLayout toolbar;
     private ConstraintLayout objectif_sommeil;
-    private SommeilActivity activity_sommeil;
     private LinearLayout pas;
     private LinearLayout mes_info;
     private LinearLayout calories;
@@ -43,7 +42,6 @@ public class SommeilActivity extends AppCompatActivity {
             return insets;
         });
 
-        activity_sommeil = this;
         objectif_sommeil = findViewById(R.id.objectif_sommeil);
         toolbar = findViewById(R.id.toolbar);
         pas = toolbar.findViewById(R.id.pas);
@@ -74,9 +72,7 @@ public class SommeilActivity extends AppCompatActivity {
     }
 
     public void onClickListenerHeureCoucher(View view){
-        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil, R.style.PopUpArrondi);
-        pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
-
+        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(this, R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
 
         AlertDialog pop_up = pop_up_objectif_coucher.create();
@@ -86,11 +82,12 @@ public class SommeilActivity extends AppCompatActivity {
         assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
+            assert saisie != null;
+
             TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher);
+            String affichage = String.valueOf(saisie.getText());
 
-            String textChoix = String.valueOf(saisie.getText());
-
-            heure_coucher.setText(textChoix);
+            heure_coucher.setText(affichage);
 
             pop_up.dismiss();
         });
@@ -101,9 +98,7 @@ public class SommeilActivity extends AppCompatActivity {
     }
 
     public void onClickListenerHeureReveil(View view){
-        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(activity_sommeil ,R.style.PopUpArrondi);
-        pop_up_objectif_coucher.setView(R.layout.pop_up_heure_reveil);
-
+        AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(this ,R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_reveil);
 
         AlertDialog pop_up = pop_up_objectif_coucher.create();
@@ -112,18 +107,20 @@ public class SommeilActivity extends AppCompatActivity {
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
         assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
-            /*A compléter*/
+            EditText saisie = pop_up.findViewById(R.id.saisie_user);
+            assert saisie != null;
+
+            TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_reveil);
+            String affichage = String.valueOf(saisie.getText());
+
+            heure_reveil.setText(affichage);
 
             pop_up.dismiss();
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
         assert bouton_annuler != null;
-        bouton_annuler.setOnClickListener(v -> {
-            /*A compléter*/
-
-            pop_up.dismiss();
-        });
+        bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 
     public void onClickListenerBoutonMesInfo(View view){
@@ -145,6 +142,7 @@ public class SommeilActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonSommeil(View view){
+        /*On pourra supprimer ce listener ou le garder*/
         Intent intent = new Intent(SommeilActivity.this, SommeilActivity.class);
         startActivity(intent);
     }
