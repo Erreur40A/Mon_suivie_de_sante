@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:id="@+id/error_credentials"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_error">
+
+    <TextView
+        android:id="@+id/tvErrorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/erreur"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tvErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/identifiant_ou_mot_de_passe_incorrect"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/btnDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>
