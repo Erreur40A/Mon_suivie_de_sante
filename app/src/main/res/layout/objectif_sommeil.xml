@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toTopOf="@id/objectif_reveil"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +49,7 @@
         android:id="@+id/objectif_reveil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +82,86 @@
 
         <include
             android:id="@+id/bouton_reveil"
+            layout="@layout/bouton_modification" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reveil_reel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objectif_reveil">
+
+        <TextView
+            android:id="@+id/demande_reveil_reel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/demande_reveil_reel"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--NE PAS SUPPRIMER CONTIENDRA LA VALEUR ENTRER DANS LA POP-UP PAR L'UTILISATEUR -->
+        <TextView
+            android:id="@+id/heure_reveil_reel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/demande_reveil_reel"
+            app:layout_constraintEnd_toStartOf="@id/bouton_reveil_reel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include
+            android:id="@+id/bouton_reveil_reel"
+            layout="@layout/bouton_modification" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coucher_reel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reveil_reel">
+
+        <TextView
+            android:id="@+id/demande_coucher_reel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/demande_coucher_reel"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--NE PAS SUPPRIMER CONTIENDRA LA VALEUR ENTRER DANS LA POP-UP PAR L'UTILISATEUR -->
+        <TextView
+            android:id="@+id/heure_coucher_reel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/demande_coucher_reel"
+            app:layout_constraintEnd_toStartOf="@id/bouton_coucher_reel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include
+            android:id="@+id/bouton_coucher_reel"
             layout="@layout/bouton_modification" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -42,20 +42,10 @@
         layout="@layout/objectif_sommeil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/img_motivation"
+        app:layout_constraintBottom_toTopOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/msg_motivation" />
 
-    <ImageView
-        android:id="@+id/img_motivation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/image_de_motivation"
-        app:layout_constraintBottom_toTopOf="@id/toolbar"
-        app:layout_constraintEnd_toStartOf="@id/toolbar"
-        app:layout_constraintStart_toEndOf="@id/objectif_sommeil"
-        app:srcCompat="@drawable/motivation" />
+
 
     <include
         android:id="@+id/toolbar"
