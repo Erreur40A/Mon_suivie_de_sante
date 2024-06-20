@@ -10,6 +10,6 @@ public class NotificationsBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Notifications notif = new Notifications(context);
 
-        notif.showNotification(intent);
+        notif.showNotification();
     }
 }

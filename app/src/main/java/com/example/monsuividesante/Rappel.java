@@ -18,19 +18,21 @@ public class Rappel {
     @SuppressLint("ScheduleExactAlarm")
     public static void setRappel(Context context, boolean autorisation, int heure, int minute){
         Intent intent = new Intent(context, NotificationsBroadcast.class);
+        intent.putExtra("heure", heure);
+        intent.putExtra("miniute", minute);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                1,
+                0,
                 intent,
                 PendingIntent.FLAG_IMMUTABLE);
 
         Calendar calandrier = setAlarm(heure, minute);
         AlarmManager alarme = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        if(autorisation)
-            alarme.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calandrier.getTimeInMillis(), pendingIntent);
-        else
-            alarme.setExact(AlarmManager.RTC_WAKEUP, calandrier.getTimeInMillis(), pendingIntent);
+        alarme.cancel(pendingIntent);
+
+        alarme.setRepeating(AlarmManager.RTC_WAKEUP, calandrier.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     public static Calendar setAlarm(int heure, int minute){
@@ -41,6 +43,7 @@ public class Rappel {
         calendrier.set(Calendar.MINUTE, minute);
         calendrier.set(Calendar.HOUR_OF_DAY, heure);
         calendrier.set(Calendar.SECOND, 0);
+        calendrier.set(Calendar.MILLISECOND, 0);
 
         return calendrier;
     }

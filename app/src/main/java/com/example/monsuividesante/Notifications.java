@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat;
 public class Notifications {
     private final Context context;
     public static final String CHANNEL_ID = "reveil";
-    public static final int NOTIFICATION_ID = 1;
+    public static int NOTIFICATION_ID = 1;
     private Notification notification;
     private NotificationManager manager;
 
@@ -28,7 +28,7 @@ public class Notifications {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(
                     Notifications.CHANNEL_ID,
-                    "Couchez vous",
+                    "Rappel coucher",
                     NotificationManager.IMPORTANCE_DEFAULT);
 
             channel.setDescription("Utiliser pour rappeler à l'utilisateur de ce coucher");
@@ -37,12 +37,15 @@ public class Notifications {
         }
     }
 
-    public void showNotification(Intent intent) {
+    public void showNotification() {
         createNotificationChannel();
+
+        Intent intent = new Intent(context, SommeilActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent pendingIntentActivity = PendingIntent.getActivity(
                 context,
-                1,
+                0,
                 intent,
                 PendingIntent.FLAG_IMMUTABLE);
 
