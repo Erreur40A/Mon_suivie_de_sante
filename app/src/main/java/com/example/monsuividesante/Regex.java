@@ -8,7 +8,7 @@ public class Regex {
     }
 
     public static boolean isValideCalorieSaisie(String calorie){
-        if(calorie.matches("[0-9]*"))
+        if(calorie.matches("[0-9]+"))
             return Integer.parseInt(calorie)<=2000;
         return false;
     }
