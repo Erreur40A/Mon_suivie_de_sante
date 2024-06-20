@@ -159,7 +159,7 @@ public class CaloriesActivity extends AppCompatActivity {
         LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.liste_duree_activite);
 
         for (String item : items_duree_activite) {
-            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, null, false);
+            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, liste_deroulante, false);
 
             TextView textViewItem = view_item.findViewById(R.id.item);
             textViewItem.setText(item);
@@ -169,7 +169,7 @@ public class CaloriesActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     onClickListenerItemListeDeroulante(view, liste_deroulante_duree_activite);
 
-                    if(pop_up_duree_activite != null && pop_up_duree_activite.isShowing())
+                    if(pop_up_duree_activite.isShowing())
                         pop_up_duree_activite.dismiss();
                 }
             });
@@ -192,7 +192,7 @@ public class CaloriesActivity extends AppCompatActivity {
         LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.liste_choix_activite);
 
         for (String item : items_choix_activite) {
-            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, null, false);
+            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, liste_deroulante, false);
 
             TextView textViewItem = view_item.findViewById(R.id.item);
             textViewItem.setText(item);
@@ -202,7 +202,7 @@ public class CaloriesActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     onClickListenerItemListeDeroulante(view, liste_deroulante_choix_activite);
 
-                    if(pop_up_choix_activite != null && pop_up_choix_activite.isShowing())
+                    if(pop_up_choix_activite.isShowing())
                         pop_up_choix_activite.dismiss();
                 }
             });
@@ -219,7 +219,7 @@ public class CaloriesActivity extends AppCompatActivity {
     public void onClickListenerItemListeDeroulante(View view, ViewGroup liste_deroulante){
         String choix = (String) ((TextView) view).getText();
 
-        TextView explication = liste_deroulante.findViewById(R.id.explication_liste_déroulante);
+        TextView explication = liste_deroulante.findViewById(R.id.explication_liste_deroulante);
 
         explication.setText(choix);
         explication.setTextColor(Color.BLACK);
