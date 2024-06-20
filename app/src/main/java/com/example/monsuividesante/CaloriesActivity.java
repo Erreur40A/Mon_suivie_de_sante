@@ -169,8 +169,7 @@ public class CaloriesActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     onClickListenerItemListeDeroulante(view, liste_deroulante_duree_activite);
 
-                    if(pop_up_duree_activite.isShowing())
-                        pop_up_duree_activite.dismiss();
+                    pop_up_duree_activite.dismiss();
                 }
             });
 
@@ -202,8 +201,7 @@ public class CaloriesActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     onClickListenerItemListeDeroulante(view, liste_deroulante_choix_activite);
 
-                    if(pop_up_choix_activite.isShowing())
-                        pop_up_choix_activite.dismiss();
+                    pop_up_choix_activite.dismiss();
                 }
             });
 
