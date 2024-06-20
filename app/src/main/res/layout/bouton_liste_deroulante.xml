@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--A remplacer par Spinner-->
+<ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bouton_liste_deroulante"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:contentDescription="@string/desc_bouton_liste_deroulante"
+    android:scaleType="centerInside"
+    android:background="@drawable/border_radius"
+    android:src="@drawable/fleche_bas"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+</ImageButton>

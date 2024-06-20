@@ -26,18 +26,20 @@
     <string name="sommeil">Sommeil</string>
     <string name="icone_sante">Health Icon</string>
     <string name="hello_icon">Hello Icon</string>
+    <string name="choix_genre">Sexe</string>
+    <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
 
     <string-array name="genre_array">
-        <item>Genre</item>
         <item>Homme</item>
         <item>Femme</item>
     </string-array>
 
-    <string-array name="vous_etes_array">
-        <item>Vous etes</item>
-        <item>Sédentaire</item>
-        <item>Sportif</item>
-        <item>Actif</item>
+    <string-array name="type_de_personne_array">
+        <item>Sédentaire (peu ou pas d\'exercie)</item>
+        <item>Léger (exercice léger/sport 1 à 3 jours/semaine)</item>
+        <item>Modéré (exercice modéré/sport 3 à 5 jours/semaine</item>
+        <item>Actif exercice intense/sport 6 à 7 jours/semaine</item>
+        <item>Très actif (exercice intense quotidien ou activité physique très difficile)</item>
     </string-array>
 
 
