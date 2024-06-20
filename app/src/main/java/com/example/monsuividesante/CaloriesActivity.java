@@ -61,11 +61,21 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
-        TextView textViewCalDep = findViewById(R.id.calories_depense).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        TextView textViewCalDep = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
         calories_depense = "300 " + textViewCalDep.getText().toString();
         textViewCalDep.setText(calories_depense);
 
-        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        TextView textViewCalDepReel = findViewById(R.id.calories_depense).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+
+        /*formule réél pour "calories_depense_reel":
+        *homme: mb = 8,362 + (13,397 x poids en kg) + (4,799 x taille en cm) - (5,677 x âge en années)
+        *femme: mb = 447,593 + (9,247 x poids en kg) + (3,098 x taille en cm) - (4,330 x âge en années)
+        *Si Sédentaire (peu ou pas d'exercice) : MB x 1,2
+        *Si Léger (exercice léger/sport 1 à 3 jours/semaine) : MB x 1,375
+        *Si Modéré (exercice modéré/sport 3 à 5 jours/semaine) : MB x 1,55
+        *Si Actif (exercice intense/sport 6 à 7 jours/semaine) : MB x 1,725
+        *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9**/
+
         calories_depense_reel = "100 " + textViewCalDepReel.getText().toString();
         textViewCalDepReel.setText(calories_depense_reel);
 
