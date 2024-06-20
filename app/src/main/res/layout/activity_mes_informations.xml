@@ -181,8 +181,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:alpha="0.8"
                         android:src="@drawable/icone_mes_informations"
                         android:contentDescription="@string/mesinformations" />
@@ -204,8 +204,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:alpha="0.4"
                         android:src="@drawable/icone_pas"
                         android:contentDescription="@string/pas" />
@@ -227,8 +227,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:alpha="0.4"
                         android:src="@drawable/icone_calories"
                         android:contentDescription="@string/calories" />
@@ -250,8 +250,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:alpha="0.4"
                         android:src="@drawable/icone_sommeil"
                         android:contentDescription="@string/sommeil" />
@@ -265,13 +265,6 @@
 
             </LinearLayout>
         </RelativeLayout>
-
-
-
-
-
-
-
 
     </LinearLayout>
 
