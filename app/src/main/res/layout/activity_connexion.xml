@@ -42,8 +42,8 @@
 
         <!--Icon Account-->
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_marginTop="4dp"
             android:contentDescription="@string/icon_account"
             android:src="@drawable/icon_account_circle"
@@ -56,17 +56,21 @@
             android:textSize="20sp"
             android:layout_marginTop="8dp" />
 
+
+        <!-- Identifiant -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/identifiant"
             android:textSize="20sp"
             android:padding="18dp"
             android:inputType="text"
             android:autofillHints="username"
+            android:drawableEnd="@drawable/done_icon"
             android:id="@+id/identifiant_connexion"/>
 
+        <!-- Password -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,8 +80,33 @@
             android:padding="18dp"
             android:inputType="textPassword"
             android:autofillHints="password"
+            android:drawableEnd="@drawable/password_icon"
             android:id="@+id/password_connexion"
             />
+
+        <!--se souvenir de moi -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+            
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/se_souvenir_de_moi"
+                android:layout_centerVertical="true"
+                android:alpha="0.7"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mot_de_passe_oubli"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/login_button"
@@ -87,7 +116,7 @@
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"
             android:padding="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:textSize="20sp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
@@ -100,7 +129,7 @@
             android:text="@string/inscription_invitation"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_gravity="center_horizontal"
