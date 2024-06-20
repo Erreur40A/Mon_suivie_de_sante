@@ -16,10 +16,8 @@ public class Rappel {
 
     //on utilise @SuppressLint("ScheduleExactAlarm") car on vérifie les permissions dans SommeilActivity
     @SuppressLint("ScheduleExactAlarm")
-    public static void setRappel(Context context, boolean autorisation, int heure, int minute){
+    public static void setRappel(Context context, int heure, int minute){
         Intent intent = new Intent(context, NotificationsBroadcast.class);
-        intent.putExtra("heure", heure);
-        intent.putExtra("miniute", minute);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

@@ -37,7 +37,6 @@ public class SommeilActivity extends AppCompatActivity {
     private ImageButton bouton_heure_reveil;
     private ImageButton bouton_heure_coucher_reel;
     private ImageButton bouton_heure_reveil_reel;
-    private boolean autorisation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,30 +84,6 @@ public class SommeilActivity extends AppCompatActivity {
         bouton_heure_reveil_reel.setOnClickListener(this::onClickListenerHeureReveilReel);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        autorisation=verifierAutorisation();
-    }
-
-    /*Obliger de mettre ici car les classes Rappel, Notifications et NotificationsBroadcast sont des classes utilitaire*/
-    public boolean verifierAutorisation(){
-        /*Pour les version Android 12 ou plus il faut demander l'autorisation d'utiliser l'alarme exact*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
-                Toast.makeText(this, Rappel.explication, Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                startActivity(intent);
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public void onClickListenerHeureCoucher(View view){
         AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(this, R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
@@ -131,7 +106,7 @@ public class SommeilActivity extends AppCompatActivity {
             * 2134, lkjhw, 30:00 et 11h24 non valide*/
             String[] horaire = affichage.split(":");
 
-            Rappel.setRappel(this, autorisation, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
+            Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
             heure_coucher.setText(affichage);
 
             pop_up.dismiss();
