@@ -44,6 +44,7 @@ public class CaloriesActivity extends AppCompatActivity {
     private ImageButton bouton_edit_calories_consomme;
     private ImageButton bouton_liste_choix_activite;
     private ImageButton bouton_liste_duree_activite;
+    private ImageButton bouton_explication;
     private ImageButton bouton_mes_info;
     private ImageButton bouton_pas;
     private ImageButton bouton_calories;
@@ -60,25 +61,22 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
-        pop_up_duree_activite = null;
-        pop_up_choix_activite = null;
+        TextView textViewCalDep = findViewById(R.id.calories_depense).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        calories_depense = "300 " + textViewCalDep.getText().toString();
+        textViewCalDep.setText(calories_depense);
 
-        TextView tmp_textView;
-        tmp_textView = findViewById(R.id.calories_depense).findViewById(R.id.text_calorie_depense);
-        calories_depense = tmp_textView.getText().toString();
+        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        calories_depense_reel = "100 " + textViewCalDepReel.getText().toString();
+        textViewCalDepReel.setText(calories_depense_reel);
 
-        tmp_textView=findViewById(R.id.calories_depense_reel).findViewById(R.id.text_calorie_depense_reel);
-        calories_depense = tmp_textView.getText().toString();
+        bouton_explication=findViewById(R.id.calories_depense_reel).findViewById(R.id.bouton_explication);
+        bouton_explication.setOnClickListener(this::onClickListenerBoutonExplication);
 
         toolar = findViewById(R.id.toolbar);
 
         pas = toolar.findViewById(R.id.pas);
         mes_info = toolar.findViewById(R.id.mes_info);
         sommeil = toolar.findViewById(R.id.sommeil);
-
-        pas.setAlpha(0.4F);
-        mes_info.setAlpha(0.4F);
-        sommeil.setAlpha(0.4F);
 
         ConstraintLayout tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
@@ -109,20 +107,35 @@ public class CaloriesActivity extends AppCompatActivity {
 
         liste_deroulante_duree_activite = tmp_CL.findViewById(R.id.liste_deroulante_duree);
         bouton_liste_duree_activite = liste_deroulante_duree_activite.findViewById(R.id.bouton_liste_deroulante);
-        /*La liste est à modifier
-        Peut-être créer une classe Utilitaire qui récupère tout les durée présent dans la db*/
+
+        /*La liste est à modifier*/
         items_duree_activite = new ArrayList<String>(Arrays.asList("00:15", "00:30", "1:00", "1:30", "2:00"));
         liste_deroulante_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
         bouton_liste_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
 
         liste_deroulante_choix_activite = tmp_CL.findViewById(R.id.liste_deroulante_activite);
         bouton_liste_choix_activite = liste_deroulante_choix_activite.findViewById(R.id.bouton_liste_deroulante);
-        /*La liste est à modifier
-        Peut-être créer une classe Utilitaire qui récupère tout les activité présent dans la db*/
+
+        /*La liste est à modifier*/
         items_choix_activite = new ArrayList<String>(Arrays.asList("activité1", "activité2", "activité3", "activité4", "activité5"));
         liste_deroulante_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
 
         bouton_liste_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
+    }
+
+    public void onClickListenerBoutonExplication(View view){
+        AlertDialog.Builder pop_up_explication = new AlertDialog.Builder(this, R.style.PopUpArrondi);
+
+        pop_up_explication.setView(R.layout.pop_up_explication);
+
+        AlertDialog pop_up = pop_up_explication.create();
+        pop_up.show();
+
+        TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
+
+        String explication = "Si vous dépensez plus de " + calories_depense_reel + " vous allez maigrir.\nSi vous dépensez moins de " + calories_depense_reel + " vous allez grossir";
+        if(textExplication!=null)
+            textExplication.setText(explication);
     }
 
     public void onClickListenerCaloriesConsomme(View view){
