@@ -52,7 +52,6 @@ public class Notifications {
 
         builder_notif.setSmallIcon(R.drawable.logo_app)
                 .setContentTitle("Mon Suivie de Santé")
-                .setContentText("Vous êtes réveilez ?")
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setContentIntent(pendingIntentActivity)
                 .setCustomContentView(layout_notif)

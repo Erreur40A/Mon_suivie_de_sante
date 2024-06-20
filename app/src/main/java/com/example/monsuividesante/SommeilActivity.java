@@ -91,6 +91,7 @@ public class SommeilActivity extends AppCompatActivity {
         autorisation=verifierAutorisation();
     }
 
+    /*Obliger de mettre ici car les classes Rappel, Notifications et NotificationsBroadcast sont des classes utilitaire*/
     public boolean verifierAutorisation(){
         /*Pour les version Android 12 ou plus il faut demander l'autorisation d'utiliser l'alarme exact*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -126,8 +127,8 @@ public class SommeilActivity extends AppCompatActivity {
             String affichage = String.valueOf(saisie.getText());
             /*Vérifier si 'affichage' correspond à une vrai heure
             * par exemple :
-            * 08:30 validé
-            * 2134, lkjhw et 30:00 non validé*/
+            * 08:30 le seul format a être valide
+            * 2134, lkjhw, 30:00 et 11h24 non valide*/
             String[] horaire = affichage.split(":");
 
             Rappel.setRappel(this, autorisation, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
