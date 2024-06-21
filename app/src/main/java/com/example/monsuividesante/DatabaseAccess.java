@@ -3,6 +3,9 @@ package com.example.monsuividesante;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class DatabaseAccess {
 
@@ -36,5 +39,17 @@ public class DatabaseAccess {
         c = db.rawQuery("SELECT * FROM message where id = ?", new String[]{id});
         c.moveToFirst();
         return c.getString(1);
+    }
+
+    public ArrayList<String> getDuree(){
+        c = db.rawQuery("SELECT * FROM duree", new String[]{});
+        ArrayList<String> res = new ArrayList<String>();
+
+        while (c.moveToFirst()){
+            res.add(c.getString(c.getColumnIndexOrThrow("duree")));
+            Log.println(Log. ,res.get(res.size()));
+        }
+
+        return res;
     }
 }
