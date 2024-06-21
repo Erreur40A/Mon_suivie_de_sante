@@ -1,6 +1,7 @@
 package com.example.monsuividesante;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,18 +33,19 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
         db.open();
 
-        ArrayList<String> res = db.getDuree();
-        TextView textView_id = (TextView) findViewById(R.id.ici);
-        textView_id.setText(res.get(1));
+        /*Récupérer la liste de toute les durées
+        *
+        * ArrayList<String> lesDurees = db.getDuree();*/
+
+        /*Récupérer la liste de toute les activités avec les calories dépensées associer
+        *
+        * HashMap<String, Float> activiteCalorie = db.getActiviteCalories();
+        * Set<String> lesActivites = res.keySet();*/
+
+        /*Récupérer le message de motivation d'identifiant id
+        * int id = 4;
+        * String msg_motivation = db.getMsgMotivation(id);
+        * */
         db.close();
-
-        /*final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
-        db.open();
-
-        String id = db.gettkt("2");
-        TextView textView_id = (TextView) findViewById(R.id.ici);
-        textView_id.setText(id);
-
-        db.close();*/
     }
 }
