@@ -7,9 +7,9 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
-    private static final String DATABSE_NAME = "db_monSuiviDeSante.db";
+    private static final String DATABASE_NAME = "mon_suivi_de_sante_db.db";
 
     public DatabaseOpenhelper(Context context) {
-        super(context, DATABSE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 }
