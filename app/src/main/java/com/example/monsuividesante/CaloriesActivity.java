@@ -4,7 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,17 +26,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class CaloriesActivity extends AppCompatActivity {
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
 
+    /*Correspond à variation
+    * en kcal a afficher dans le rectangle rouge*/
+    private float calories_perdue;
     private float calories_depense; //en kcal a afficher dans le rectangle vert
-    private float calories_depense_reel; //en kcal a afficher dans le rectangle rouge
+    private float calories_consomme;
     private float calories_activite;
     private String duree_activite;
-    private ConstraintLayout toolar;
+
     private ConstraintLayout entrer_calorie_consomme;
     private ConstraintLayout liste_deroulante_choix_activite;
     private HashMap<String, Float> items_choix_activite;
@@ -44,19 +48,7 @@ public class CaloriesActivity extends AppCompatActivity {
     private ConstraintLayout liste_deroulante_duree_activite;
     private ArrayList<String> items_duree_activite;
     private AlertDialog pop_up_duree_activite;
-    private LinearLayout pas;
-    private LinearLayout mes_info;
-    private LinearLayout sommeil;
-    private Button bouton_calories_consome_ok;
-    private Button bouton_activite_ok;
-    private ImageButton bouton_edit_calories_consomme;
-    private ImageButton bouton_liste_choix_activite;
-    private ImageButton bouton_liste_duree_activite;
-    private ImageButton bouton_explication;
-    private ImageButton bouton_mes_info;
-    private ImageButton bouton_pas;
-    private ImageButton bouton_calories;
-    private ImageButton bouton_sommeil;
+    private TextView textViewCalDepReel;
 
     //private Utilisateur user;
 
@@ -71,25 +63,32 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
+        //user=getIntent().getSerializableExtra("user");
+
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
 
-        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_depense_reel = setTextViewCalorieDepenseReel(textViewCalDepReel, 0F);
+        /*-------------------Temporaire---------------------*/
+        /*db_helper.deleteApportEnEnergie();
+        db_helper.addLigneActiviteCalorie("userTest");*/
+        /*--------------------------------------------------*/
+
+        textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        calories_perdue = setTextViewCalorieDepenseReel(textViewCalDepReel);
 
         ConstraintLayout tmp_CL = findViewById(R.id.calories_depense);
 
         TextView textViewCalDep = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
         calories_depense = setTextViewCalorieDepense(textViewCalDep);
 
-        bouton_explication= tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.bouton_explication);
+        ImageButton bouton_explication = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.bouton_explication);
         bouton_explication.setOnClickListener(this::onClickListenerBoutonExplication);
 
-        toolar = findViewById(R.id.toolbar);
+        ConstraintLayout toolar = findViewById(R.id.toolbar);
 
-        pas = toolar.findViewById(R.id.pas);
-        mes_info = toolar.findViewById(R.id.mes_info);
-        sommeil = toolar.findViewById(R.id.sommeil);
+        LinearLayout pas = toolar.findViewById(R.id.pas);
+        LinearLayout mes_info = toolar.findViewById(R.id.mes_info);
+        LinearLayout sommeil = toolar.findViewById(R.id.sommeil);
 
         pas.setAlpha(0.4F);
         mes_info.setAlpha(0.4F);
@@ -98,57 +97,62 @@ public class CaloriesActivity extends AppCompatActivity {
         tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
         entrer_calorie_consomme = tmp_CL.findViewById(R.id.entrer_calorie_consomme);
-        bouton_edit_calories_consomme = entrer_calorie_consomme.findViewById(R.id.bouton_modifications);
+        ImageButton bouton_edit_calories_consomme = entrer_calorie_consomme.findViewById(R.id.bouton_modifications);
 
         bouton_edit_calories_consomme.setOnClickListener(this::onClickListenerCaloriesConsomme);
         entrer_calorie_consomme.setOnClickListener(this::onClickListenerCaloriesConsomme);
 
-        bouton_calories_consome_ok = tmp_CL.findViewById(R.id.bouton_ok);
+        Button bouton_calories_consome_ok = tmp_CL.findViewById(R.id.bouton_ok);
         bouton_calories_consome_ok.setOnClickListener(this::onClickListenerBoutonConsommeOK);
 
         tmp_CL = findViewById(R.id.demande_info_activite);
 
-        bouton_activite_ok = tmp_CL.findViewById(R.id.bouton_ok_activite);
+        Button bouton_activite_ok = tmp_CL.findViewById(R.id.bouton_ok_activite);
         bouton_activite_ok.setOnClickListener(this::onClickListenerBoutonActiviteOK);
 
-        bouton_pas = pas.findViewById(R.id.bouton_pas);
+        ImageButton bouton_pas = pas.findViewById(R.id.bouton_pas);
         bouton_pas.setOnClickListener(this::onClickListenerBoutonPas);
 
-        bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
+        ImageButton bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
         bouton_mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
 
-        bouton_calories = toolar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        ImageButton bouton_calories = toolar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
         bouton_calories.setOnClickListener(this::onClickListenerBoutonCalorie);
 
-        bouton_sommeil = sommeil.findViewById(R.id.bouton_sommeil);
+        ImageButton bouton_sommeil = sommeil.findViewById(R.id.bouton_sommeil);
         bouton_sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
 
         liste_deroulante_duree_activite = tmp_CL.findViewById(R.id.liste_deroulante_duree);
-        bouton_liste_duree_activite = liste_deroulante_duree_activite.findViewById(R.id.bouton_liste_deroulante);
+        ImageButton bouton_liste_duree_activite = liste_deroulante_duree_activite.findViewById(R.id.bouton_liste_deroulante);
 
         items_duree_activite = setListeDuree();
         liste_deroulante_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
         bouton_liste_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
 
         liste_deroulante_choix_activite = tmp_CL.findViewById(R.id.liste_deroulante_activite);
-        bouton_liste_choix_activite = liste_deroulante_choix_activite.findViewById(R.id.bouton_liste_deroulante);
+        ImageButton bouton_liste_choix_activite = liste_deroulante_choix_activite.findViewById(R.id.bouton_liste_deroulante);
 
-        items_choix_activite = setListeActivite();
+        items_choix_activite = setHashMapActivite();
         liste_deroulante_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
         bouton_liste_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
 
         db.close();
     }
 
-    public float setTextViewCalorieDepenseReel(TextView textView, float ajout){
+    public float setTextViewCalorieDepenseReel(TextView textView){
         db.open();
+            String date = db.getDateApportEnEnergie("userTest");
+        db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
+        if(Regex.estDateDuJour(date)){
+            db_helper.addLigneActiviteCalorie("userTest");
+        }
 
-        float res = db.getCalorieDepense("userTest") + ajout;
-        String calorie = res + " kcal";
-        textView.setText(calorie);
-
+        db.open();
+            float res = db.getCalorieVariation("userTest");
+            String calorie = res + " kcal";
+            textView.setText(calorie);
         db.close();
 
         return res;
@@ -156,6 +160,13 @@ public class CaloriesActivity extends AppCompatActivity {
 
     public float setTextViewCalorieDepense(TextView textView){
         db.open();
+            String date = db.getDateApportEnEnergie("userTest");
+        db.close();
+
+        /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
+        if(Regex.estDateDuJour(date)){
+            db_helper.addLigneActiviteCalorie("userTest");
+        }
 
         /*formule réél pour "res":
          *
@@ -168,10 +179,10 @@ public class CaloriesActivity extends AppCompatActivity {
          *Si Actif (exercice intense/sport 6 à 7 jours/semaine) : MB x 1,725
          *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9*/
 
-        float res = db.getCalorieDepense("userTest");
-        String calorie = res + " kcal";
-        textView.setText(calorie);
-
+        db.open();
+            float res = db.getCalorieVariation("userTest");
+            String calorie = res + " kcal";
+            textView.setText(calorie);
         db.close();
 
         return res;
@@ -185,7 +196,7 @@ public class CaloriesActivity extends AppCompatActivity {
         return res;
     }
 
-    public HashMap<String, Float> setListeActivite(){
+    public HashMap<String, Float> setHashMapActivite(){
         db.open();
         HashMap<String, Float> res = db.getActiviteCalories();
         db.close();
@@ -203,7 +214,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
-        String explication = "Si vous dépensez plus de " + calories_depense_reel + " vous allez maigrir.\nSi vous dépensez moins de " + calories_depense_reel + " vous allez grossir";
+        String explication = "Si vous dépensez plus de " + calories_depense + " vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + " vous allez grossir";
         textExplication.setText(explication);
     }
 
@@ -219,17 +230,20 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_ok.setOnClickListener(v -> {
             TextView choix = entrer_calorie_consomme.findViewById(R.id.calorie_consome);
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
+            String affichage = saisie.getText().toString();
 
-            String affichage = saisie.getText() + " kcal";
-
-            choix.setText(affichage);
-            choix.setTextColor(Color.BLACK);
+            if(Regex.estCaloriesSaisieValide(affichage)) {
+                calories_consomme = Float.parseFloat(affichage);
+                affichage = saisie.getText() + " kcal";
+                choix.setText(affichage);
+                choix.setTextColor(Color.BLACK);
+            }
 
             pop_up.dismiss();
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
+        bouton_annuler.setOnClickListener(v -> pop_up.dismiss());
     }
 
     public void onClickListenerActiviteDuree(View view){
@@ -242,13 +256,10 @@ public class CaloriesActivity extends AppCompatActivity {
 
         liste_deroulante.setLayoutManager(new LinearLayoutManager(this));
 
-        ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(items_duree_activite, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                duree_activite = getChoixListeDeroulanteDuree(view, liste_deroulante_duree_activite);
+        ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(items_duree_activite, view1 -> {
+            duree_activite = getChoixListeDeroulanteDuree(view1, liste_deroulante_duree_activite);
 
-                pop_up_duree_activite.dismiss();
-            }
+            pop_up_duree_activite.dismiss();
         });
         liste_deroulante.setAdapter(adapter);
 
@@ -267,19 +278,17 @@ public class CaloriesActivity extends AppCompatActivity {
         RecyclerView liste_deroulante = view_pop_up.findViewById(R.id.liste_choix_activite);
 
         liste_deroulante.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<String> liste_items = new ArrayList<String>(items_choix_activite.keySet());
+        ArrayList<String> liste_items = new ArrayList<>(items_choix_activite.keySet());
 
         ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(liste_items, view1 -> {
             String choix = getChoixListeDeroulanteActivite(view1, liste_deroulante_choix_activite);
 
             /*formule reel pour calories_depense:
             *
-            * calories_depense = items_choix_activite.get(choix) * poids * heure
+            * calories_depense = tmp * poids * heure
             */
             Float tmp = items_choix_activite.get(choix);
-
             calories_activite = tmp!=null ? tmp : 0;
-
             pop_up_choix_activite.dismiss();
         });
         liste_deroulante.setAdapter(adapter);
@@ -313,29 +322,42 @@ public class CaloriesActivity extends AppCompatActivity {
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonCalorie(View view){
         /*Soit on supprime ce listener soit on le garde*/
         Intent intent = new Intent(CaloriesActivity.this, CaloriesActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
         Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Sommeil)*/
         Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonConsommeOK(View view){
-        Toast.makeText(this, "bouton consomme ok clique", Toast.LENGTH_SHORT).show();
+        calories_perdue -= calories_consomme;
+
+        db.open();
+        /*Remplacer userTest par user.getId()*/
+        String date = db.getDateApportEnEnergie("userTest");
+        db.close();
+
+        db_helper.updateCaloriesVariation(calories_perdue, date);
+
+        setTextViewCalorieDepenseReel(textViewCalDepReel);
     }
 
     public float dureeStringToFloat(String duree){
@@ -343,9 +365,10 @@ public class CaloriesActivity extends AppCompatActivity {
         float res = Float.parseFloat(horaire[0]);
 
         switch (horaire[1]){
-            case "15": res+=0.25F;
-            case "30": res+=0.5F;
-            case "45": res+=0.75F;
+            case "15": { res+=0.25F; break; }
+            case "30": { res+=0.5F; break; }
+            case "45": { res+=0.75F; break; }
+            default: { break; }
         }
 
         return res;
@@ -354,18 +377,17 @@ public class CaloriesActivity extends AppCompatActivity {
     public void onClickListenerBoutonActiviteOK(View view){
         /*formule reel de calories_depense:
          *
-         * calories_depense += calories_activite * poids * duree_activite
+         * calories_perdue += calories_activite * poids * duree_activite
          */
+        calories_perdue += calories_activite * dureeStringToFloat(duree_activite);
 
-        calories_depense += calories_activite * dureeStringToFloat(duree_activite);
-        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "calorie depense: " + calories_depense);
-        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "calorie activite: " + calories_activite);
-        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "duree: " + dureeStringToFloat(duree_activite));
+        db.open();
+        /*Remplacer userTest par user.getId()*/
+        String date = db.getDateApportEnEnergie("userTest");
+        db.close();
 
-        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel)
-                .findViewById(R.id.val_calories_depense)
-                .findViewById(R.id.text_calorie_depense_reel);
+        db_helper.updateCaloriesVariation(calories_perdue, date);
 
-        setTextViewCalorieDepenseReel(textViewCalDepReel, calories_depense);
+        setTextViewCalorieDepenseReel(textViewCalDepReel);
     }
 }

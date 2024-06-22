@@ -149,4 +149,17 @@ public class DatabaseAccess{
 
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
     }
+
+    public float getCalorieVariation(String user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{user_id, date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
+    }
 }

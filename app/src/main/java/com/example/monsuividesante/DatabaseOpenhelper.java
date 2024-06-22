@@ -58,8 +58,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ContentValues ligne = new ContentValues();
             ligne.put(APPORT_EN_ENERGIE$USER_ID, user_id);
             ligne.put(APPORT_EN_ENERGIE$DATE, dateAujourdhui);
-            ligne.put(APPORT_EN_ENERGIE$CALORIE_CONSOMME, 0);
-            ligne.put(APPORT_EN_ENERGIE$CALORIE_DEPENSE, 0);
             ligne.put(APPORT_EN_ENERGIE$VARIATION, 0);
 
             db.insert(APPORT_EN_ENERGIE, null, ligne);
@@ -75,26 +73,13 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public void updateCalorieConsomme(float nb_consomme, String date){
+    public void updateCaloriesVariation(float variation, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues maj = new ContentValues();
 
-        maj.put(APPORT_EN_ENERGIE$CALORIE_CONSOMME, nb_consomme);
+        maj.put(APPORT_EN_ENERGIE$VARIATION, variation);
 
         String condition = APPORT_EN_ENERGIE$DATE + "=?";
-
-
-        db.update(APPORT_EN_ENERGIE, maj, condition, new String[]{date});
-    }
-
-    public void updateCalorieDepense(float nb_depense, String date){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues maj = new ContentValues();
-
-        maj.put(APPORT_EN_ENERGIE$CALORIE_DEPENSE, nb_depense);
-
-        String condition = APPORT_EN_ENERGIE$DATE + "=?";
-
 
         db.update(APPORT_EN_ENERGIE, maj, condition, new String[]{date});
     }
