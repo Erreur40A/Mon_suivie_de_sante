@@ -1,18 +1,13 @@
 package com.example.monsuividesante;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -38,6 +33,8 @@ public class SommeilActivity extends AppCompatActivity {
     private ImageButton bouton_heure_coucher_reel;
     private ImageButton bouton_heure_reveil_reel;
 
+    //private Utilisateur user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +45,8 @@ public class SommeilActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //user = getIntent().getSerializableExtra("user");
 
         objectif_sommeil = findViewById(R.id.objectif_sommeil);
         toolbar = findViewById(R.id.toolbar);
@@ -100,14 +99,13 @@ public class SommeilActivity extends AppCompatActivity {
             TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher);
 
             String affichage = String.valueOf(saisie.getText());
-            /*Vérifier si 'affichage' correspond à une vrai heure
-            * par exemple :
-            * 08:30 le seul format a être valide
-            * 2134, lkjhw, 30:00 et 11h24 non valide*/
-            String[] horaire = affichage.split(":");
 
-            Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
-            heure_coucher.setText(affichage);
+            if(Regex.estHeureValide(affichage)){
+                String[] horaire = affichage.split(":");
+
+                Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
+                heure_coucher.setText(affichage);
+            }
 
             pop_up.dismiss();
         });
@@ -132,12 +130,10 @@ public class SommeilActivity extends AppCompatActivity {
 
             TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_reveil);
             String affichage = String.valueOf(saisie.getText());
-            /*Vérifier si 'affichage' correspond à une vrai heure
-             * par exemple :
-             * 08:30 validé
-             * 2134, lkjhw et 30:00 non validé*/
 
-            heure_reveil.setText(affichage);
+            if(Regex.estHeureValide(affichage)){
+                heure_reveil.setText(affichage);
+            }
 
             pop_up.dismiss();
         });
@@ -160,13 +156,12 @@ public class SommeilActivity extends AppCompatActivity {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
             assert saisie != null;
 
-            TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher_reel);
+            TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher_reel);
             String affichage = String.valueOf(saisie.getText());
-            /*Vérifier si 'affichage' correspond à une vrai heure
-             * par exemple :
-             * 08:30 validé
-             * 2134, lkjhw et 30:00 non validé*/
-            heure_reveil.setText(affichage);
+
+            if(Regex.estHeureValide(affichage)){
+                heure_coucher.setText(affichage);
+            }
 
             /*Mettre 'affichage' dans la DB*/
 
@@ -193,11 +188,10 @@ public class SommeilActivity extends AppCompatActivity {
 
             TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_reveil_reel);
             String affichage = String.valueOf(saisie.getText());
-            /*Vérifier si 'affichage' correspond à une vrai heure
-             * par exemple :
-             * 08:30 validé
-             * 2134, lkjhw et 30:00 non validé*/
-            heure_reveil.setText(affichage);
+
+            if(Regex.estHeureValide(affichage)){
+                heure_reveil.setText(affichage);
+            }
 
             /*Mettre 'affichage' dans la DB*/
 
@@ -212,24 +206,28 @@ public class SommeilActivity extends AppCompatActivity {
     public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonCalories(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Calories)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
         /*On pourra supprimer ce listener ou le garder*/
         Intent intent = new Intent(SommeilActivity.this, SommeilActivity.class);
+        //intent.putExtra("user", user);
         startActivity(intent);
     }
 }
