@@ -18,7 +18,7 @@
 
     <include
         android:id="@+id/calories_depense_reel"
-        layout="@layout/calories_depense"
+        layout="@layout/calories_depense_reel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/calories_depense"
@@ -28,7 +28,7 @@
 
     <include
         android:id="@+id/calories_depense"
-        layout="@layout/calories_depense_reel"
+        layout="@layout/calories_depense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/calories_depense_reel"
@@ -41,7 +41,7 @@
         layout="@layout/demande_calories_consome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/calories_depense_reel"
+        app:layout_constraintTop_toBottomOf="@id/calories_depense"
         app:layout_constraintBottom_toTopOf="@id/demande_info_activite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,25 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 public class CaloriesActivity extends AppCompatActivity {
 
-    private String calories_depense; //en kcal a afficher dans le rectangle vert
-    private String calories_depense_reel; //en kcal a afficher dans le rectangle rouge
+    private DatabaseAccess db;
+    private DatabaseOpenhelper db_helper;
+
+    private float calories_depense; //en kcal a afficher dans le rectangle vert
+    private float calories_depense_reel; //en kcal a afficher dans le rectangle rouge
+    private float calories_activite;
+    private String duree_activite;
     private ConstraintLayout toolar;
     private ConstraintLayout entrer_calorie_consomme;
     private ConstraintLayout liste_deroulante_choix_activite;
-    private ArrayList<String> items_choix_activite;
+    private HashMap<String, Float> items_choix_activite;
     private AlertDialog pop_up_choix_activite;
     private ConstraintLayout liste_deroulante_duree_activite;
     private ArrayList<String> items_duree_activite;
@@ -50,6 +58,8 @@ public class CaloriesActivity extends AppCompatActivity {
     private ImageButton bouton_calories;
     private ImageButton bouton_sommeil;
 
+    //private Utilisateur user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,25 +71,18 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
-        TextView textViewCalDep = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_depense = "300 " + textViewCalDep.getText().toString();
-        textViewCalDep.setText(calories_depense);
+        db = DatabaseAccess.getInstance(this);
+        db_helper = new DatabaseOpenhelper(this);
 
-        TextView textViewCalDepReel = findViewById(R.id.calories_depense).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        calories_depense_reel = setTextViewCalorieDepenseReel(textViewCalDepReel, 0F);
 
-        /*formule réél pour "calories_depense_reel":
-        *homme: mb = 8,362 + (13,397 x poids en kg) + (4,799 x taille en cm) - (5,677 x âge en années)
-        *femme: mb = 447,593 + (9,247 x poids en kg) + (3,098 x taille en cm) - (4,330 x âge en années)
-        *Si Sédentaire (peu ou pas d'exercice) : MB x 1,2
-        *Si Léger (exercice léger/sport 1 à 3 jours/semaine) : MB x 1,375
-        *Si Modéré (exercice modéré/sport 3 à 5 jours/semaine) : MB x 1,55
-        *Si Actif (exercice intense/sport 6 à 7 jours/semaine) : MB x 1,725
-        *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9**/
+        ConstraintLayout tmp_CL = findViewById(R.id.calories_depense);
 
-        calories_depense_reel = "100 " + textViewCalDepReel.getText().toString();
-        textViewCalDepReel.setText(calories_depense_reel);
+        TextView textViewCalDep = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
+        calories_depense = setTextViewCalorieDepense(textViewCalDep);
 
-        bouton_explication=findViewById(R.id.calories_depense_reel).findViewById(R.id.bouton_explication);
+        bouton_explication= tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.bouton_explication);
         bouton_explication.setOnClickListener(this::onClickListenerBoutonExplication);
 
         toolar = findViewById(R.id.toolbar);
@@ -92,7 +95,7 @@ public class CaloriesActivity extends AppCompatActivity {
         mes_info.setAlpha(0.4F);
         sommeil.setAlpha(0.4F);
 
-        ConstraintLayout tmp_CL = findViewById(R.id.demande_calorie_consomme);
+        tmp_CL = findViewById(R.id.demande_calorie_consomme);
 
         entrer_calorie_consomme = tmp_CL.findViewById(R.id.entrer_calorie_consomme);
         bouton_edit_calories_consomme = entrer_calorie_consomme.findViewById(R.id.bouton_modifications);
@@ -104,6 +107,7 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_calories_consome_ok.setOnClickListener(this::onClickListenerBoutonConsommeOK);
 
         tmp_CL = findViewById(R.id.demande_info_activite);
+
         bouton_activite_ok = tmp_CL.findViewById(R.id.bouton_ok_activite);
         bouton_activite_ok.setOnClickListener(this::onClickListenerBoutonActiviteOK);
 
@@ -122,19 +126,71 @@ public class CaloriesActivity extends AppCompatActivity {
         liste_deroulante_duree_activite = tmp_CL.findViewById(R.id.liste_deroulante_duree);
         bouton_liste_duree_activite = liste_deroulante_duree_activite.findViewById(R.id.bouton_liste_deroulante);
 
-        /*La liste est à modifier*/
-        items_duree_activite = new ArrayList<String>(Arrays.asList("00:15", "00:30", "1:00", "1:30", "2:00"));
+        items_duree_activite = setListeDuree();
         liste_deroulante_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
         bouton_liste_duree_activite.setOnClickListener(this::onClickListenerActiviteDuree);
 
         liste_deroulante_choix_activite = tmp_CL.findViewById(R.id.liste_deroulante_activite);
         bouton_liste_choix_activite = liste_deroulante_choix_activite.findViewById(R.id.bouton_liste_deroulante);
 
-        /*La liste est à modifier*/
-        items_choix_activite = new ArrayList<String>(Arrays.asList("activité1", "activité2", "activité3", "activité4", "activité5"));
+        items_choix_activite = setListeActivite();
         liste_deroulante_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
-
         bouton_liste_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
+
+        db.close();
+    }
+
+    public float setTextViewCalorieDepenseReel(TextView textView, float ajout){
+        db.open();
+
+        /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
+
+        float res = db.getCalorieDepense("userTest") + ajout;
+        String calorie = res + " kcal";
+        textView.setText(calorie);
+
+        db.close();
+
+        return res;
+    }
+
+    public float setTextViewCalorieDepense(TextView textView){
+        db.open();
+
+        /*formule réél pour "res":
+         *
+         *homme: mb = 8,362 + (13,397 x poids en kg) + (4,799 x taille en cm) - (5,677 x âge en années)
+         *femme: mb = 447,593 + (9,247 x poids en kg) + (3,098 x taille en cm) - (4,330 x âge en années)
+         *
+         *Si Sédentaire (peu ou pas d'exercice) : MB x 1,2
+         *Si Léger (exercice léger/sport 1 à 3 jours/semaine) : MB x 1,375
+         *Si Modéré (exercice modéré/sport 3 à 5 jours/semaine) : MB x 1,55
+         *Si Actif (exercice intense/sport 6 à 7 jours/semaine) : MB x 1,725
+         *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9*/
+
+        float res = db.getCalorieDepense("userTest");
+        String calorie = res + " kcal";
+        textView.setText(calorie);
+
+        db.close();
+
+        return res;
+    }
+
+    public ArrayList<String> setListeDuree(){
+        db.open();
+        ArrayList<String> res = db.getDuree();
+        db.close();
+
+        return res;
+    }
+
+    public HashMap<String, Float> setListeActivite(){
+        db.open();
+        HashMap<String, Float> res = db.getActiviteCalories();
+        db.close();
+
+        return res;
     }
 
     public void onClickListenerBoutonExplication(View view){
@@ -148,8 +204,7 @@ public class CaloriesActivity extends AppCompatActivity {
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
         String explication = "Si vous dépensez plus de " + calories_depense_reel + " vous allez maigrir.\nSi vous dépensez moins de " + calories_depense_reel + " vous allez grossir";
-        if(textExplication!=null)
-            textExplication.setText(explication);
+        textExplication.setText(explication);
     }
 
     public void onClickListenerCaloriesConsomme(View view){
@@ -183,25 +238,19 @@ public class CaloriesActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View view_pop_up = inflater.inflate(R.layout.pop_up_duree_activite, null);
 
-        LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.liste_duree_activite);
+        RecyclerView liste_deroulante = view_pop_up.findViewById(R.id.liste_duree_activite);
 
-        for (String item : items_duree_activite) {
-            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, liste_deroulante, false);
+        liste_deroulante.setLayoutManager(new LinearLayoutManager(this));
 
-            TextView textViewItem = view_item.findViewById(R.id.item);
-            textViewItem.setText(item);
+        ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(items_duree_activite, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                duree_activite = getChoixListeDeroulanteDuree(view, liste_deroulante_duree_activite);
 
-            textViewItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickListenerItemListeDeroulante(view, liste_deroulante_duree_activite);
-
-                    pop_up_duree_activite.dismiss();
-                }
-            });
-
-            liste_deroulante.addView(view_item);
-        }
+                pop_up_duree_activite.dismiss();
+            }
+        });
+        liste_deroulante.setAdapter(adapter);
 
         pop_up_duree_activite = pop_up_activite_dure_builder.create();
 
@@ -215,25 +264,25 @@ public class CaloriesActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View view_pop_up = inflater.inflate(R.layout.pop_up_choix_activite, null);
 
-        LinearLayout liste_deroulante = view_pop_up.findViewById(R.id.liste_choix_activite);
+        RecyclerView liste_deroulante = view_pop_up.findViewById(R.id.liste_choix_activite);
 
-        for (String item : items_choix_activite) {
-            View view_item = inflater.inflate(R.layout.background_item_liste_deroulante, liste_deroulante, false);
+        liste_deroulante.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<String> liste_items = new ArrayList<String>(items_choix_activite.keySet());
 
-            TextView textViewItem = view_item.findViewById(R.id.item);
-            textViewItem.setText(item);
+        ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(liste_items, view1 -> {
+            String choix = getChoixListeDeroulanteActivite(view1, liste_deroulante_choix_activite);
 
-            textViewItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickListenerItemListeDeroulante(view, liste_deroulante_choix_activite);
+            /*formule reel pour calories_depense:
+            *
+            * calories_depense = items_choix_activite.get(choix) * poids * heure
+            */
+            Float tmp = items_choix_activite.get(choix);
 
-                    pop_up_choix_activite.dismiss();
-                }
-            });
+            calories_activite = tmp!=null ? tmp : 0;
 
-            liste_deroulante.addView(view_item);
-        }
+            pop_up_choix_activite.dismiss();
+        });
+        liste_deroulante.setAdapter(adapter);
 
         pop_up_choix_activite = pop_up_activite_choix_builder.create();
 
@@ -241,13 +290,24 @@ public class CaloriesActivity extends AppCompatActivity {
         pop_up_choix_activite.show();
     }
 
-    public void onClickListenerItemListeDeroulante(View view, ViewGroup liste_deroulante){
-        String choix = (String) ((TextView) view).getText();
-
+    public String getChoixListeDeroulanteActivite(View view, ViewGroup liste_deroulante){
+        String choix = (String) ((TextView) view.findViewById(R.id.activite)).getText();
         TextView explication = liste_deroulante.findViewById(R.id.explication_liste_deroulante);
 
         explication.setText(choix);
         explication.setTextColor(Color.BLACK);
+
+        return choix;
+    }
+
+    public String getChoixListeDeroulanteDuree(View view, ViewGroup liste_deroulante){
+        String choix = (String) ((TextView) view.findViewById(R.id.activite)).getText();
+        TextView explication = liste_deroulante.findViewById(R.id.explication_liste_deroulante);
+
+        explication.setText(choix);
+        explication.setTextColor(Color.BLACK);
+
+        return choix;
     }
 
     public void onClickListenerBoutonPas(View view){
@@ -275,12 +335,37 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonConsommeOK(View view){
-        /*A MODIFIER*/
-        Toast.makeText(getApplicationContext(), "bouton ok consomme clique", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "bouton consomme ok clique", Toast.LENGTH_SHORT).show();
+    }
+
+    public float dureeStringToFloat(String duree){
+        String[] horaire = duree.split(":");
+        float res = Float.parseFloat(horaire[0]);
+
+        switch (horaire[1]){
+            case "15": res+=0.25F;
+            case "30": res+=0.5F;
+            case "45": res+=0.75F;
+        }
+
+        return res;
     }
 
     public void onClickListenerBoutonActiviteOK(View view){
-        /*A MODIFIER*/
-        Toast.makeText(getApplicationContext(), "bouton ok activite clique", Toast.LENGTH_SHORT).show();
+        /*formule reel de calories_depense:
+         *
+         * calories_depense += calories_activite * poids * duree_activite
+         */
+
+        calories_depense += calories_activite * dureeStringToFloat(duree_activite);
+        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "calorie depense: " + calories_depense);
+        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "calorie activite: " + calories_activite);
+        Log.println(Log.INFO, "onClickListenerBoutonActiviteOK", "duree: " + dureeStringToFloat(duree_activite));
+
+        TextView textViewCalDepReel = findViewById(R.id.calories_depense_reel)
+                .findViewById(R.id.val_calories_depense)
+                .findViewById(R.id.text_calorie_depense_reel);
+
+        setTextViewCalorieDepenseReel(textViewCalDepReel, calories_depense);
     }
 }

@@ -7,7 +7,7 @@
     <!--Pas besion de : android:background="@drawable/background_blue"
     car la pop-up le contient déja-->
     <TextView
-        android:id="@+id/item"
+        android:id="@+id/activite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -23,6 +23,6 @@
         android:background="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item"/>
+        app:layout_constraintTop_toBottomOf="@id/activite"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
