@@ -145,7 +145,7 @@ public class CaloriesActivity extends AppCompatActivity {
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
-        if(Regex.estDateDuJour(date)){
+        if(!Regex.estDateDuJour(date)){
             db_helper.addLigneActiviteCalorie("userTest");
         }
 
@@ -164,7 +164,7 @@ public class CaloriesActivity extends AppCompatActivity {
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
-        if(Regex.estDateDuJour(date)){
+        if(!Regex.estDateDuJour(date)){
             db_helper.addLigneActiviteCalorie("userTest");
         }
 
