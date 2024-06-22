@@ -8,6 +8,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 public class DatabaseAccess {
 
     private DatabaseOpenhelper openhelper;
@@ -35,7 +37,22 @@ public class DatabaseAccess {
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
 
+    /*
+    * Syntaxe pour la table identite*/
+    private static final String TABLE_IDENTITE = "identite";
+    private static final String COL_USER_ID = "user_id";
+    private static final String COL_NAME = "nom";
+    private static final String COL_FIRST_NAME = "prenom";
+    private static final String COL_AGE = "age";
+    private static final String COL_POIDS = "poids";
+    private static final String COL_TAILLE = "taille";
+    private static final String COL_GENRE = "genre";
+    private static final String COL_TYPE_DE_PERS = "type_de_pers";
+
+
+
     private DatabaseAccess(Context context) {
+
         this.openhelper = new DatabaseOpenhelper(context);
     }
 
@@ -101,4 +118,107 @@ public class DatabaseAccess {
 
         return res;
     }
+
+    /**
+     * Pour obtenir le nom de l'utilisateur dans la base de donnees
+     */
+
+    public String getUserLastName(int user_id) {
+        String query = "SELECT " + COL_NAME + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        String userName = null;
+        if (c != null && c.moveToFirst()) {
+            userName = c.getString(c.getColumnIndexOrThrow(COL_NAME));
+        }
+        return userName;
+    }
+
+    public String getUserFirstName(int user_id) {
+        String query = "SELECT " + COL_FIRST_NAME + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        String userFirstName = null;
+        if (c != null && c.moveToFirst()) {
+            userFirstName = c.getString(c.getColumnIndexOrThrow(COL_FIRST_NAME));
+        }
+        return userFirstName;
+    }
+
+    public int getUserAge(int user_id) {
+        String query = "SELECT " + COL_AGE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        int userAge = -1;
+        if (c != null && c.moveToFirst()) {
+            userAge = c.getInt(c.getColumnIndexOrThrow(COL_AGE));
+        }
+        return userAge;
+    }
+
+    public int getUserWeight(int user_id) {
+        String query = "SELECT " + COL_POIDS + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        int userWeight = -1;
+        if (c != null && c.moveToFirst()) {
+            userWeight = c.getInt(c.getColumnIndexOrThrow(COL_POIDS));
+        }
+        return userWeight;
+    }
+
+    public int getUserHeight(int user_id) {
+        String query = "SELECT " + COL_TAILLE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        int userHeight = -1;
+        if (c != null && c.moveToFirst()) {
+            userHeight = c.getInt(c.getColumnIndexOrThrow(COL_TAILLE));
+        }
+        return userHeight;
+    }
+
+    public Genre getUserGender(int user_id) {
+        String query = "SELECT " + COL_GENRE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        Genre userGender = null;
+        if (c != null && c.moveToFirst()) {
+            String genderString = c.getString(c.getColumnIndexOrThrow(COL_GENRE));
+            if (genderString.equalsIgnoreCase(Genre.HOMME.getGenre())) {
+                userGender = Genre.HOMME;
+            }
+            else if (genderString.equalsIgnoreCase(Genre.FEMME.getGenre())) {
+                userGender = Genre.FEMME;
+            }
+        }
+        return userGender;
+    }
+
+    public String getUserType(int user_id) {
+        String query = "SELECT " + COL_TYPE_DE_PERS + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        int i = -1;
+        String userType;
+        if (c != null && c.moveToFirst()) {
+            i = c.getInt(c.getColumnIndexOrThrow(COL_TYPE_DE_PERS));
+        }
+        switch (i){
+            case 1:
+                userType = "Sédentaire (peu ou pas d'exercie)";
+                break;
+            case 2:
+                userType = "Léger (exercice léger/sport 1 à 3 jours/semaine)";
+                break;
+            case 3:
+                userType = "Modéré (exercice modéré/sport 3 à 5 jours/semaine";
+                break;
+            case 4:
+                userType = "Actif exercice intense/sport 6 à 7 jours/semaine";
+                break;
+            case 5:
+                userType = "Très actif (exercice intense quotidien ou activité physique très difficile)";
+                break;
+            default:
+                userType = null;
+                break;
+        }
+        return userType;
+    }
+
+
 }

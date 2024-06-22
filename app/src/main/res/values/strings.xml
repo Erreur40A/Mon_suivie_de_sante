@@ -17,7 +17,7 @@
     <string name="nom">Nom</string>
     <string name="prenom">Prénom</string>
     <string name="poids">Poids</string>
-    <string name="taille">Taille</string>
+    <string name="taille">Taille (en cm)</string>
     <string name="genre_prompt">Genre</string>
     <string name="vous_etes_prompt">Vous êtes ?</string>
     <string name="mesinformations">Mes Informations</string>
