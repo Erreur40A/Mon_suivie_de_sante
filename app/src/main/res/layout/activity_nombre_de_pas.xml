@@ -550,6 +550,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/bouton_sommeil" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Réinitialiser les objectifs"
+        app:layout_constraintTop_toBottomOf="@id/entete" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
