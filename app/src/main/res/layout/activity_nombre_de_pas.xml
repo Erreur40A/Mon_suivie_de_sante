@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_nb_pas"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -94,8 +95,19 @@
                     android:textSize="20sp"
                     android:textColor="@android:color/black"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/val_objectif_journalier"
+                    app:layout_constraintStart_toEndOf="@id/obj"
+                    app:layout_constraintEnd_toStartOf="@id/bouton_journalier"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="20sp"
+                    android:textColor="@color/vert"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
                 <ImageButton
-                    android:id="@+id/bouton"
+                    android:id="@+id/bouton_journalier"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="desc_bouton_liste_deroulante"
@@ -124,11 +136,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bande"
                 android:id="@+id/textPasFaitJournalier"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nombre_de_pas_fait"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nb_pas_journalier"
+                android:textColor="@color/blue"
+                app:layout_constraintStart_toEndOf="@id/textPasFaitJournalier"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <!-- Barre de progression -->
             <ProgressBar
@@ -147,7 +168,7 @@
                 android:progress="20"/>
 
             <TextView
-                android:id="@+id/progressTextView"
+                android:id="@+id/progressTextjour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20%"
@@ -191,15 +212,20 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:textColor="@android:color/black"/>
+
                 <TextView
+                    android:id="@+id/val_objectif_hebdomadaire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/vert"
+                    android:textSize="20sp"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/obj1"
-                    app:layout_constraintEnd_toStartOf="@id/bouton1"/>
+                    app:layout_constraintEnd_toStartOf="@id/bouton_hebdomadaire"/>
 
                 <ImageButton
-                    android:id="@+id/bouton1"
+                    android:id="@+id/bouton_hebdomadaire"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="desc_bouton_liste_deroulante"
@@ -228,11 +254,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bande1"
                 android:id="@+id/editHebdo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nombre_de_pas_fait"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nb_pas_hebdomadaire"
+                android:textColor="@color/blue"
+                app:layout_constraintStart_toEndOf="@id/editHebdo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <!-- Barre de progression -->
             <ProgressBar
@@ -251,7 +286,7 @@
                 android:progress="50"/>
 
             <TextView
-                android:id="@+id/progresstext"
+                android:id="@+id/progresstexthebd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="50%"
@@ -295,8 +330,19 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textColor="@android:color/black"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/val_objectif_mensuelle"
+                        android:textColor="@color/vert"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@id/obj2"
+                        app:layout_constraintEnd_toStartOf="@id/bouton_mensuelle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
                     <ImageButton
-                        android:id="@+id/bouton2"
+                        android:id="@+id/bouton_mensuelle"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="desc_bouton_liste_deroulante"
@@ -322,11 +368,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bande2"
                     android:id="@+id/editmensuel"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/nombre_de_pas_fait"
                     android:textSize="20sp"
                     android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nb_pas_mensuelle"
+                    android:textColor="@color/blue"
+                    app:layout_constraintStart_toEndOf="@id/editmensuel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <!-- Barre de progression -->
                 <ProgressBar
@@ -345,7 +400,7 @@
                     android:progress="71"/>
 
                 <TextView
-                    android:id="@+id/progressText"
+                    android:id="@+id/progressTextmens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="71%"
@@ -358,175 +413,156 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Layout pour les 4 bouttons de menu en bas-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <!-- LinearLayout pour le bouton MesInformations -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:id="@+id/mes_info"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintWidth_percent="0.25"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/pas">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:alpha="0.4"
-                    android:src="@drawable/icone_mes_informations"
-                    android:contentDescription="@string/mesinformations" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mesinformations"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <!-- LinearLayout pour le bouton Pas -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:id="@+id/pas"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintWidth_percent="0.25"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/calories">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:alpha="0.8"
-                    android:src="@drawable/icone_pas"
-                    android:contentDescription="@string/pas" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pas"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <!-- LinearLayout pour le bouton Calories -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:id="@+id/calories"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintWidth_percent="0.25"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/sommeil">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:alpha="0.4"
-                    android:src="@drawable/icone_calories"
-                    android:contentDescription="@string/calories" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/calories"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <!-- LinearLayout pour le bouton Sommeil -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:id="@+id/sommeil"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintWidth_percent="0.25"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:alpha="0.4"
-                    android:src="@drawable/icone_sommeil"
-                    android:contentDescription="@string/sommeil" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sommeil"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
-            android:id="@+id/activity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/mes_info"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:alpha="0.4"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.25">
 
-            <Button
-                android:id="@+id/button_stylo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stylo" />
+            <ImageButton
+                android:id="@+id/bouton_mes_info"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_bouton_mes_informations"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/icone_mes_informations" />
 
             <TextView
-                android:id="@+id/text_view_objectifs"
+                android:id="@+id/titre_bouton_mes_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entrez vos objectifs ici"
-                android:visibility="gone" />
+                android:text="@string/mes_informations"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/bouton_mes_info" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/button_infos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mes Informations" />
+        <LinearLayout
+            android:id="@+id/pas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/mes_info"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.25">
 
-            <Button
-                android:id="@+id/button_pas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pas" />
+            <ImageButton
+                android:id="@+id/bouton_pas"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_bouton_pas"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/icone_pas" />
 
-            <Button
-                android:id="@+id/button_calories"
+            <TextView
+                android:id="@+id/titre_bouton_pas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Calories" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/pas"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/bouton_pas" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/button_sommeil"
+        <LinearLayout
+            android:id="@+id/calories"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:alpha="0.4"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pas"
+            app:layout_constraintWidth_percent="0.25">
+
+            <ImageButton
+                android:id="@+id/bouton_calories"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_bouton_calories"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/icone_calories" />
+
+            <TextView
+                android:id="@+id/titre_calories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sommeil" />
+                android:text="@string/calories"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/bouton_calories" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sommeil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:alpha="0.4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/calories"
+            app:layout_constraintWidth_percent="0.25">
+
+            <ImageButton
+                android:id="@+id/bouton_sommeil"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_bouton_sommeil"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/icone_sommeil" />
+
+            <TextView
+                android:id="@+id/titre_sommeil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sommeil"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/bouton_sommeil" />
         </LinearLayout>
 
     <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Réinitialiser les objectifs"/>
+        android:text="Réinitialiser les objectifs"
+        tools:ignore="MissingConstraints" />
 
     </RelativeLayout>
+
+
+
+
 
 
 
