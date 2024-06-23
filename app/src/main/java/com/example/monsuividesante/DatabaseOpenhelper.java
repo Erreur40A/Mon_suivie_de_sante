@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+import android.database.Cursor;
+
 
 public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
@@ -29,18 +31,17 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         try(SQLiteDatabase db = getWritableDatabase()){
 
             ContentValues ligne = new ContentValues();
+
             ligne.put(SOMMEIL$USER_ID, user_id);
             ligne.put(SOMMEIL$HEURE_COUCHER_REEL, "22:00");
             ligne.put(SOMMEIL$HEURE_COUCHER_PREVUE, "20:00");
             ligne.put(SOMMEIL$HEURE_REVEIL_REEL, "10:00");
             ligne.put(SOMMEIL$HEURE_REVEIL_PREVUE, "08:00");
-            ligne.put("difference", 0);
-            ligne.put("nb_heures_de_sommeil_effectuees",0);
-            ligne.put("nb_heures_de_sommeil_prevues",0);
+            ligne.put("difference", 0F);
+            ligne.put("nb_heures_de_sommeil_effectuees", 0F);
+            ligne.put("nb_heures_de_sommeil_prevues", 0);
 
             db.insert(SOMMEIL, null, ligne);
-            Log.i("DatabaseOpenhelper", "addLigneSommeil reusie");
-
         }catch (SQLiteException e){
             Log.e("DatabaseOpenhelper", "addLigneSommeil");
         }

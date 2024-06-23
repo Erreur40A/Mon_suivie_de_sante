@@ -30,22 +30,5 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        String user_id = "userTest";
-
-        DatabaseAccess db = DatabaseAccess.getInstance(this);
-
-        try(DatabaseOpenhelper db_helper = new DatabaseOpenhelper(this)){
-            db_helper.deleteSommeil();
-            db_helper.addLigneSommeil(user_id);
-        }catch (Exception e){
-            Log.println(Log.ERROR, "MainActivity", "DatabaseOpenhelper");
-        }
-
-        db.open();
-            String heureCoucherReel = db.getHeureCoucherReel(user_id);
-        db.close();
-
-            Log.i("azertyuiop", heureCoucherReel);
-
     }
 }

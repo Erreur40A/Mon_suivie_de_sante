@@ -15,6 +15,7 @@ public class DatabaseAccess {
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
     Cursor c = null;
+
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
     private static final String MESSAGE = "message";
@@ -106,23 +107,10 @@ public class DatabaseAccess {
         return res;
     }
 
-    public ArrayList<String> test(String id){
-        String requete="SELECT * FROM " + SOMMEIL +
-                " WHERE " + SOMMEIL$USER_ID + "=?";
-
-        ArrayList<String> res = new ArrayList<String>();
-        c = db.rawQuery(requete, new String[]{id});
-        while (c.moveToNext()){
-            res.add(c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL)));
-        }
-
-        return res;
-    }
-
     public String getHeureCoucherReel(String user_id){
-        String requete="SELECT * "+
-                        " FROM " + SOMMEIL +
-                        " WHERE " + SOMMEIL$USER_ID + "=?";
+        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_REEL +
+                       " FROM " + SOMMEIL +
+                       " WHERE " + SOMMEIL$USER_ID + "=?";
 
         c = db.rawQuery(requete, new String[]{user_id});
         c.moveToFirst();

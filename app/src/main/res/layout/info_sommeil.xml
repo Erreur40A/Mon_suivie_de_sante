@@ -4,48 +4,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Les TextView devront être modifier à l'aide de Java pour afficher l'heure de coucher/reveil ect -->
-
-    <TextView
-        android:id="@+id/heure_coucher"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_heure_coucher"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/coucher"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/heure_reveil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/reveil"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heure_coucher" />
+        <TextView
+            android:id="@+id/text_heure_coucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coucher"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
 
-    <TextView
-        android:id="@+id/objectif_heure_coucher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/objectif_sommeil"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heure_reveil" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/qualite_sommeil"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/heure_coucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/text_heure_coucher"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_heure_reveil"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/qualite_sommeil"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/layout_heure_coucher"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/objectif_heure_coucher" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/text_heure_reveil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reveil"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/heure_reveil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/text_heure_reveil"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_objectif_heure_coucher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_heure_reveil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/text_objectif_heure_coucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/objectif_sommeil"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/objectif_heure_coucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/text_objectif_heure_coucher"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_objectif_heure_reveil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_objectif_heure_coucher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/text_objectif_heure_reveil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/objectif_reveil"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/objectif_heure_reveil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_objectif_heure_reveil"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

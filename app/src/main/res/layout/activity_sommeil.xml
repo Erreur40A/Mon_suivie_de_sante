@@ -21,11 +21,11 @@
         android:id="@+id/info_sommeil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/entete"
-        app:layout_constraintBottom_toTopOf="@id/msg_motivation"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintBottom_toTopOf="@id/msg_motivation" />
 
     <include
         android:id="@+id/msg_motivation"
@@ -33,25 +33,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toStartOf="@id/objectif_sommeil"
-        app:layout_constraintStart_toEndOf="@id/info_sommeil"
-        app:layout_constraintTop_toBottomOf="@id/info_sommeil" />
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_sommeil"
+        app:layout_constraintBottom_toTopOf="@id/objectif_sommeil"/>
 
     <include
         android:id="@+id/objectif_sommeil"
         layout="@layout/objectif_sommeil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/msg_motivation" />
-
-
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

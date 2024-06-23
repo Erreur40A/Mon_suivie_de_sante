@@ -17,6 +17,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Random;
+
 public class SommeilActivity extends AppCompatActivity {
 
     private String heure_coucher_prevue;
@@ -25,8 +27,14 @@ public class SommeilActivity extends AppCompatActivity {
     private String heure_reveil_reel;
 
     private ConstraintLayout objectif_sommeil;
-    private TextView msg_motivation;
+    private TextView objectif_heure_reveil;
+    private TextView heure_reveil;
+    private TextView heure_coucher;
+    private TextView objectif_heure_coucher;
 
+    private final String user_id = "userTest";
+    private DatabaseAccess db;
+    private DatabaseOpenhelper db_helper;
     //private Utilisateur user;
 
     @Override
@@ -41,9 +49,18 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         //user = getIntent().getSerializableExtra("user");
+        /*-------------Temporaire--------------*/
+        db = DatabaseAccess.getInstance(this);
+        db_helper = new DatabaseOpenhelper(this);
+        db_helper.deleteSommeil();
+        db_helper.addLigneSommeil(user_id);
+        /*------------------------------------*/
 
-        msg_motivation = findViewById(R.id.msg_motivation).findViewById(R.id.msg_motiv);
+        TextView msg_motivation = findViewById(R.id.msg_motivation).findViewById(R.id.msg_motiv);
+        setMessageMotivation(msg_motivation);
+
         objectif_sommeil = findViewById(R.id.objectif_sommeil);
+
         ConstraintLayout toolbar = findViewById(R.id.toolbar);
         LinearLayout pas = toolbar.findViewById(R.id.pas);
         LinearLayout mes_info = toolbar.findViewById(R.id.mes_info);
@@ -52,6 +69,17 @@ public class SommeilActivity extends AppCompatActivity {
         pas.setAlpha(0.4F);
         mes_info.setAlpha(0.4F);
         calories.setAlpha(0.4F);
+
+        ConstraintLayout info_sommeil = findViewById(R.id.info_sommeil);
+        objectif_heure_reveil = info_sommeil.findViewById(R.id.layout_objectif_heure_reveil).findViewById(R.id.objectif_heure_reveil);
+        heure_reveil = info_sommeil.findViewById(R.id.layout_heure_reveil).findViewById(R.id.heure_reveil);
+        heure_coucher = info_sommeil.findViewById(R.id.layout_heure_coucher).findViewById(R.id.heure_coucher);
+        objectif_heure_coucher = info_sommeil.findViewById(R.id.layout_objectif_heure_coucher).findViewById(R.id.objectif_heure_coucher);
+
+        setHeureReveil();
+        setObjectifHeureReveil();
+        setHeureCoucher();
+        setObjectifHeureCoucher();
 
         ImageButton bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
         bouton_mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
@@ -78,6 +106,48 @@ public class SommeilActivity extends AppCompatActivity {
         bouton_heure_reveil_reel.setOnClickListener(this::onClickListenerHeureReveilReel);
     }
 
+    public void setObjectifHeureCoucher(){
+        db.open();
+        String objectif = db.getHeureCoucherPrevue(user_id);
+        db.close();
+
+        objectif_heure_coucher.setText(objectif);
+    }
+
+    public void setHeureReveil(){
+        db.open();
+        String objectif = db.getHeureReveilReel(user_id);
+        db.close();
+
+        heure_reveil.setText(objectif);
+    }
+
+    public void setHeureCoucher(){
+        db.open();
+        String objectif = db.getHeureCoucherReel(user_id);
+        db.close();
+
+        heure_coucher.setText(objectif);
+    }
+
+    public void setObjectifHeureReveil(){
+        db.open();
+        String reveil = db.getHeureReveilPrevue(user_id);
+        db.close();
+
+        objectif_heure_reveil.setText(reveil);
+    }
+
+    public void setMessageMotivation(TextView textView){
+        Random ramdom = new Random();
+
+        db.open();
+            String msg = db.getMsgMotivation(ramdom.nextInt(20)  + 1);
+        db.close();
+
+        textView.setText(msg);
+    }
+
     public void onClickListenerHeureCoucher(View view){
         AlertDialog.Builder pop_up_objectif_coucher = new AlertDialog.Builder(this, R.style.PopUpArrondi);
         pop_up_objectif_coucher.setView(R.layout.pop_up_heure_coucher);
@@ -100,6 +170,8 @@ public class SommeilActivity extends AppCompatActivity {
 
                 Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
                 heure_coucher.setText(affichage);
+                db_helper.updateHeureCoucherPrevue(user_id, affichage);
+                setObjectifHeureCoucher();
             }
 
             pop_up.dismiss();
@@ -128,6 +200,8 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
+                db_helper.updateHeureReveilPrevue(user_id, affichage);
+                setObjectifHeureReveil();
             }
 
             pop_up.dismiss();
@@ -156,9 +230,9 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_coucher.setText(affichage);
+                db_helper.updateHeureCoucherReel(user_id, affichage);
+                setObjectifHeureCoucher();
             }
-
-            /*Mettre 'affichage' dans la DB*/
 
             pop_up.dismiss();
         });
@@ -186,9 +260,9 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
+                db_helper.updateHeureReveilReel(user_id, affichage);
+                setObjectifHeureReveil();
             }
-
-            /*Mettre 'affichage' dans la DB*/
 
             pop_up.dismiss();
         });

@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/demande_coucher"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/demande_coucher"
             app:layout_constraintEnd_toStartOf="@id/bouton_coucher"
@@ -61,7 +63,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/demande_reveil"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/demande_reveil"
             app:layout_constraintEnd_toStartOf="@id/bouton_reveil"
@@ -101,7 +105,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/demande_reveil_reel"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/demande_reveil_reel"
             app:layout_constraintEnd_toStartOf="@id/bouton_reveil_reel"
@@ -141,7 +147,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/demande_coucher_reel"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +160,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
+
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/demande_coucher_reel"
             app:layout_constraintEnd_toStartOf="@id/bouton_coucher_reel"
