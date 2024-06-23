@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,6 +31,7 @@ public class ActivityMesInformations extends AppCompatActivity {
 
     private DatabaseAccess databaseAccess;
     private EditText editName, editFirstName, editAge, editWeight, editHeight;
+    private TextView viewName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,9 @@ public class ActivityMesInformations extends AppCompatActivity {
         });
 
         // Initialiser les vues
-        editName = findViewById(R.id.edit_name);
+       // editName = findViewById(R.id.edit_name);
+       viewName = findViewById(R.id.edit_name);
+        viewName.setText("Dieunel");
         editFirstName = findViewById(R.id.edit_firstname);
         editAge = findViewById(R.id.edit_age);
         editWeight = findViewById(R.id.edit_weight);
@@ -69,6 +73,8 @@ public class ActivityMesInformations extends AppCompatActivity {
         int user_id = 1;
 
         String userLastName = databaseAccess.getUserLastName(user_id);
+       // String userLastName = databaseAccess.getMsgMotivation(2);
+
         String userFirstName = databaseAccess.getUserFirstName(user_id);
 
         int userAge = databaseAccess.getUserAge(user_id);

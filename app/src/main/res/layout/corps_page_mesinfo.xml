@@ -17,17 +17,14 @@
 
 
             <!--Nom-->
-            <EditText
+            <TextView
                 android:id="@+id/edit_name"
                 android:layout_width="match_parent"
                 android:layout_marginTop="6dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:layout_marginBottom="6dp"
-                android:padding="8dp"
-                android:inputType="textPersonName"
-                android:autofillHints="name"
-                android:hint="@string/nom" />
+                android:padding="8dp"/>
 
             <!--prenom-->
             <EditText
@@ -100,7 +97,7 @@
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_height="wrap_content"
-               /> />
+               />
         </LinearLayout>
 
 
