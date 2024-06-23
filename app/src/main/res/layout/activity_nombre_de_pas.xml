@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_nb_pas"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+    android:layout_height="match_parent">
 
         <!--En tete-->
         <LinearLayout
+            android:id="@+id/entete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- ImageView for the health app icon -->
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
                 android:contentDescription="@string/icone_sante"
                 android:src="@drawable/logo_app" />
 
@@ -33,67 +28,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:textColor="@color/black"
-                android:textAlignment="center"
                 />
-
 
         </LinearLayout>
 
         <!-- Box motivation-->
         <LinearLayout
+            android:id="@+id/motivation"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rectangle_background"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/entete"
+            app:layout_constraintBottom_toTopOf="@id/objectif_journalier">
 
             <TextView
                 android:id="@+id/textMotivation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/message_motivation"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textColor="@android:color/black"
-                android:gravity="center"/>
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
         <!-- Objectifs journaliers-->
         <androidx.constraintlayout.widget.ConstraintLayout
-
+            android:id="@+id/objectif_journalier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-
             android:background="@drawable/rectangle_background1"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/motivation"
+            app:layout_constraintBottom_toTopOf="@id/objectif_hebdomadaire">
 
-            <!-- Ligne pour les objectifs journaliers -->
+            <!-- Objectifs journaliers -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rec">
-
-
+                android:id="@+id/rec">
 
                 <TextView
                     android:id="@+id/obj"
@@ -101,101 +88,90 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:text="Mon objectif journalier :"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:textColor="@android:color/black"/>
 
+                <ImageButton
+                    android:id="@+id/bouton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="desc_bouton_liste_deroulante"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                    <ImageButton
-                        android:id="@+id/bouton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="desc_bouton_liste_deroulante"
-                        android:scaleType="centerInside"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/icon_bouton_modification"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </ImageButton>
+                </ImageButton>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <View
-                    android:id="@+id/bande"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rec"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:background="#FF000000"/>
+            <!--Bande-->
+            <View
+                android:id="@+id/bande"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rec"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FF000000"/>
 
-                <TextView
-                    android:layout_margin="15dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bande"
-                    android:id="@+id/textPasFaitJournalier"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/nombre_de_pas_fait"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"/>
+            <!--Les pas que j'ai fais-->
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bande"
+                android:id="@+id/textPasFaitJournalier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre_de_pas_fait"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
+            <!-- Barre de progression -->
+            <ProgressBar
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textPasFaitJournalier"
+                android:id="@+id/progressBarJour"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progressDrawable="@drawable/progress"
+                android:progress="20"/>
 
-                <!-- Barre de progression -->
-
-                <ProgressBar
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textPasFaitJournalier"
-                    android:id="@+id/progressBarJour"
-                    android:layout_margin="15dp"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:max="100"
-                    android:progressDrawable="@drawable/progress"
-                    android:progress="20"/>
-                <TextView
-                    android:id="@+id/progressTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20%"
-                    android:textColor="@android:color/black"
-                    android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/progressBarJour"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Ligne pour afficher le nombre de pas -->
-
+            <TextView
+                android:id="@+id/progressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20%"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressBarJour"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Objectifs hebdomadaires-->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/objectif_hebdomadaire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/rectangle_background1"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/objectif_journalier"
+            app:layout_constraintBottom_toTopOf="@id/objectif_mensuelle">
 
             <!-- Ligne pour les objectifs hebdo -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -230,28 +206,29 @@
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                 </ImageButton>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!--Bande-->
             <View
                 android:id="@+id/bande1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rec1"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="#FF000000"/>
-            <!-- Ligne pour afficher le nombre de pas -->
+
+            <!-- Afficher le nombre de pas -->
             <TextView
-                android:layout_margin="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bande1"
                 android:id="@+id/editHebdo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:text="@string/nombre_de_pas_fait"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"/>
@@ -262,14 +239,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editHebdo"
                 android:id="@+id/progresshebdo"
-                android:layout_margin="15dp"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/progress1"
                 android:max="100"
                 android:progress="50"/>
+
             <TextView
                 android:id="@+id/progresstext"
                 android:layout_width="wrap_content"
@@ -280,27 +259,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/progresshebdo"
                 app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--Mensuelle-->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/objectif_mensuelle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/rectangle_background1"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-            <!-- Ligne pour les objectifs Mensuel -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/objectif_hebdomadaire"
+            app:layout_constraintBottom_toTopOf="@id/toolbar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     app:layout_constraintStart_toStartOf="parent"
@@ -330,8 +303,8 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/icon_bouton_modification"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
                     </ImageButton>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -341,17 +314,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rec2"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="1dp"
                     android:background="#FF000000"/>
                 <!-- Ligne pour afficher le nombre de pas -->
                 <TextView
-                    android:layout_margin="15dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bande2"
                     android:id="@+id/editmensuel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:text="@string/nombre_de_pas_fait"
                     android:textSize="20sp"
                     android:textColor="@android:color/black"/>
@@ -362,14 +333,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/editmensuel"
                     android:id="@+id/progressmensuel"
-                    android:layout_margin="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_marginTop="10dp"
                     android:max="100"
                     android:progressDrawable="@drawable/progress2"
                     android:progress="71"/>
+
                 <TextView
                     android:id="@+id/progressText"
                     android:layout_width="wrap_content"
@@ -380,32 +353,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/progressmensuel"
                     app:layout_constraintBottom_toBottomOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Latout pour les 4 bouttons de menu en bas-->
-        <LinearLayout
+        <!-- Layout pour les 4 bouttons de menu en bas-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:baselineAligned="false"
-            android:weightSum="4">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <!-- LinearLayout pour le bouton MesInformations -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:id="@+id/mes_info"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/pas">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_mes_informations"
                     android:contentDescription="@string/mesinformations" />
@@ -422,13 +397,16 @@
                 android:layout_width="0dp"
                 android:id="@+id/pas"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/calories">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:alpha="0.8"
                     android:src="@drawable/icone_pas"
                     android:contentDescription="@string/pas" />
@@ -445,13 +423,16 @@
                 android:layout_width="0dp"
                 android:id="@+id/calories"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/sommeil">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_calories"
                     android:contentDescription="@string/calories" />
@@ -468,13 +449,16 @@
                 android:layout_width="0dp"
                 android:id="@+id/sommeil"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:alpha="0.4"
                     android:src="@drawable/icone_sommeil"
                     android:contentDescription="@string/sommeil" />
@@ -486,7 +470,8 @@
                     android:textAlignment="center" />
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
@@ -539,3 +524,6 @@
     </LinearLayout>
 
 </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
