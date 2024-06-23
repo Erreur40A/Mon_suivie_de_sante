@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,11 @@ public class DatabaseAccess {
     private static final String DUREE$DUREE = "duree";
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+    private static final String SOMMEIL$USER_ID = "user_id";
+    private static final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
+    private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
+    private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
+    private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
 
     private DatabaseAccess(Context context) {
         this.openhelper = new DatabaseOpenhelper(context);
@@ -59,8 +65,6 @@ public class DatabaseAccess {
     public String getMsgMotivation(int id) {
         if(id < 0) return null;
 
-        Log.println(Log.INFO, "getMsgMotivation", Integer.toString(id));
-
         String requete = "SELECT " + MESSAGE$CONTENU +
                          " FROM " + MESSAGE +
                          " WHERE " + MESSAGE$ID + " = ?";
@@ -74,7 +78,7 @@ public class DatabaseAccess {
     public ArrayList<String> getDuree(){
         String requete = "SELECT * FROM " + DUREE;
 
-        c = db.rawQuery(requete, new String[]{});
+        c = db.rawQuery(requete, null);
         ArrayList<String> res = new ArrayList<String>();
 
         while (c.moveToNext()){
@@ -87,7 +91,7 @@ public class DatabaseAccess {
     public HashMap<String, Float> getActiviteCalories(){
         String requete = "SELECT * FROM " + ACTIVITE_CALORIE;
 
-        c = db.rawQuery(requete, new String[]{});
+        c = db.rawQuery(requete, null);
         HashMap<String, Float> res = new HashMap<String, Float>();
         String activite;
         float calories;
@@ -100,5 +104,62 @@ public class DatabaseAccess {
         }
 
         return res;
+    }
+
+    public ArrayList<String> test(String id){
+        String requete="SELECT * FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        ArrayList<String> res = new ArrayList<String>();
+        c = db.rawQuery(requete, new String[]{id});
+        while (c.moveToNext()){
+            res.add(c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL)));
+        }
+
+        return res;
+    }
+
+    public String getHeureCoucherReel(String user_id){
+        String requete="SELECT * "+
+                        " FROM " + SOMMEIL +
+                        " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{user_id});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
+    }
+
+    public String getHeureCoucherPrevue(String user_id){
+        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
+                       " FROM " + SOMMEIL +
+                       " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{user_id});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
+    }
+
+    public String getHeureReveilReel(String user_id){
+        String requete="SELECT " + SOMMEIL$HEURE_REVEIL_REEL +
+                       " FROM " + SOMMEIL +
+                       " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{user_id});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
+    }
+
+    public String getHeureReveilPrevue(String user_id){
+        String requete="SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{user_id});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
     }
 }

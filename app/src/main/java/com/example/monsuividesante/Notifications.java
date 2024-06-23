@@ -40,6 +40,7 @@ public class Notifications {
     public void showNotification() {
         createNotificationChannel();
 
+        /*Changer SommeilActivity.class par Connexion.class*/
         Intent intent = new Intent(context, SommeilActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

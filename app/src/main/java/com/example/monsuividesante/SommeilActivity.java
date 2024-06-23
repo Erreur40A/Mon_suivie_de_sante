@@ -19,19 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SommeilActivity extends AppCompatActivity {
 
-    private ConstraintLayout toolbar;
+    private String heure_coucher_prevue;
+    private String heure_coucher_reel;
+    private String heure_reveil_prevue;
+    private String heure_reveil_reel;
+
     private ConstraintLayout objectif_sommeil;
-    private LinearLayout pas;
-    private LinearLayout mes_info;
-    private LinearLayout calories;
-    private ImageButton bouton_mes_info;
-    private ImageButton bouton_pas;
-    private ImageButton bouton_calories;
-    private ImageButton bouton_sommeil;
-    private ImageButton bouton_heure_coucher;
-    private ImageButton bouton_heure_reveil;
-    private ImageButton bouton_heure_coucher_reel;
-    private ImageButton bouton_heure_reveil_reel;
+    private TextView msg_motivation;
 
     //private Utilisateur user;
 
@@ -48,38 +42,39 @@ public class SommeilActivity extends AppCompatActivity {
 
         //user = getIntent().getSerializableExtra("user");
 
+        msg_motivation = findViewById(R.id.msg_motivation).findViewById(R.id.msg_motiv);
         objectif_sommeil = findViewById(R.id.objectif_sommeil);
-        toolbar = findViewById(R.id.toolbar);
-        pas = toolbar.findViewById(R.id.pas);
-        mes_info = toolbar.findViewById(R.id.mes_info);
-        calories = toolbar.findViewById(R.id.calories);
+        ConstraintLayout toolbar = findViewById(R.id.toolbar);
+        LinearLayout pas = toolbar.findViewById(R.id.pas);
+        LinearLayout mes_info = toolbar.findViewById(R.id.mes_info);
+        LinearLayout calories = toolbar.findViewById(R.id.calories);
 
         pas.setAlpha(0.4F);
         mes_info.setAlpha(0.4F);
         calories.setAlpha(0.4F);
 
-        bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
+        ImageButton bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
         bouton_mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
 
-        bouton_pas = pas.findViewById(R.id.bouton_pas);
+        ImageButton bouton_pas = pas.findViewById(R.id.bouton_pas);
         bouton_pas.setOnClickListener(this::onClickListenerBoutonPas);
 
-        bouton_calories = calories.findViewById(R.id.bouton_calories);
+        ImageButton bouton_calories = calories.findViewById(R.id.bouton_calories);
         bouton_calories.setOnClickListener(this::onClickListenerBoutonCalories);
 
-        bouton_sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
+        ImageButton bouton_sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
         bouton_sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
 
-        bouton_heure_coucher = objectif_sommeil.findViewById(R.id.bouton_coucher);
+        ImageButton bouton_heure_coucher = objectif_sommeil.findViewById(R.id.bouton_coucher);
         bouton_heure_coucher.setOnClickListener(this::onClickListenerHeureCoucher);
 
-        bouton_heure_reveil = objectif_sommeil.findViewById(R.id.bouton_reveil);
+        ImageButton bouton_heure_reveil = objectif_sommeil.findViewById(R.id.bouton_reveil);
         bouton_heure_reveil.setOnClickListener(this::onClickListenerHeureReveil);
 
-        bouton_heure_coucher_reel = objectif_sommeil.findViewById(R.id.bouton_coucher_reel);
+        ImageButton bouton_heure_coucher_reel = objectif_sommeil.findViewById(R.id.bouton_coucher_reel);
         bouton_heure_coucher_reel.setOnClickListener(this::onClickListenerHeureCoucherReel);
 
-        bouton_heure_reveil_reel = objectif_sommeil.findViewById(R.id.bouton_reveil_reel);
+        ImageButton bouton_heure_reveil_reel = objectif_sommeil.findViewById(R.id.bouton_reveil_reel);
         bouton_heure_reveil_reel.setOnClickListener(this::onClickListenerHeureReveilReel);
     }
 

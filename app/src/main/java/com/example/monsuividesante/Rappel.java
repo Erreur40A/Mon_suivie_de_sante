@@ -1,21 +1,13 @@
 package com.example.monsuividesante;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.provider.Settings;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class Rappel {
-    public static final String explication = "Pour s'assurer que la notification s'active à la bonne heure, veuillez autoriser l'application à utiliser les alarmes exactes";
-
-    //on utilise @SuppressLint("ScheduleExactAlarm") car on vérifie les permissions dans SommeilActivity
-    @SuppressLint("ScheduleExactAlarm")
     public static void setRappel(Context context, int heure, int minute){
         Intent intent = new Intent(context, NotificationsBroadcast.class);
 

@@ -3,6 +3,7 @@ package com.example.monsuividesante;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,23 +30,22 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        String user_id = "userTest";
 
-        final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+
+        try(DatabaseOpenhelper db_helper = new DatabaseOpenhelper(this)){
+            db_helper.deleteSommeil();
+            db_helper.addLigneSommeil(user_id);
+        }catch (Exception e){
+            Log.println(Log.ERROR, "MainActivity", "DatabaseOpenhelper");
+        }
+
         db.open();
-
-        /*Récupérer la liste de toute les durées
-        *
-        * ArrayList<String> lesDurees = db.getDuree();*/
-
-        /*Récupérer la liste de toute les activités avec les calories dépensées associer
-        *
-        * HashMap<String, Float> activiteCalorie = db.getActiviteCalories();
-        * Set<String> lesActivites = res.keySet();*/
-
-        /*Récupérer le message de motivation d'identifiant id
-        * int id = 4;
-        * String msg_motivation = db.getMsgMotivation(id);
-        * */
+            String heureCoucherReel = db.getHeureCoucherReel(user_id);
         db.close();
+
+            Log.i("azertyuiop", heureCoucherReel);
+
     }
 }
