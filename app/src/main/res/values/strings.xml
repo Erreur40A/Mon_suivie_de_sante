@@ -6,9 +6,13 @@
     <string name="pop_up_hint_obj_mensuelle">28000 pas</string>
     <string name="pop_up_text_obj_hebdomadaire">Quelle est votre objectif de pas hebdomadaire ?</string>
     <string name="pop_up_hint_obj_hebdomadaire">7000 pas</string>
-    <string name="mesinformations">Mes Informations</string>
+    <string name="desc_bouton_mes_informations">bouton mes informations</string>
+    <string name="mes_informations">Mes informations</string>
+    <string name="desc_bouton_pas">bouton pas</string>
     <string name="pas">Pas</string>
+    <string name="desc_bouton_calories">bouton calories</string>
     <string name="calories">Calories</string>
+    <string name="desc_bouton_sommeil">bouton sommeil</string>
     <string name="sommeil">Sommeil</string>
     <string name="icone_sante">Health Icon</string>
     <string name="message_motivation">Votre message de motivation ici</string>
