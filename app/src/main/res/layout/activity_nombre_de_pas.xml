@@ -490,7 +490,49 @@
 
 
 
+        <LinearLayout
+            android:id="@+id/activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <Button
+                android:id="@+id/button_stylo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stylo" />
+
+            <TextView
+                android:id="@+id/text_view_objectifs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrez vos objectifs ici"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_infos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mes Informations" />
+
+            <Button
+                android:id="@+id/button_pas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pas" />
+
+            <Button
+                android:id="@+id/button_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calories" />
+
+            <Button
+                android:id="@+id/button_sommeil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sommeil" />
+        </LinearLayout>
 
 
 
