@@ -2,13 +2,14 @@ package com.example.monsuividesante;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DatabaseAccess {
+public class DatabaseAccess{
 
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
@@ -34,6 +35,11 @@ public class DatabaseAccess {
     private static final String DUREE$DUREE = "duree";
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+    private static final String APPORT_EN_ENERGIE$DATE = "date";
+    private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
+    private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
+    private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
 
     private DatabaseAccess(Context context) {
         this.openhelper = new DatabaseOpenhelper(context);
@@ -72,9 +78,10 @@ public class DatabaseAccess {
     }
 
     public ArrayList<String> getDuree(){
-        String requete = "SELECT * FROM " + DUREE;
+        String requete = "SELECT * FROM " + DUREE +
+                         " ORDER BY " + DUREE$DUREE + " ASC";
 
-        c = db.rawQuery(requete, new String[]{});
+        c = db.rawQuery(requete, null);
         ArrayList<String> res = new ArrayList<String>();
 
         while (c.moveToNext()){
@@ -85,9 +92,10 @@ public class DatabaseAccess {
     }
 
     public HashMap<String, Float> getActiviteCalories(){
-        String requete = "SELECT * FROM " + ACTIVITE_CALORIE;
+        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +
+                         " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
 
-        c = db.rawQuery(requete, new String[]{});
+        c = db.rawQuery(requete, null);
         HashMap<String, Float> res = new HashMap<String, Float>();
         String activite;
         float calories;
@@ -100,5 +108,143 @@ public class DatabaseAccess {
         }
 
         return res;
+    }
+
+    public String getDateApportEnEnergie(int user_id){
+        //Le ORDER BY sert a trier les dates du plus récent au plus ancien
+        String requete = "SELECT " + APPORT_EN_ENERGIE$DATE +
+                         " FROM " + APPORT_EN_ENERGIE +
+                         " WHERE user_id = ?" +
+                         " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                                    "SUBSTR(date, 4, 2) || '/' || " +
+                                    "SUBSTR(date, 1, 2) DESC";
+
+        c=db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
+    }
+
+    public float getCalorieConsomme(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_CONSOMME +
+                         " FROM " + APPORT_EN_ENERGIE +
+                         " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
+    }
+
+    public float getCalorieDepense(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_DEPENSE +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
+    }
+
+    public float getCalorieVariation(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
+    }
+
+    public HashMap<String, String> getObjectifDates() {
+        HashMap<String, String> objectifDates = new HashMap<>();
+
+        // Récupérer la date du journalier
+        String dateJournalier = getDateFromTable(PAS_JOURNALIERS, "journalier");
+
+        // Récupérer la date de l'hebdomadaire
+        String dateHebdomadaire = getDateFromTable(PAS_HEBDOMADAIRE, "hebdomadaire");
+
+        // Récupérer la date du mensuel
+        String dateMensuel = getDateFromTable(PAS_MENSUELS, "mensuel");
+
+        // Mettre les résultats dans la HashMap
+        if (dateJournalier != null) {
+            objectifDates.put("journalier", dateJournalier);
+        }
+        if (dateHebdomadaire != null) {
+            objectifDates.put("hebdomadaire", dateHebdomadaire);
+        }
+        if (dateMensuel != null) {
+            objectifDates.put("mensuel", dateMensuel);
+        }
+
+        return objectifDates;
+    }
+
+    // Méthode auxiliaire pour récupérer la date depuis une table spécifique
+    private String getDateFromTable(String tableName, String type) {
+        String requete = "SELECT date FROM " + tableName + " ORDER BY date DESC LIMIT 1";
+        String date = null;
+
+        try {
+            c = db.rawQuery(requete, null);
+            if (c.moveToFirst()) {
+                date = c.getString(c.getColumnIndexOrThrow("date"));
+            }
+        } catch (SQLException e) {
+            Log.e("DatabaseAccess", "Erreur lors de la récupération de la date pour " + type + ": " + e.getMessage());
+        }
+
+        return date;
+    }
+
+    public HashMap<String, Integer> getNombreDePas() {
+        HashMap<String, Integer> nombreDePas = new HashMap<>();
+
+        // Récupérer les pas journalier
+        int pasJournalier = getPasFromTable(PAS_JOURNALIERS, "journalier");
+
+        // Récupérer les pas hebdomadaire
+        int pasHebdomadaire = getPasFromTable(PAS_HEBDOMADAIRE, "hebdomadaire");
+
+        // Récupérer les pas mensuel
+        int pasMensuel = getPasFromTable(PAS_MENSUELS, "mensuel");
+
+        // Mettre les résultats dans la HashMap
+        nombreDePas.put("journalier", pasJournalier);
+        nombreDePas.put("hebdomadaire", pasHebdomadaire);
+        nombreDePas.put("mensuel", pasMensuel);
+
+        return nombreDePas;
+    }
+
+    // Méthode auxiliaire pour récupérer le nombre de pas depuis une table spécifique
+    private int getPasFromTable(String tableName, String type) {
+        String requete = "SELECT SUM(pas) AS total_pas FROM " + tableName;
+        int totalPas = 0;
+
+        try {
+            c = db.rawQuery(requete, null);
+            if (c.moveToFirst()) {
+                totalPas = c.getInt(c.getColumnIndexOrThrow("total_pas"));
+            }
+        } catch (SQLException e) {
+            Log.e("DatabaseAccess", "Erreur lors de la récupération des pas pour " + type + ": " + e.getMessage());
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return totalPas;
     }
 }
