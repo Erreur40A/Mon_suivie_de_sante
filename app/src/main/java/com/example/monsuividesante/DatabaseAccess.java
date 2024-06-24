@@ -107,45 +107,45 @@ public class DatabaseAccess {
         return res;
     }
 
-    public String getHeureCoucherReel(String user_id){
+    public String getHeureCoucherReel(int user_id){
         String requete="SELECT " + SOMMEIL$HEURE_COUCHER_REEL +
                        " FROM " + SOMMEIL +
                        " WHERE " + SOMMEIL$USER_ID + "=?";
 
-        c = db.rawQuery(requete, new String[]{user_id});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
     }
 
-    public String getHeureCoucherPrevue(String user_id){
+    public String getHeureCoucherPrevue(int user_id){
         String requete="SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
                        " FROM " + SOMMEIL +
                        " WHERE " + SOMMEIL$USER_ID + "=?";
 
-        c = db.rawQuery(requete, new String[]{user_id});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
     }
 
-    public String getHeureReveilReel(String user_id){
+    public String getHeureReveilReel(int user_id){
         String requete="SELECT " + SOMMEIL$HEURE_REVEIL_REEL +
                        " FROM " + SOMMEIL +
                        " WHERE " + SOMMEIL$USER_ID + "=?";
 
-        c = db.rawQuery(requete, new String[]{user_id});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
     }
 
-    public String getHeureReveilPrevue(String user_id){
+    public String getHeureReveilPrevue(int user_id){
         String requete="SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
                 " FROM " + SOMMEIL +
                 " WHERE " + SOMMEIL$USER_ID + "=?";
 
-        c = db.rawQuery(requete, new String[]{user_id});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));

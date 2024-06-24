@@ -9,7 +9,6 @@ import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import android.database.Cursor;
 
-
 public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
     private static final String DATABSE_NAME = "mon_suivi_de_sante_db.db";
@@ -27,7 +26,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         super(context, DATABSE_NAME, null, 1);
     }
 
-    public void addLigneSommeil(String user_id){
+    public void addLigneSommeil(int user_id){
         try(SQLiteDatabase db = getWritableDatabase()){
 
             ContentValues ligne = new ContentValues();
@@ -53,7 +52,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public void updateHeureCoucherReel(String user_id, String heure){
+    public void updateHeureCoucherReel(int user_id, String heure){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues maj = new ContentValues();
 
@@ -61,10 +60,10 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
         String condition=SOMMEIL$USER_ID + "=?";
 
-        db.update(SOMMEIL, maj, condition, new String[]{user_id});
+        db.update(SOMMEIL, maj, condition, new String[]{Integer.toString(user_id)});
     }
 
-    public void updateHeureCoucherPrevue(String user_id, String heure){
+    public void updateHeureCoucherPrevue(int user_id, String heure){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues maj = new ContentValues();
 
@@ -72,10 +71,10 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
         String condition=SOMMEIL$USER_ID + "=?";
 
-        db.update(SOMMEIL, maj, condition, new String[]{user_id});
+        db.update(SOMMEIL, maj, condition, new String[]{Integer.toString(user_id)});
     }
 
-    public void updateHeureReveilReel(String user_id, String heure){
+    public void updateHeureReveilReel(int user_id, String heure){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues maj = new ContentValues();
 
@@ -83,10 +82,10 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
         String condition=SOMMEIL$USER_ID + "=?";
 
-        db.update(SOMMEIL, maj, condition, new String[]{user_id});
+        db.update(SOMMEIL, maj, condition, new String[]{Integer.toString(user_id)});
     }
 
-    public void updateHeureReveilPrevue(String user_id, String heure){
+    public void updateHeureReveilPrevue(int user_id, String heure){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues maj = new ContentValues();
 
@@ -94,6 +93,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
         String condition=SOMMEIL$USER_ID + "=?";
 
-        db.update(SOMMEIL, maj, condition, new String[]{user_id});
+        db.update(SOMMEIL, maj, condition, new String[]{Integer.toString(user_id)});
     }
 }

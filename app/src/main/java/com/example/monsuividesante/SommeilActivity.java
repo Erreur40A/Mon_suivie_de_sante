@@ -2,6 +2,7 @@ package com.example.monsuividesante;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +28,13 @@ public class SommeilActivity extends AppCompatActivity {
     private String heure_reveil_reel;
 
     private ConstraintLayout objectif_sommeil;
+    private ConstraintLayout info_sommeil;
     private TextView objectif_heure_reveil;
     private TextView heure_reveil;
     private TextView heure_coucher;
     private TextView objectif_heure_coucher;
 
-    private final String user_id = "userTest";
+    private final int user_id = 1;
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
     //private Utilisateur user;
@@ -70,7 +72,7 @@ public class SommeilActivity extends AppCompatActivity {
         mes_info.setAlpha(0.4F);
         calories.setAlpha(0.4F);
 
-        ConstraintLayout info_sommeil = findViewById(R.id.info_sommeil);
+        info_sommeil = findViewById(R.id.info_sommeil);
         objectif_heure_reveil = info_sommeil.findViewById(R.id.layout_objectif_heure_reveil).findViewById(R.id.objectif_heure_reveil);
         heure_reveil = info_sommeil.findViewById(R.id.layout_heure_reveil).findViewById(R.id.heure_reveil);
         heure_coucher = info_sommeil.findViewById(R.id.layout_heure_coucher).findViewById(R.id.heure_coucher);
@@ -116,26 +118,26 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void setHeureReveil(){
         db.open();
-        String objectif = db.getHeureReveilReel(user_id);
+        String heure = db.getHeureReveilReel(user_id);
         db.close();
 
-        heure_reveil.setText(objectif);
+        heure_reveil.setText(heure);
     }
 
     public void setHeureCoucher(){
         db.open();
-        String objectif = db.getHeureCoucherReel(user_id);
+        String heure = db.getHeureCoucherReel(user_id);
         db.close();
 
-        heure_coucher.setText(objectif);
+        heure_coucher.setText(heure);
     }
 
     public void setObjectifHeureReveil(){
         db.open();
-        String reveil = db.getHeureReveilPrevue(user_id);
+        String objectif = db.getHeureReveilPrevue(user_id);
         db.close();
 
-        objectif_heure_reveil.setText(reveil);
+        objectif_heure_reveil.setText(objectif);
     }
 
     public void setMessageMotivation(TextView textView){
@@ -231,7 +233,7 @@ public class SommeilActivity extends AppCompatActivity {
             if(Regex.estHeureValide(affichage)){
                 heure_coucher.setText(affichage);
                 db_helper.updateHeureCoucherReel(user_id, affichage);
-                setObjectifHeureCoucher();
+                setHeureCoucher();
             }
 
             pop_up.dismiss();
@@ -261,7 +263,7 @@ public class SommeilActivity extends AppCompatActivity {
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
                 db_helper.updateHeureReveilReel(user_id, affichage);
-                setObjectifHeureReveil();
+                setHeureReveil();
             }
 
             pop_up.dismiss();
