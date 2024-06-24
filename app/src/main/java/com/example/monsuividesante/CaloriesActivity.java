@@ -32,7 +32,6 @@ public class CaloriesActivity extends AppCompatActivity {
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
-    private int user_id=1;
 
     /*Correspond à variation
     * en kcal a afficher dans le rectangle rouge*/
@@ -51,7 +50,7 @@ public class CaloriesActivity extends AppCompatActivity {
     private AlertDialog pop_up_duree_activite;
     private TextView textViewCalDepReel;
 
-    //private Utilisateur user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +63,14 @@ public class CaloriesActivity extends AppCompatActivity {
             return insets;
         });
 
-        //user=getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
 
         /*-------------------Temporaire---------------------*/
         db_helper.deleteApportEnEnergie();
-        db_helper.addLigneActiviteCalorie(user_id);
+        db_helper.addLigneActiviteCalorie(user.getId());
         /*--------------------------------------------------*/
 
         textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
@@ -142,16 +141,16 @@ public class CaloriesActivity extends AppCompatActivity {
 
     public float setTextViewCalorieDepenseReel(TextView textView){
         db.open();
-            String date = db.getDateApportEnEnergie(user_id);
+            String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
         if(!Regex.estDateDuJour(date)){
-            db_helper.addLigneActiviteCalorie(user_id);
+            db_helper.addLigneActiviteCalorie(user.getId());
         }
 
         db.open();
-            float res = db.getCalorieVariation(user_id);
+            float res = db.getCalorieVariation(user.getId());
             String calorie = res + " kcal";
             textView.setText(calorie);
         db.close();
@@ -160,31 +159,31 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public float setTextViewCalorieDepense(TextView textView){
-        db.open();
-            String date = db.getDateApportEnEnergie(user_id);
-        db.close();
+        float res;
 
-        /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
-        if(!Regex.estDateDuJour(date)){
-            db_helper.addLigneActiviteCalorie(user_id);
+        if(user.getGenre().equals("homme")){
+            res = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
+        }else{
+            res = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
         }
 
-        /*formule réél pour "res":
-         *
-         *homme: mb = 8,362 + (13,397 x poids en kg) + (4,799 x taille en cm) - (5,677 x âge en années)
-         *femme: mb = 447,593 + (9,247 x poids en kg) + (3,098 x taille en cm) - (4,330 x âge en années)
-         *
-         *Si Sédentaire (peu ou pas d'exercice) : MB x 1,2
-         *Si Léger (exercice léger/sport 1 à 3 jours/semaine) : MB x 1,375
-         *Si Modéré (exercice modéré/sport 3 à 5 jours/semaine) : MB x 1,55
-         *Si Actif (exercice intense/sport 6 à 7 jours/semaine) : MB x 1,725
-         *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9*/
-
-        db.open();
-            float res = db.getCalorieVariation(user_id);
-            String calorie = res + " kcal";
-            textView.setText(calorie);
-        db.close();
+        switch (user.getType_de_personne()){
+            case 1:
+                res *= 1.2F;
+                break;
+            case 2:
+                res *= 1.375F;
+                break;
+            case 3:
+                res *= 1.55F;
+                break;
+            case 4:
+                res *= 1.725F;
+                break;
+            case 5:
+                res *= 1.9F;
+                break;
+        }
 
         return res;
     }
@@ -323,28 +322,28 @@ public class CaloriesActivity extends AppCompatActivity {
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonCalorie(View view){
         /*Soit on supprime ce listener soit on le garde*/
         Intent intent = new Intent(CaloriesActivity.this, CaloriesActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
         Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Sommeil)*/
-        Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(CaloriesActivity.this, SommeilActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
@@ -353,7 +352,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         /*Remplacer userTest par user.getId()*/
-        String date = db.getDateApportEnEnergie(user_id);
+        String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);
@@ -384,7 +383,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         /*Remplacer userTest par user.getId()*/
-        String date = db.getDateApportEnEnergie(user_id);
+        String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);

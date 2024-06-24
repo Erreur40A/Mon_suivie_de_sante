@@ -4,7 +4,8 @@
     package="com.example.monsuividesante">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -19,9 +20,9 @@
 
         <receiver android:name=".NotificationsBroadcast"
             android:enabled="true"/>
-        <!--*********************A MODIFIER LORS DE LA FUSION********************-->
+        <!--_______________________A enlever quand tout sera merge________________________________-->
         <activity
-            android:name=".MainActivity"
+            android:name=".SommeilActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +30,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CaloriesActivity"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".MainActivity"
+            android:exported="true">
+
+        </activity>
+        <!--______________________________________________________________________________________-->
+        <!--*********************Enlevez les commentaire quand tout sera merge********************-->
+
+        <!--<activity android:name=".Connexion"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CaloriesActivity"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".SommeilActivity"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".ActivityInscription"
+            android:exported="true">
+            
+        </activity>
+        <activity android:name=".ActivityMesInformations"
+            android:exported="true">
+            
+        </activity>
+        <activity android:name=".NombreDePasActivity"
+            android:exported="true">
+
+        </activity>-->
+
         <!--*******************************************************************-->
     </application>
 

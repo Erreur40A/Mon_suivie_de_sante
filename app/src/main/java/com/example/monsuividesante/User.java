@@ -1,11 +1,10 @@
 package com.example.monsuividesante;
 
-import android.provider.CalendarContract;
-import android.provider.ContactsContract;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
 
-    private int id;
+    private final int id;
     private String prenom;
     private String nom;
     private int age;

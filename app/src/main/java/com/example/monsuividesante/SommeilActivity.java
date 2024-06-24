@@ -34,10 +34,9 @@ public class SommeilActivity extends AppCompatActivity {
     private TextView heure_coucher;
     private TextView objectif_heure_coucher;
 
-    private final int user_id = 1;
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
-    //private Utilisateur user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +49,17 @@ public class SommeilActivity extends AppCompatActivity {
             return insets;
         });
 
-        //user = getIntent().getSerializableExtra("user");
+        Intent intent = getIntent();
         /*-------------Temporaire--------------*/
+        if(intent != null && intent.hasExtra("user"))
+            user = (User) getIntent().getSerializableExtra("user");
+        else
+            user = new User(1, "Jibril", "DOUZI", 20, 68, 172, "Homme", 1);
+
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
         db_helper.deleteSommeil();
-        db_helper.addLigneSommeil(user_id);
+        db_helper.addLigneSommeil(user.getId());
         /*------------------------------------*/
 
         TextView msg_motivation = findViewById(R.id.msg_motivation).findViewById(R.id.msg_motiv);
@@ -110,7 +114,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void setObjectifHeureCoucher(){
         db.open();
-        String objectif = db.getHeureCoucherPrevue(user_id);
+        String objectif = db.getHeureCoucherPrevue(user.getId());
         db.close();
 
         objectif_heure_coucher.setText(objectif);
@@ -118,7 +122,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void setHeureReveil(){
         db.open();
-        String heure = db.getHeureReveilReel(user_id);
+        String heure = db.getHeureReveilReel(user.getId());
         db.close();
 
         heure_reveil.setText(heure);
@@ -126,7 +130,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void setHeureCoucher(){
         db.open();
-        String heure = db.getHeureCoucherReel(user_id);
+        String heure = db.getHeureCoucherReel(user.getId());
         db.close();
 
         heure_coucher.setText(heure);
@@ -134,7 +138,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void setObjectifHeureReveil(){
         db.open();
-        String objectif = db.getHeureReveilPrevue(user_id);
+        String objectif = db.getHeureReveilPrevue(user.getId());
         db.close();
 
         objectif_heure_reveil.setText(objectif);
@@ -172,7 +176,7 @@ public class SommeilActivity extends AppCompatActivity {
 
                 Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
                 heure_coucher.setText(affichage);
-                db_helper.updateHeureCoucherPrevue(user_id, affichage);
+                db_helper.updateHeureCoucherPrevue(user.getId(), affichage);
                 setObjectifHeureCoucher();
             }
 
@@ -202,7 +206,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
-                db_helper.updateHeureReveilPrevue(user_id, affichage);
+                db_helper.updateHeureReveilPrevue(user.getId(), affichage);
                 setObjectifHeureReveil();
             }
 
@@ -232,7 +236,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_coucher.setText(affichage);
-                db_helper.updateHeureCoucherReel(user_id, affichage);
+                db_helper.updateHeureCoucherReel(user.getId(), affichage);
                 setHeureCoucher();
             }
 
@@ -262,7 +266,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
-                db_helper.updateHeureReveilReel(user_id, affichage);
+                db_helper.updateHeureReveilReel(user.getId(), affichage);
                 setHeureReveil();
             }
 
@@ -277,28 +281,28 @@ public class SommeilActivity extends AppCompatActivity {
     public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonCalories(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Calories)*/
-        Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(SommeilActivity.this, CaloriesActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
         /*On pourra supprimer ce listener ou le garder*/
         Intent intent = new Intent(SommeilActivity.this, SommeilActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 }

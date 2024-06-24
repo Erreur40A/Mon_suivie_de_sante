@@ -118,9 +118,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ligne.put(SOMMEIL$HEURE_COUCHER_PREVUE, "20:00");
             ligne.put(SOMMEIL$HEURE_REVEIL_REEL, "10:00");
             ligne.put(SOMMEIL$HEURE_REVEIL_PREVUE, "08:00");
-            ligne.put("difference", 0F);
-            ligne.put("nb_heures_de_sommeil_effectuees", 0F);
-            ligne.put("nb_heures_de_sommeil_prevues", 0);
 
             db.insert(SOMMEIL, null, ligne);
         }catch (SQLiteException e){
