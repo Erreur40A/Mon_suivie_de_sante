@@ -19,7 +19,6 @@
             android:text="@string/coucher"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
-
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,10 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
-
             android:textStyle="bold"
+            android:textColor="@color/bleu_nuit"
             app:layout_constraintStart_toEndOf="@id/text_heure_coucher"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,7 +52,6 @@
             android:text="@string/reveil"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
-
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
-
+            android:textColor="@color/orange"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/text_heure_reveil"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -85,7 +84,6 @@
             android:layout_marginTop="15dp"
             android:text="@string/objectif_sommeil"
             android:textSize="18sp"
-
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-
+            android:textColor="@color/bleu_claire"
             android:layout_marginTop="15dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/text_objectif_heure_coucher"
@@ -118,7 +116,6 @@
             android:layout_marginTop="15dp"
             android:text="@string/objectif_reveil"
             android:textSize="18sp"
-
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
-
+            android:textColor="@color/vert_clair"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_objectif_heure_reveil"/>
