@@ -60,16 +60,16 @@ public class NombreDePasActivity extends AppCompatActivity {
         /*-------------------------------*/
 
         Random random = new Random();
-        msg_motivation = findViewById(R.id.textMotivation);
+        msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
         db.open();
         //il y a 19 msg entre 1 et 20
         msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
         db.close();
 
-        db_helper.updateNombreDePas("pas_hebdo", 1000, user_id);
+        db_helper.updateObjectifMensuelle(user_id, 20);
         db.open();
-        HashMap<String, String> lesdates = db.getObjectifDates(user_id);
-        msg_motivation.setText(lesdates.get("journalier") +" "+lesdates.get("hebdomadaire")+" "+lesdates.get("mensuel"));
+        //il y a 19 msg entre 1 et 20
+        msg_motivation.setText(""+db.getObjectifMensuelle(user_id));
         db.close();
 
         ConstraintLayout toolbar = findViewById(R.id.toolbar);

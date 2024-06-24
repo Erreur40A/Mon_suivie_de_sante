@@ -121,15 +121,36 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.close();
     }
 
+    public void updateObjectifJournalier(int user_id, int nv_obj){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PAS$OBJECTIFS, nv_obj);
+        db.update(PAS_JOURNALIERS, values, "user_id = ?", new String[]{Integer.toString(user_id)});
+    }
+
+    public void updateObjectifHebdomadaire(int user_id, int nv_obj){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PAS$OBJECTIFS, nv_obj);
+        db.update(PAS_HEBDOMADAIRE, values, "user_id = ?", new String[]{Integer.toString(user_id)});
+    }
+
+    public void updateObjectifMensuelle(int user_id, int nv_obj){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PAS$OBJECTIFS, nv_obj);
+        db.update(PAS_MENSUELS, values, "user_id = ?", new String[]{Integer.toString(user_id)});
+    }
+
     // Méthode pour mettre à jour le nombre de pas pour un objectif spécifique
-    public void updateNombreDePas(String table, int nombreDePas, int user_id) {
+    public void updateNombreDePas(String table, int nombreDePas) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PAS$NB_PAS_EFFECTUES, nombreDePas);
+        values.put("pas", nombreDePas);
 
-        String whereClause =  PAS$USER_ID + "= ?";
-        String[] whereArgs = {Integer.toString(user_id)};
+        String whereClause = "type = ?";
+        String[] whereArgs = {table};
 
         // Exécuter la mise à jour
         int rowsAffected = db.update(table, values, whereClause, whereArgs);
