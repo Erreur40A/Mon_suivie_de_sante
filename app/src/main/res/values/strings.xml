@@ -48,4 +48,5 @@
     <string name="question_notif_coucher">C\'est l\'heure de se coucher</string>
     <string name="rappel_notif_coucher">N\'oubliez pas d\'écrire l\'heure à la qu\'elle vous vous êtes réveillez et couchez</string>
     <string name="dec_img_lune">Image lune</string>
+    <string name="explication_format_heure">hh:mm</string>
 </resources>

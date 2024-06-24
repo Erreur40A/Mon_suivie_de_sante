@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class CaloriesActivity extends AppCompatActivity {
 
@@ -159,33 +156,36 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public float setTextViewCalorieDepense(TextView textView){
-        float res;
+        float kcal;
 
         if(user.getGenre().equals("homme")){
-            res = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
+            kcal = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
         }else{
-            res = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
+            kcal = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
         }
 
         switch (user.getType_de_personne()){
             case 1:
-                res *= 1.2F;
+                kcal *= 1.2F;
                 break;
             case 2:
-                res *= 1.375F;
+                kcal *= 1.375F;
                 break;
             case 3:
-                res *= 1.55F;
+                kcal *= 1.55F;
                 break;
             case 4:
-                res *= 1.725F;
+                kcal *= 1.725F;
                 break;
             case 5:
-                res *= 1.9F;
+                kcal *= 1.9F;
                 break;
         }
 
-        return res;
+        String affichage = kcal + " kcal";
+        textView.setText(affichage);
+
+        return kcal;
     }
 
     public ArrayList<String> setListeDuree(){

@@ -140,6 +140,7 @@ public class DatabaseAccess{
                 " WHERE " + SOMMEIL$USER_ID + "=?";
 
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
     }

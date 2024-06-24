@@ -50,6 +50,7 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
+
         /*-------------Temporaire--------------*/
         if(intent != null && intent.hasExtra("user"))
             user = (User) getIntent().getSerializableExtra("user");
