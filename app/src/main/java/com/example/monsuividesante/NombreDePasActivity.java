@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,12 +19,22 @@ import androidx.core.view.ViewCompat;
 
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.HashMap;
+import java.util.Random;
+
 public class NombreDePasActivity extends AppCompatActivity {
 
     private TextView pas_journalier_fait, pas_hebdomadaire_fait, pas_mensuelle_fait;
     private TextView objectif_journalier, objectif_hebdomadaire, objectif_mensuelle;
-    private TextView pourcent_journaier, pourcent_hebdomadaire, pourcent_mensuelle;
+    private TextView pourcent_journaier, pourcent_hebdomadaire, pourcent_mensuelle, msg_motivation;
     private ImageButton bouton_journalier, bouton_hebdomadaire, bouton_mensuelle;
+    private ProgressBar bar_journalier, bar_mensuelle, bar_hebdomadaire;
+
+    //temporaire
+    private final int user_id=1;
+
+    private DatabaseAccess db;
+    private DatabaseOpenhelper db_helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,31 @@ public class NombreDePasActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        db = DatabaseAccess.getInstance(this);
+        db_helper = new DatabaseOpenhelper(this);
+
+        /*-----------Temporaire----------*/
+        db_helper.deletePasHebdomadaire();
+        db_helper.addLignePasHebdomadaire(user_id);
+        db_helper.deletePasJournalier();
+        db_helper.addLignePasJournaliers(user_id);
+        db_helper.deletePasMensuelle();
+        db_helper.addLignePasMensuelle(user_id);
+        /*-------------------------------*/
+
+        Random random = new Random();
+        msg_motivation = findViewById(R.id.textMotivation);
+        db.open();
+        //il y a 19 msg entre 1 et 20
+        msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
+        db.close();
+
+        db_helper.updateNombreDePas("pas_hebdo", 1000, user_id);
+        db.open();
+        HashMap<String, String> lesdates = db.getObjectifDates(user_id);
+        msg_motivation.setText(lesdates.get("journalier") +" "+lesdates.get("hebdomadaire")+" "+lesdates.get("mensuel"));
+        db.close();
 
         ConstraintLayout toolbar = findViewById(R.id.toolbar);
         ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);

@@ -58,6 +58,7 @@
                 android:text="@string/message_motivation"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
+                android:gravity="center"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -551,12 +552,12 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <!--<Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Réinitialiser les objectifs"
-        app:layout_constraintTop_toBottomOf="@id/entete" />
+        app:layout_constraintTop_toBottomOf="@id/entete" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

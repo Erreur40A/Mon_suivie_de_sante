@@ -41,6 +41,17 @@ public class DatabaseAccess{
     private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
     private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
 
+    private static final String PAS$USER_ID = "user_id";
+    private static final String PAS$ANNEE = "annee";
+    private static final String PAS$OBJECTIFS = "objectifs";
+    private static final String PAS$NB_PAS_EFFECTUES = "nb_pas_effectues";
+    private static final String PAS$DIFF_PAS = "diff_pas";
+    private static final String PAS_HEBDOMADAIRE$MOIS = "mois";
+
+    private static final String PAS_HEBDOMADAIRE$NO_SEMAINE = "no_semaine";
+    private static final String PAS_MENSUELS$NO_MOIS = "no_mois";
+    private static final String PAS_JOURNALIERS$DATE = "date";
+
     private DatabaseAccess(Context context) {
         this.openhelper = new DatabaseOpenhelper(context);
     }
@@ -164,35 +175,112 @@ public class DatabaseAccess{
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
     }
 
-    public HashMap<String, String> getObjectifDates() {
+    public HashMap<String, String> getObjectifDates(int user_id) {
         HashMap<String, String> objectifDates = new HashMap<>();
 
         // Récupérer la date du journalier
-        String dateJournalier = getDateFromTable(PAS_JOURNALIERS, "journalier");
+        String dateJournalier = getDateJournalier(user_id);
 
-        // Récupérer la date de l'hebdomadaire
-        String dateHebdomadaire = getDateFromTable(PAS_HEBDOMADAIRE, "hebdomadaire");
+        // Récupérer le mois du mensuel
+        String dateMensuel = Integer.toString(getMoisMensuelle(user_id));
 
-        // Récupérer la date du mensuel
-        String dateMensuel = getDateFromTable(PAS_MENSUELS, "mensuel");
+        // Récupérer la semaine de l'hebdomadaire
+        String dateHebdomadaire = Integer.toString(getSemaineHebdomadaire(user_id));
 
         // Mettre les résultats dans la HashMap
-        if (dateJournalier != null) {
-            objectifDates.put("journalier", dateJournalier);
-        }
-        if (dateHebdomadaire != null) {
-            objectifDates.put("hebdomadaire", dateHebdomadaire);
-        }
-        if (dateMensuel != null) {
-            objectifDates.put("mensuel", dateMensuel);
-        }
+        objectifDates.put("journalier", dateJournalier);
+        objectifDates.put("hebdomadaire", dateHebdomadaire);
+        objectifDates.put("mensuel", dateMensuel);
 
         return objectifDates;
     }
 
+    public String getDateJournalier(int user_id){
+        String requete = "SELECT " + PAS_JOURNALIERS$DATE +
+                         " FROM " + PAS_JOURNALIERS +
+                         " WHERE " + PAS$USER_ID + " = ?" +
+                         " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                                    "SUBSTR(date, 4, 2) || '/' || " +
+                                    "SUBSTR(date, 1, 2) DESC";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(PAS_JOURNALIERS$DATE));
+    }
+
+    public int getSemaineHebdomadaire(int user_id){
+        String requete = "SELECT " + PAS_HEBDOMADAIRE$NO_SEMAINE +
+                         " FROM " + PAS_HEBDOMADAIRE +
+                         " WHERE " + PAS$USER_ID + " = ?" +
+                         " ORDER BY " + PAS_HEBDOMADAIRE$MOIS + ", " + PAS_HEBDOMADAIRE$NO_SEMAINE + " DESC";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS_HEBDOMADAIRE$NO_SEMAINE));
+    }
+
+    public int getMoisMensuelle(int user_id){
+        String requete = "SELECT " + PAS_MENSUELS$NO_MOIS +
+                         " FROM " + PAS_MENSUELS +
+                         " WHERE " + PAS$USER_ID + " = ?" +
+                         " ORDER BY " + PAS$ANNEE + ", " + PAS_MENSUELS$NO_MOIS + " DESC";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS_MENSUELS$NO_MOIS));
+    }
+
+    public int getObjectifJournalier(int user_id){
+        String date = getDateJournalier(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                         " FROM " + PAS_JOURNALIERS +
+                         " WHERE " + PAS$USER_ID + "=? AND " + PAS_JOURNALIERS$DATE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
+    public int getObjectifMensuelle(int user_id){
+        //le mois est entre 0 et 11
+        int mois = getMoisMensuelle(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                " FROM " + PAS_MENSUELS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_MENSUELS$NO_MOIS + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(mois)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
+    public int getObjectifHedbomadaire(int user_id){
+        //le mois est entre 0 et 11
+        int semaine = getSemaineHebdomadaire(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                " FROM " + PAS_HEBDOMADAIRE +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
     // Méthode auxiliaire pour récupérer la date depuis une table spécifique
     private String getDateFromTable(String tableName, String type) {
-        String requete = "SELECT date FROM " + tableName + " ORDER BY date DESC LIMIT 1";
+        String requete = "SELECT date FROM " + tableName +
+                         " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                                    "SUBSTR(date, 4, 2) || '/' || " +
+                                    "SUBSTR(date, 1, 2) DESC LIMIT 1";
+
         String date = null;
 
         try {
@@ -228,6 +316,7 @@ public class DatabaseAccess{
     }
 
     // Méthode auxiliaire pour récupérer le nombre de pas depuis une table spécifique
+    //A modifier ou supprimer
     private int getPasFromTable(String tableName, String type) {
         String requete = "SELECT SUM(pas) AS total_pas FROM " + tableName;
         int totalPas = 0;
