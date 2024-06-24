@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/page_de_connexion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- En tete-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/icone_sante"
+                android:src="@drawable/logo_app" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
+        </LinearLayout>
+
+        <!--Icon Account-->
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/icon_account"
+            android:src="@drawable/icon_account_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seconnceter"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/identifiant"
+            android:textSize="20sp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:autofillHints="username"
+            android:id="@+id/identifiant_connexion"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/motdepasse"
+            android:textSize="20sp"
+            android:padding="18dp"
+            android:inputType="textPassword"
+            android:autofillHints="password"
+            android:id="@+id/password_connexion"
+            />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seconnceter"
+            android:backgroundTint="@color/black"
+            android:textColor="#FFFFFF"
+            android:padding="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/inscription_invitation"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <Button
+            android:id="@+id/inscription1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sinscrire"
+            android:backgroundTint="@color/black"
+            android:textColor="#FFFFFF"
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
