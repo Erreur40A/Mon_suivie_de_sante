@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+    <string name="logo_app">Logo de l\'application</string>
+    <string name="coucher">Vous vous êtes couchez à : </string>
+    <string name="reveil">Vous vous êtes réveiller à : </string>
+    <string name="objectif_sommeil">Votre objectif était de ce couchez à : </string>
+    <string name="objectif_reveil">Votre objectif était de ce réveillez à : </string>
+    <string name="demande_reveil">Vous voulez vous réveillez à ?</string>
+    <string name="demande_reveil_reel">Vous vous êtes réveiller à ?</string>
+    <string name="demande_coucher">Vous voulez vous couchez à ?</string>
+    <string name="demande_coucher_reel">Vous vous êtes couchez à ?</string>
+    <string name="image_de_motivation">image de motivation</string>
+    <string name="heure_coucher_dft">22h00</string>
+    <string name="heure_reveil_dft">8h00</string>
+    <string name="desc_bouton_mes_informations">bouton mes informations</string>
+    <string name="mes_informations">Mes informations</string>
+    <string name="desc_bouton_pas">bouton pas</string>
+    <string name="pas">Pas</string>
+    <string name="desc_bouton_calories">bouton calories</string>
+    <string name="calories">Calories</string>
+    <string name="desc_bouton_sommeil">bouton sommeil</string>
+    <string name="sommeil">Sommeil</string>
+    <string name="msg_motivation">msg motivation azerty qwerty sdfqgd rliv klnjvfw kjbgdfw rfbjhsd jldw ezoq</string>
+    <string name="desc_bouton_modification">bouton de modification</string>
+    <string name="pop_up_demande_heure_coucher">À quelle heure voulez vous vous couchez ?</string>
+    <string name="pop_up_demande_heure_coucher_reel">À quelle heure vous êtes vous couchez ?</string>
+    <string name="pop_up_affichage_reveil_dfl">08:00</string>
+    <string name="pop_up_demande_heure_reveil">À quelle heure voulez vous vous reveillez ?</string>
+    <string name="pop_up_demande_heure_reveil_reel">À quelle heure vous êtes vous reveillez ?</string>
+    <string name="pop_up_affichage_coucher_dfl">22:00</string>
+    <string name="validation">OK</string>
+    <string name="annulation">Annuler</string>
+    <string name="question_notif_coucher">C\'est l\'heure de se coucher</string>
+    <string name="rappel_notif_coucher">N\'oubliez pas d\'écrire l\'heure à la qu\'elle vous vous êtes réveillez et couchez</string>
+    <string name="dec_img_lune">Image lune</string>
 </resources>

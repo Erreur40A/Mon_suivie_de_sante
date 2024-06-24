@@ -1,7 +1,6 @@
 package com.example.monsuividesante;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +9,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
-    private String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +20,5 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
-        db.open();
-
-        id = db.gettkt("1");
-        TextView textView_id = (TextView) findViewById(R.id.ici);
-        textView_id.setText(id);
-
-        db.close();
     }
 }
