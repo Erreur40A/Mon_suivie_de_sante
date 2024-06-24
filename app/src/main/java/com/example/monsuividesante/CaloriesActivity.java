@@ -32,6 +32,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
+    private int user_id=1;
 
     /*Correspond à variation
     * en kcal a afficher dans le rectangle rouge*/
@@ -69,8 +70,8 @@ public class CaloriesActivity extends AppCompatActivity {
         db_helper = new DatabaseOpenhelper(this);
 
         /*-------------------Temporaire---------------------*/
-        /*db_helper.deleteApportEnEnergie();
-        db_helper.addLigneActiviteCalorie("userTest");*/
+        db_helper.deleteApportEnEnergie();
+        db_helper.addLigneActiviteCalorie(user_id);
         /*--------------------------------------------------*/
 
         textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
@@ -141,16 +142,16 @@ public class CaloriesActivity extends AppCompatActivity {
 
     public float setTextViewCalorieDepenseReel(TextView textView){
         db.open();
-            String date = db.getDateApportEnEnergie("userTest");
+            String date = db.getDateApportEnEnergie(user_id);
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
         if(!Regex.estDateDuJour(date)){
-            db_helper.addLigneActiviteCalorie("userTest");
+            db_helper.addLigneActiviteCalorie(user_id);
         }
 
         db.open();
-            float res = db.getCalorieVariation("userTest");
+            float res = db.getCalorieVariation(user_id);
             String calorie = res + " kcal";
             textView.setText(calorie);
         db.close();
@@ -160,12 +161,12 @@ public class CaloriesActivity extends AppCompatActivity {
 
     public float setTextViewCalorieDepense(TextView textView){
         db.open();
-            String date = db.getDateApportEnEnergie("userTest");
+            String date = db.getDateApportEnEnergie(user_id);
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
         if(!Regex.estDateDuJour(date)){
-            db_helper.addLigneActiviteCalorie("userTest");
+            db_helper.addLigneActiviteCalorie(user_id);
         }
 
         /*formule réél pour "res":
@@ -180,7 +181,7 @@ public class CaloriesActivity extends AppCompatActivity {
          *Si Très actif (exercice intense quotidien ou activité physique très difficile) : MB x 1,9*/
 
         db.open();
-            float res = db.getCalorieVariation("userTest");
+            float res = db.getCalorieVariation(user_id);
             String calorie = res + " kcal";
             textView.setText(calorie);
         db.close();
@@ -352,7 +353,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         /*Remplacer userTest par user.getId()*/
-        String date = db.getDateApportEnEnergie("userTest");
+        String date = db.getDateApportEnEnergie(user_id);
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);
@@ -383,7 +384,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         /*Remplacer userTest par user.getId()*/
-        String date = db.getDateApportEnEnergie("userTest");
+        String date = db.getDateApportEnEnergie(user_id);
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);

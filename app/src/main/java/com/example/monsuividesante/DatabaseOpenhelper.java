@@ -47,7 +47,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, 1);
     }
 
-    public void addLigneActiviteCalorie(String user_id){
+    public void addLigneActiviteCalorie(int user_id){
         try(SQLiteDatabase db = getWritableDatabase()){
 
             Date aujourdhui = new Date();

@@ -109,7 +109,7 @@ public class DatabaseAccess{
         return res;
     }
 
-    public String getDateApportEnEnergie(String user_id){
+    public String getDateApportEnEnergie(int user_id){
         //Le ORDER BY sert a trier les dates du plus récent au plus ancien
         String requete = "SELECT " + APPORT_EN_ENERGIE$DATE +
                          " FROM " + APPORT_EN_ENERGIE +
@@ -118,46 +118,46 @@ public class DatabaseAccess{
                                     "SUBSTR(date, 4, 2) || '/' || " +
                                     "SUBSTR(date, 1, 2) DESC";
 
-        c=db.rawQuery(requete, new String[]{user_id});
+        c=db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
     }
 
-    public float getCalorieConsomme(String user_id){
+    public float getCalorieConsomme(int user_id){
         String date = getDateApportEnEnergie(user_id);
 
         String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_CONSOMME +
                          " FROM " + APPORT_EN_ENERGIE +
                          " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
 
-        c= db.rawQuery(requete, new String[]{user_id, date});
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
         c.moveToFirst();
 
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
     }
 
-    public float getCalorieDepense(String user_id){
+    public float getCalorieDepense(int user_id){
         String date = getDateApportEnEnergie(user_id);
 
         String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_DEPENSE +
                 " FROM " + APPORT_EN_ENERGIE +
                 " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
 
-        c= db.rawQuery(requete, new String[]{user_id, date});
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
         c.moveToFirst();
 
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
     }
 
-    public float getCalorieVariation(String user_id){
+    public float getCalorieVariation(int user_id){
         String date = getDateApportEnEnergie(user_id);
 
         String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
                 " FROM " + APPORT_EN_ENERGIE +
                 " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
 
-        c= db.rawQuery(requete, new String[]{user_id, date});
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
         c.moveToFirst();
 
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
