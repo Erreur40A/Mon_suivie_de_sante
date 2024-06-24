@@ -22,9 +22,6 @@
         <!--*********************A MODIFIER LORS DE LA FUSION********************-->
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".SommeilActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text_calorie_depense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/calories_depense_activite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/val_calories_depense"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/val_calories_depense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_calorie_depense"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/flamme1"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/desc_image_flamme"
+            android:scaleType="centerInside"
+            android:src="@drawable/flamme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_calorie_depense_reel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <TextView
+            android:id="@+id/text_calorie_depense_reel"
+            android:layout_width="200dp"
+            android:layout_height="62dp"
+            android:background="@drawable/border_green"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/calorie_en_kcal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/flamme2"
+            app:layout_constraintStart_toEndOf="@id/flamme1"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <ImageButton
+            android:id="@+id/bouton_explication"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/interrogation"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/text_calorie_depense_reel"
+            app:layout_constraintEnd_toStartOf="@id/flamme2"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/flamme2"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/desc_image_flamme"
+            android:scaleType="centerInside"
+            android:src="@drawable/flamme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_calorie_depense_reel"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

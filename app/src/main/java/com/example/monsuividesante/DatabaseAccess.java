@@ -3,13 +3,11 @@ package com.example.monsuividesante;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DatabaseAccess {
+public class DatabaseAccess{
 
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
@@ -36,6 +34,11 @@ public class DatabaseAccess {
     private static final String DUREE$DUREE = "duree";
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+    private static final String APPORT_EN_ENERGIE$DATE = "date";
+    private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
+    private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
+    private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
     private static final String SOMMEIL$USER_ID = "user_id";
     private static final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
     private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
@@ -77,7 +80,8 @@ public class DatabaseAccess {
     }
 
     public ArrayList<String> getDuree(){
-        String requete = "SELECT * FROM " + DUREE;
+        String requete = "SELECT * FROM " + DUREE +
+                         " ORDER BY " + DUREE$DUREE + " ASC";
 
         c = db.rawQuery(requete, null);
         ArrayList<String> res = new ArrayList<String>();
@@ -90,7 +94,8 @@ public class DatabaseAccess {
     }
 
     public HashMap<String, Float> getActiviteCalories(){
-        String requete = "SELECT * FROM " + ACTIVITE_CALORIE;
+        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +
+                         " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
 
         c = db.rawQuery(requete, null);
         HashMap<String, Float> res = new HashMap<String, Float>();
@@ -148,5 +153,59 @@ public class DatabaseAccess {
         c.moveToFirst();
 
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
+    }
+
+    public String getDateApportEnEnergie(int user_id){
+        //Le ORDER BY sert a trier les dates du plus récent au plus ancien
+        String requete = "SELECT " + APPORT_EN_ENERGIE$DATE +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE user_id = ?" +
+                " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                "SUBSTR(date, 4, 2) || '/' || " +
+                "SUBSTR(date, 1, 2) DESC";
+
+        c=db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
+    }
+
+    public float getCalorieConsomme(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_CONSOMME +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
+    }
+
+    public float getCalorieDepense(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_DEPENSE +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
+    }
+
+    public float getCalorieVariation(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
     }
 }

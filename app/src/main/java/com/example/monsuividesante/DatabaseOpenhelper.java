@@ -9,18 +9,46 @@ import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import android.database.Cursor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
     private static final String DATABSE_NAME = "mon_suivi_de_sante_db.db";
 
+    /*Syntaxe des constantes des nom des tables : nom de la table*/
+    /*Sa va nous permettre d'éviter les fautes de frappes*/
+    private static final String MESSAGE = "message";
+    private static final String DUREE = "duree";
+    private static final String ACTIVITE_CALORIE = "activite_calories";
     private static final String SOMMEIL = "sommeil";
+    private static final String CONNEXION = "connexion";
+    private static final String APPORT_EN_ENERGIE = "apport_en_energie";
+    private static final String IDENTITE = "identite";
+    private static final String PAS_HEBDOMADAIRE = "pas_hebdo";
+    private static final String PAS_JOURNALIERS = "pas_journaliers";
+    private static final String PAS_MENSUELS = "pas_mensuels";
 
     private static final String SOMMEIL$USER_ID = "user_id";
     private static final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
     private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
     private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
     private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
+    private static final String MESSAGE$ID = "id";
+    private static final String MESSAGE$CONTENU = "contenu";
+    private static final String DUREE$DUREE = "duree";
+    private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
+    private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+    private static final String APPORT_EN_ENERGIE$DATE = "date";
+    private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
+    private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
+    private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
 
+
+    private static final String DATABASE_NAME = "mon_suivi_de_sante_db.db";
 
     public DatabaseOpenhelper(Context context) {
         super(context, DATABSE_NAME, null, 1);
@@ -137,5 +165,42 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         String condition=SOMMEIL$USER_ID + "=?";
 
         db.update(SOMMEIL, maj, condition, new String[]{Integer.toString(user_id)});
+    }
+
+    public void addLigneActiviteCalorie(int user_id){
+        try(SQLiteDatabase db = getWritableDatabase()){
+
+            Date aujourdhui = new Date();
+
+            DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+            String dateAujourdhui = format.format(aujourdhui);
+
+            ContentValues ligne = new ContentValues();
+            ligne.put(APPORT_EN_ENERGIE$USER_ID, user_id);
+            ligne.put(APPORT_EN_ENERGIE$DATE, dateAujourdhui);
+            ligne.put(APPORT_EN_ENERGIE$VARIATION, 0);
+
+            db.insert(APPORT_EN_ENERGIE, null, ligne);
+
+        }catch (SQLiteException e){
+            Log.e("DatabaseOpenhelper", "addLigneActiviteCalorie");
+        }
+    }
+
+    public void deleteApportEnEnergie(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(APPORT_EN_ENERGIE, null, null);
+        db.close();
+    }
+
+    public void updateCaloriesVariation(float variation, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues maj = new ContentValues();
+
+        maj.put(APPORT_EN_ENERGIE$VARIATION, variation);
+
+        String condition = APPORT_EN_ENERGIE$DATE + "=?";
+
+        db.update(APPORT_EN_ENERGIE, maj, condition, new String[]{date});
     }
 }
