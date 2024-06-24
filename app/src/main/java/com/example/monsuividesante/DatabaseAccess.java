@@ -129,10 +129,10 @@ public class DatabaseAccess {
         return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
     }
 
-    public String getHeureReveilReel(int user_id){
-        String requete="SELECT " + SOMMEIL$HEURE_REVEIL_REEL +
-                       " FROM " + SOMMEIL +
-                       " WHERE " + SOMMEIL$USER_ID + "=?";
+    public String getHeureReveilReel(int user_id) {
+        String requete = "SELECT " + SOMMEIL$HEURE_REVEIL_REEL +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
 
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
 
@@ -140,7 +140,7 @@ public class DatabaseAccess {
     }
 
     public String getHeureReveilPrevue(int user_id){
-        String requete="SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
+        String requete = "SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
                 " FROM " + SOMMEIL +
                 " WHERE " + SOMMEIL$USER_ID + "=?";
 
