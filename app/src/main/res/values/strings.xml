@@ -49,4 +49,43 @@
     <string name="rappel_notif_coucher">N\'oubliez pas d\'écrire l\'heure à la qu\'elle vous vous êtes réveillez et couchez</string>
     <string name="dec_img_lune">Image lune</string>
     <string name="explication_format_heure">hh:mm</string>
+    <string name="icone_sante">Health Icon</string>
+    <string name="icon_account">Icon Account</string>
+    <string name="seconnceter">Se connecter</string>
+    <string name="inscription_invitation">Vous n\'avez pas de compte? Inscrivez-vous</string>
+    <string name="identifiant">Identifiant</string>
+    <string name="sinscrire">S\'inscrire</string>
+    <string name="motdepasse">Mot de passe</string>
+    <string name="ok">OK</string>
+    <string name="identifiant_ou_mot_de_passe_incorrect">Identifiant ou mote de passe incorrect.</string>
+    <string name="erreur">Erreur</string>
+    <string name="genre_prompt">Genre</string>
+    <string name="vous_etes_prompt">Vous êtes ?</string>
+    <string name="entrer_information">Saisir vos informations</string>
+
+    <string-array name="genre_array">
+        <item>Genre</item>
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
+
+    <string-array name="vous_etes_array">
+        <item>Vous etes</item>
+        <item>Sédentaire</item>
+        <item>Sportif</item>
+        <item>Actif</item>
+    </string-array>
+
+
+    <string name="content_description_logo_app">Logo App</string>
+    <string name="utilite">Ces informations sont utiles au bon fonctionnement de l\'application</string>
+    <string name="age">Age</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">Prénom</string>
+    <string name="poids">Poids</string>
+    <string name="taille">Taille</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="creercompte">Créer votre compte</string>
+    <string name="idenfiant">Identifiant</string>
+    <string name="motdepass">Mot de passe</string>
 </resources>
