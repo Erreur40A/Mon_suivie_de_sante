@@ -1,5 +1,6 @@
 package com.example.monsuividesante;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -208,5 +209,36 @@ public class DatabaseAccess{
         c.moveToFirst();
 
         return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
+    }
+
+    public boolean existUser(String utilisateur, String mdp) {
+        c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ? AND mot_de_passe = ?", new String[]{utilisateur, mdp});
+        return c.getCount() == 1;
+    }
+
+    public boolean existUser(String utilisateur) {
+        c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ?", new String[]{utilisateur});
+
+        return c.getCount() == 1;
+    }
+
+    public void addUser(String id_inscr, String mdp) {
+        ContentValues value = new ContentValues();
+        value.put("nom_utilisateur", id_inscr);
+        value.put("mot_de_passe", mdp);
+        long l = db.insert("connexion", null, value);
+    }
+
+    public void addInfo(int user_id, String nom, String prenom, int age, int poids, int taille, String genre, String type_de_pers) {
+        ContentValues value = new ContentValues();
+        value.put("user_id", user_id);
+        value.put("nom", nom);
+        value.put("prenom", prenom);
+        value.put("age", age);
+        value.put("poids", poids);
+        value.put("taille", taille);
+        value.put("genre", genre);
+        value.put("type_de_pers", type_de_pers);
+        long l = db.insert("identite", null, value);
     }
 }
