@@ -4,6 +4,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +30,13 @@ public class ActivityMesInformations extends AppCompatActivity {
     private DatabaseOpenhelper db_helper;
     private ConstraintLayout layout_nom, layout_prenom, layout_age, layout_taille, layout_poids;
     //private EditText editName, editFirstName, editAge, editWeight, editHeight;
-    private TextView bienvenue, nom, prenom, age, taille, poids;
+    private TextView bienvenue, nom, prenom, age, taille, poids, text_genre, text_type_de_pers;
+
+    private Spinner spinner_genre;
+    private Spinner spinner_type;
     //private User user;
+
+
 
     //a modifier
     private int user_id = 1;
@@ -63,11 +73,63 @@ public class ActivityMesInformations extends AppCompatActivity {
         layout_taille = findViewById(R.id.layout_taille);
         layout_poids = findViewById(R.id.layout_poids);
 
+
+        // Référence au Spinner
+        spinner_genre = findViewById(R.id.spinner_genre);
+        spinner_type = findViewById(R.id.spinner_type_de_personne);
+
+        // Configuration de l'adaptateur pour le Spinner_genre
+        ArrayAdapter<CharSequence> adapter_genre = ArrayAdapter.createFromResource(this,
+                R.array.genre_array, android.R.layout.simple_spinner_item);
+        adapter_genre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_genre.setAdapter(adapter_genre);
+
+        // Configuration de l'adaptateur pour le Spinner_type
+        ArrayAdapter<CharSequence> adapter_type = ArrayAdapter.createFromResource(this,
+                R.array.type_de_personne_array, android.R.layout.simple_spinner_item);
+        adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_type.setAdapter(adapter_type);
+
+        // Définir un OnItemSelectedListener sur le Spinner_genre
+        spinner_genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Récupérer l'élément sélectionné
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                Toast.makeText(ActivityMesInformations.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Action à effectuer lorsque rien n'est sélectionné (facultatif)
+            }
+        });
+
+
+        // Définir un OnItemSelectedListener sur le Spinner_type
+        spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Récupérer l'élément sélectionné
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                Toast.makeText(ActivityMesInformations.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Action à effectuer lorsque rien n'est sélectionné (facultatif)
+            }
+        });
+
+
+
         age = layout_age.findViewById(R.id.age);
         taille = layout_taille.findViewById(R.id.taille);
         nom = layout_nom.findViewById(R.id.nom);
         prenom = layout_prenom.findViewById(R.id.prenom);
         poids = layout_poids.findViewById(R.id.poids);
+        text_genre = findViewById(R.id.text_genre);
+        text_type_de_pers = findViewById(R.id.text_type_de_pers);
 
         bienvenue = findViewById(R.id.text_welcome);
 
@@ -98,6 +160,27 @@ public class ActivityMesInformations extends AppCompatActivity {
         //a modfifier Matthias à deja fait
         addTextWatchers();*/
         /*---------------------------------------------*/
+
+
+        //boutton de la toolbar
+        ConstraintLayout toolar = findViewById(R.id.toolbar);
+
+        LinearLayout pas = toolar.findViewById(R.id.pas);
+        LinearLayout mes_info = toolar.findViewById(R.id.mes_info);
+        LinearLayout sommeil = toolar.findViewById(R.id.sommeil);
+        LinearLayout calories = toolar.findViewById(R.id.calories);
+
+        ImageButton bouton_pas = pas.findViewById(R.id.bouton_pas);
+        bouton_pas.setOnClickListener(this::onClickListenerBoutonPas);
+
+        ImageButton bouton_mes_info = mes_info.findViewById(R.id.bouton_mes_info);
+        bouton_mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
+
+        ImageButton bouton_calories = calories.findViewById(R.id.bouton_calories);
+        bouton_calories.setOnClickListener(this::onClickListenerBoutonCalorie);
+
+        ImageButton bouton_sommeil = sommeil.findViewById(R.id.bouton_sommeil);
+        bouton_sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
     }
 
     public void onClickListenerNom(View view){
@@ -272,6 +355,8 @@ public class ActivityMesInformations extends AppCompatActivity {
         int userAge = databaseAccess.getUserAge(user_id);
         int userWeight = databaseAccess.getUserWeight(user_id);
         int userHeight = databaseAccess.getUserHeight(user_id);
+        Genre gender = databaseAccess.getUserGender(user_id);
+        String type_de_pers = databaseAccess.getUserType(user_id);
 
         databaseAccess.close();
 
@@ -283,7 +368,11 @@ public class ActivityMesInformations extends AppCompatActivity {
         age.setText(String.valueOf(userAge));
         poids.setText(String.valueOf(userWeight));
         taille.setText(String.valueOf(userHeight));
+        text_genre.setText(String.valueOf(gender));
+        text_type_de_pers.setText(String.valueOf(type_de_pers));
     }
+
+
 
     /*private void addTextWatchers() {
         editName.setOnFocusChangeListener((v, hasFocus) -> {

@@ -62,117 +62,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-
-
         <!-- Latout pour les 4 bouttons de menu en bas-->
-        <RelativeLayout
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:baselineAligned="false"
-                android:weightSum="4">
 
-                <!-- LinearLayout pour le bouton MesInformations -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:id="@+id/mes_info"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:alpha="0.8"
-                        android:src="@drawable/icone_mes_informations"
-                        android:contentDescription="@string/mesinformations" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mesinformations"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <!-- LinearLayout pour le bouton Pas -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:id="@+id/pas"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:alpha="0.4"
-                        android:src="@drawable/icone_pas"
-                        android:contentDescription="@string/pas" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pas"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <!-- LinearLayout pour le bouton Calories -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:id="@+id/calories"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:alpha="0.4"
-                        android:src="@drawable/icone_calories"
-                        android:contentDescription="@string/calories" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/calories"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <!-- LinearLayout pour le bouton Sommeil -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:id="@+id/sommeil"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:alpha="0.4"
-                        android:src="@drawable/icone_sommeil"
-                        android:contentDescription="@string/sommeil" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sommeil"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </RelativeLayout>
 
     </LinearLayout>
 

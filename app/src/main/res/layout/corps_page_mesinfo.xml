@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -38,8 +38,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_nom"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -69,8 +69,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_prenom"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -100,8 +100,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_age"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -131,8 +131,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_poids"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -162,8 +162,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_taille"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -171,69 +171,8 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--Nom-->
-            <!--<EditText
-                android:id="@+id/edit_name"
-                android:layout_width="match_parent"
-                android:layout_marginTop="6dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/nom"
-                android:autofillHints="givenName"
-                android:background="@drawable/border"
-                android:layout_marginBottom="6dp"
-                android:padding="8dp"/>-->
 
-            <!--prenom-->
-            <!--<EditText
-                android:id="@+id/edit_firstname"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="6dp"
-                android:padding="8dp"
-                android:inputType="textPersonName"
-                android:autofillHints="givenName"
-                android:layout_height="wrap_content"
-                android:hint="@string/prenom"
-                android:background="@drawable/border"
-                android:layout_marginTop="6dp" />-->
 
-            <!--age-->
-            <!--<EditText
-                android:id="@+id/edit_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/age"
-                android:inputType="number"
-                android:layout_marginBottom="6dp"
-                android:padding="8dp"
-                android:background="@drawable/border"
-                android:autofillHints="birthDateDay"
-                android:layout_marginTop="6dp" />-->
-
-            <!--poids-->
-            <!--<EditText
-                android:id="@+id/edit_weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/poids"
-                android:layout_marginBottom="6dp"
-                android:padding="8dp"
-                android:inputType="numberDecimal"
-                android:autofillHints="weight"
-                android:background="@drawable/border"
-                android:layout_marginTop="6dp" />-->
-
-            <!--taille-->
-            <!--<EditText
-                android:id="@+id/edit_height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/taille"
-                android:layout_marginBottom="6dp"
-                android:padding="8dp"
-                android:background="@drawable/border"
-                android:inputType="number"
-                android:autofillHints="height"
-                android:layout_marginTop="6dp" />-->
 
 
             <!--genre-->

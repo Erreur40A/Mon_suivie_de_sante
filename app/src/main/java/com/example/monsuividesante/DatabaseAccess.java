@@ -205,33 +205,44 @@ public class DatabaseAccess {
     public String getUserType(int user_id) {
         String query = "SELECT " + COL_TYPE_DE_PERS + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        int i = -1;
-        String userType;
+        String userType = null;
         if (c != null && c.moveToFirst()) {
-            i = c.getInt(c.getColumnIndexOrThrow(COL_TYPE_DE_PERS));
-        }
-        switch (i){
-            case 1:
-                userType = "Sédentaire (peu ou pas d'exercie)";
-                break;
-            case 2:
-                userType = "Léger (exercice léger/sport 1 à 3 jours/semaine)";
-                break;
-            case 3:
-                userType = "Modéré (exercice modéré/sport 3 à 5 jours/semaine";
-                break;
-            case 4:
-                userType = "Actif exercice intense/sport 6 à 7 jours/semaine";
-                break;
-            case 5:
-                userType = "Très actif (exercice intense quotidien ou activité physique très difficile)";
-                break;
-            default:
-                userType = null;
-                break;
+            userType = c.getString(c.getColumnIndexOrThrow(COL_TYPE_DE_PERS));
         }
         return userType;
     }
+
+    public void setUserFirstName(int user_id, String firstName) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_FIRST_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{firstName, user_id});
+    }
+
+    public void setUserAge(int user_id, int age) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_AGE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{age, user_id});
+    }
+
+    public void setUserWeight(int user_id, int weight) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_POIDS + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{weight, user_id});
+    }
+
+    public void setUserHeight(int user_id, int height) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_TAILLE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{height, user_id});
+    }
+
+    public void setUserGender(int user_id, Genre gender) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_GENRE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{gender.getGenre(), user_id});
+    }
+
+    public void setUserType(int user_id, String userType) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_TYPE_DE_PERS + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{userType, user_id});
+    }
+
+
 
 
 }

@@ -12,7 +12,7 @@
     app:layout_constraintEnd_toEndOf="parent">
 
     <TextView
-        android:id="@+id/explication_list_type_pers_mesinfo"
+        android:id="@+id/text_type_de_pers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

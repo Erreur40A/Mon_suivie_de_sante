@@ -20,7 +20,7 @@
     <string name="taille">Taille (en cm)</string>
     <string name="genre_prompt">Genre</string>
     <string name="vous_etes_prompt">Vous êtes ?</string>
-    <string name="mesinformations">Mes Informations</string>
+    <string name="mes_informations">Mes Informations</string>
     <string name="pas">Pas</string>
     <string name="calories">Calories</string>
     <string name="sommeil">Sommeil</string>

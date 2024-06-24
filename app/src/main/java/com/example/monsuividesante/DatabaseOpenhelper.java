@@ -37,8 +37,8 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ligne.put(IDENTITE$PRENOM, "Dieunel");
             ligne.put(IDENTITE$NOM, "MARCELIN");
             ligne.put(IDENTITE$AGE, 20);
-            ligne.put(IDENTITE$POIDS, 70);
-            ligne.put(IDENTITE$TAILLE, 170);
+            ligne.put(IDENTITE$POIDS, 68);
+            ligne.put(IDENTITE$TAILLE, 185);
             ligne.put(IDENTITE$TYPE_DE_PERSONNE, 1);
             ligne.put(IDENTITE$GENRE,genre.getGenre());
 

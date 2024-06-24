@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <!--Bouton mes informations -->
+    <LinearLayout
+        android:id="@+id/mes_info"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.25">
+
+        <ImageButton
+            android:id="@+id/bouton_mes_info"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/mes_informations"
+            android:scaleType="centerInside"
+            android:alpha="0.8"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/icone_mes_informations" />
+
+        <TextView
+            android:id="@+id/titre_bouton_mes_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mes_informations"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/bouton_mes_info" />
+    </LinearLayout>
+
+    <!--Bouton pas-->
+    <LinearLayout
+        android:id="@+id/pas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mes_info"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.25">
+
+        <ImageButton
+            android:id="@+id/bouton_pas"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/pas"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:alpha="0.4"
+            app:srcCompat="@drawable/icone_pas" />
+
+        <TextView
+            android:id="@+id/titre_bouton_pas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/pas"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/bouton_pas" />
+    </LinearLayout>
+
+
+    <!--Bouton calories -->
+    <LinearLayout
+        android:id="@+id/calories"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pas"
+        app:layout_constraintWidth_percent="0.25">
+
+        <ImageButton
+            android:id="@+id/bouton_calories"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/calories"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:alpha="0.4"
+            app:srcCompat="@drawable/icone_calories" />
+
+        <TextView
+            android:id="@+id/titre_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calories"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/bouton_calories" />
+    </LinearLayout>
+
+
+    <!--Bouton sommeil-->
+    <LinearLayout
+        android:id="@+id/sommeil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/calories"
+        app:layout_constraintWidth_percent="0.25">
+
+        <ImageButton
+            android:id="@+id/bouton_sommeil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/sommeil"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:alpha="0.4"
+            app:srcCompat="@drawable/icone_sommeil" />
+
+        <TextView
+            android:id="@+id/titre_sommeil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sommeil"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/bouton_sommeil" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
