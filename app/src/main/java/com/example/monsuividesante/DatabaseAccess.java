@@ -15,7 +15,8 @@ public class DatabaseAccess {
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
-    Cursor c = null;
+    private Cursor c = null;
+
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
     private static final String MESSAGE = "message";
@@ -39,7 +40,6 @@ public class DatabaseAccess {
 
     /*
     * Syntaxe pour la table identite*/
-    private static final String TABLE_IDENTITE = "identite";
     private static final String COL_USER_ID = "user_id";
     private static final String COL_NAME = "nom";
     private static final String COL_FIRST_NAME = "prenom";
@@ -48,7 +48,6 @@ public class DatabaseAccess {
     private static final String COL_TAILLE = "taille";
     private static final String COL_GENRE = "genre";
     private static final String COL_TYPE_DE_PERS = "type_de_pers";
-
 
 
     private DatabaseAccess(Context context) {
@@ -75,8 +74,6 @@ public class DatabaseAccess {
 
     public String getMsgMotivation(int id) {
         if(id < 0) return null;
-
-        Log.println(Log.INFO, "getMsgMotivation", Integer.toString(id));
 
         String requete = "SELECT " + MESSAGE$CONTENU +
                          " FROM " + MESSAGE +
@@ -124,17 +121,33 @@ public class DatabaseAccess {
      */
 
     public String getUserLastName(int user_id) {
-        String query = "SELECT " + COL_NAME + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
+
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        String userName = null;
+        c.moveToFirst();
+
+        Log.println(Log.INFO, "azertyuiop", c.getString(c.getColumnIndexOrThrow(COL_NAME)));
+
+        return c.getString(c.getColumnIndexOrThrow(COL_NAME));
+        /*String userLastName = null;
         if (c != null && c.moveToFirst()) {
-            userName = c.getString(c.getColumnIndexOrThrow(COL_NAME));
+            userLastName = c.getString(c.getColumnIndexOrThrow(COL_NAME));
         }
-        return userName;
+        return userLastName;*/
+
+
+        /*String query = "SELECT " + COL_FIRST_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
+        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        String userFirstName = null;
+        if (c != null && c.moveToFirst()) {
+            userFirstName = c.getString(c.getColumnIndexOrThrow(COL_FIRST_NAME));
+        }
+        return userFirstName;
+        */
     }
 
     public String getUserFirstName(int user_id) {
-        String query = "SELECT " + COL_FIRST_NAME + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_FIRST_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         String userFirstName = null;
         if (c != null && c.moveToFirst()) {
@@ -144,7 +157,7 @@ public class DatabaseAccess {
     }
 
     public int getUserAge(int user_id) {
-        String query = "SELECT " + COL_AGE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_AGE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         int userAge = -1;
         if (c != null && c.moveToFirst()) {
@@ -154,7 +167,7 @@ public class DatabaseAccess {
     }
 
     public int getUserWeight(int user_id) {
-        String query = "SELECT " + COL_POIDS + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_POIDS + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         int userWeight = -1;
         if (c != null && c.moveToFirst()) {
@@ -164,7 +177,7 @@ public class DatabaseAccess {
     }
 
     public int getUserHeight(int user_id) {
-        String query = "SELECT " + COL_TAILLE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_TAILLE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         int userHeight = -1;
         if (c != null && c.moveToFirst()) {
@@ -174,7 +187,7 @@ public class DatabaseAccess {
     }
 
     public Genre getUserGender(int user_id) {
-        String query = "SELECT " + COL_GENRE + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_GENRE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         Genre userGender = null;
         if (c != null && c.moveToFirst()) {
@@ -190,7 +203,7 @@ public class DatabaseAccess {
     }
 
     public String getUserType(int user_id) {
-        String query = "SELECT " + COL_TYPE_DE_PERS + " FROM " + TABLE_IDENTITE + " WHERE " + "COL_USER_ID=?";
+        String query = "SELECT " + COL_TYPE_DE_PERS + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
         c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
         int i = -1;
         String userType;
