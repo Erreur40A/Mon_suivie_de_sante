@@ -21,6 +21,9 @@ public class Connexion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_connexion);
+        setupUI();
+    }
+    private void setupUI() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.page_de_connexion), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -32,8 +35,6 @@ public class Connexion extends AppCompatActivity {
 
         Button boutton_inscription = findViewById(R.id.inscription1);
         boutton_inscription.setOnClickListener(this::setOnCLickListenerInscription);
-
-        
     }
 
     public void setOnCLickListenerConnexion(View view) {
@@ -62,11 +63,12 @@ public class Connexion extends AppCompatActivity {
     }
 
     public void setOnCLickListenerInscription(View view) {
-        Intent intent = new Intent(Connexion.this, MainActivity.class);
+        Intent intent = new Intent(Connexion.this, ActivityInscription.class);
         startActivity(intent);
     }
 
     public void setOnClickListenerErreur(View view) {
         setContentView(R.layout.activity_connexion);
+        setupUI();
     }
 }
