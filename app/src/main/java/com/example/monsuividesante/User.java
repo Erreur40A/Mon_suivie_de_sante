@@ -13,7 +13,7 @@ public class User implements Serializable {
     private String genre;
     private int type_de_personne;
 
-    public User(int id,String prenom, String nom, int age, int poids, int taille, String genre, int type_de_personne){
+    public User(int id, String prenom, String nom, int age, int poids, int taille, String genre, int type_de_personne){
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;

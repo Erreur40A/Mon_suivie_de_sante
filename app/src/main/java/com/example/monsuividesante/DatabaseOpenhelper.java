@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
-    private static final String DATABSE_NAME = "mon_suivi_de_sante_db.db";
+    private static final String DATABSE_NAME = "ladb.db";
 
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
@@ -48,7 +48,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
 
 
-    private static final String DATABASE_NAME = "mon_suivi_de_sante_db.db";
 
     public DatabaseOpenhelper(Context context) {
         super(context, DATABSE_NAME, null, 1);

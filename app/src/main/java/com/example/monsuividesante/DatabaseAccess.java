@@ -241,4 +241,58 @@ public class DatabaseAccess{
         value.put("type_de_pers", type_de_pers);
         long l = db.insert("identite", null, value);
     }
+
+    public int getIdUtilisateur(String nom_utilisateur) {
+        c = db.rawQuery("SELECT identifiant from connexion WHERE nom_utilisateur = ?", new String[]{nom_utilisateur});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("user_id"));
+    }
+
+    public String getNomUtilisateur(int user_id) {
+        c = db.rawQuery("SELECT nom from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("nom"));
+    }
+
+    public String getPrenomUtilisateur(int user_id) {
+        c = db.rawQuery("SELECT prenom from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("prenom"));
+    }
+
+    public int getAge(int user_id) {
+        c = db.rawQuery("SELECT age from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("age"));
+    }
+
+    public int getPoids(int user_id) {
+        c = db.rawQuery("SELECT poids from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("poids"));
+    }
+
+    public int getTaille(int user_id) {
+        c = db.rawQuery("SELECT taille from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("taille"));
+    }
+
+    public String getGenre(int user_id) {
+        c = db.rawQuery("SELECT genre from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("genre"));
+    }
+
+    public int getTypeDePersonne(int user_id) {
+        c = db.rawQuery("SELECT type_de_pers from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
+    }
+
+    public String getHashMdp(String nom_utilisateur) {
+        c = db.rawQuery("SELECT mot_de_passe from connexion WHERE nom_utilisateur = ?", new String[]{nom_utilisateur});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
+    }
 }

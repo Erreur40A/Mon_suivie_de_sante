@@ -46,7 +46,8 @@ public class ActivityInscription extends AppCompatActivity {
                 Toast.makeText(this, "utilisateur deja existant", Toast.LENGTH_SHORT).show();
 
             } else {
-                db.addUser(id_inscr, mdp_inscr);
+                String hashMpd = Hashage.hasherMdpHexa(mdp_inscr);
+                db.addUser(id_inscr, hashMpd);
                 db.close();
                 Intent intent = new Intent(ActivityInscription.this, InfoActivity.class);
                 startActivity(intent);

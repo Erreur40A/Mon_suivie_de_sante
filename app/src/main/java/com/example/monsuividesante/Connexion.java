@@ -45,11 +45,24 @@ public class Connexion extends AppCompatActivity {
         if(!id.isEmpty() && !mdp.isEmpty()) {
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
             db.open();
+            String hashMdp = Hashage.hasherMdpHexa(mdp);
 
-            boolean exist = db.existUser(id, mdp);
+            boolean exist = db.existUser(id);
+            String user_hashmdp = db.getHashMdp(id);
 
-            if(exist) {
+            if(exist && Hashage.isEquals(hashMdp, user_hashmdp)) {
+                int user_id = db.getIdUtilisateur(id);
+                String user_nom = db.getNomUtilisateur(user_id);
+                String user_prenom = db.getPrenomUtilisateur(user_id);
+                int user_age = db.getAge(user_id);
+                int user_taille = db.getTaille(user_id);
+                int user_poids = db.getPoids(user_id);
+                String user_genre = db.getGenre(user_id);
+                int user_type = db.getTypeDePersonne(user_id);
+                User user = new User(user_id, user_nom, user_prenom, user_age, user_taille, user_poids, user_genre, user_type);
+                /* A changer quand il y aura mes infos */
                 Intent intent = new Intent(Connexion.this, MainActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             } else {
                 setContentView(R.layout.error);
