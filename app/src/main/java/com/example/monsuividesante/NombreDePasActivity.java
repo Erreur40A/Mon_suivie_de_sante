@@ -33,6 +33,13 @@ public class NombreDePasActivity extends AppCompatActivity {
     private TextView pourcent_journaier, pourcent_hebdomadaire, pourcent_mensuelle, msg_motivation;
     private ImageButton bouton_journalier, bouton_hebdomadaire, bouton_mensuelle;
     private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
+    private int mois, annee;
+
+    private static final String PAS_HEBDOMADAIRE = "pas_hebdo";
+    private static final String PAS_JOURNALIERS = "pas_journaliers";
+    private static final String PAS_MENSUELS = "pas_mensuels";
+
+
     private ProgressBar bar_journalier, bar_mensuelle, bar_hebdomadaire;
 
     //temporaire
@@ -116,13 +123,23 @@ public class NombreDePasActivity extends AppCompatActivity {
         *
         * Ensuite on cast le résultat en int et on met à jour la barre de progression le textView pourcent
         * */
-        setCouleurProgressBar(bar_hebdomadaire, 70);
-        setCouleurProgressBar(bar_mensuelle, 20);
-        setCouleurProgressBar(bar_journalier, 50);
 
-        pourcent_mensuelle.setText(20+"%");
-        pourcent_journaier.setText(50+"%");
-        pourcent_hebdomadaire.setText(70+"%");
+        db.open();
+        db_helper.updateNombrePasJournalier(user_id, db.getDateJournalier(user_id), 20);
+        db_helper.updateNombrePasHebdomadaire(user_id, db.getSemaineHebdomadaire(user_id), 5, 60);
+        db_helper.updateNombrePasMensuelle(user_id, db.getMoisMensuelle(user_id), 2024, 100);
+
+        int j = db.getPas(user_id, PAS_JOURNALIERS);
+        int h = db.getPas(user_id, PAS_HEBDOMADAIRE);;
+        int m = db.getPas(user_id, PAS_MENSUELS);;
+        db.close();
+        setCouleurProgressBar(bar_hebdomadaire, j);
+        setCouleurProgressBar(bar_mensuelle, h);
+        setCouleurProgressBar(bar_journalier, m);
+
+        pourcent_mensuelle.setText(j+"%");
+        pourcent_journaier.setText(h+"%");
+        pourcent_hebdomadaire.setText(m+"%");
     }
 
 

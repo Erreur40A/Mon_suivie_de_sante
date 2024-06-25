@@ -315,6 +315,17 @@ public class DatabaseAccess{
         return nombreDePas;
     }
 
+    public int getPas(int user_id, String table){
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                         " FROM " + table +
+                         " WHERE " + PAS$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
     // Méthode auxiliaire pour récupérer le nombre de pas depuis une table spécifique
     //A modifier ou supprimer
     private int getPasFromTable(String tableName, String type) {

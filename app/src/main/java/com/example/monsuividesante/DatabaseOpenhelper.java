@@ -142,7 +142,35 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.update(PAS_MENSUELS, values, "user_id = ?", new String[]{Integer.toString(user_id)});
     }
 
+    public void updateNombrePasJournalier(int user_id, String date, int nb_pas){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String condition = PAS$USER_ID + "=? AND " + PAS_JOURNALIERS$DATE + "=?";
+        values.put(PAS$OBJECTIFS, nb_pas);
+        db.update(PAS_MENSUELS, values, condition, new String[]{Integer.toString(user_id), date});
+    }
+
+    public void updateNombrePasHebdomadaire(int user_id, int semaine, int mois, int nb_pas){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String condition = PAS$USER_ID + "=? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=? AND " + PAS_HEBDOMADAIRE$MOIS + "=?";
+        values.put(PAS$OBJECTIFS, nb_pas);
+        db.update(PAS_MENSUELS, values, condition, new String[]{Integer.toString(user_id), Integer.toString(semaine), Integer.toString(mois)});
+    }
+
+    public void updateNombrePasMensuelle(int user_id, int mois, int annee, int nb_pas){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String condition = PAS$USER_ID + "=? AND " + PAS_MENSUELS$NO_MOIS + "=? AND " + PAS$ANNEE + "=?";
+        values.put(PAS$OBJECTIFS, nb_pas);
+        db.update(PAS_MENSUELS, values, condition, new String[]{Integer.toString(user_id), Integer.toString(mois), Integer.toString(annee)});
+    }
+
     // Méthode pour mettre à jour le nombre de pas pour un objectif spécifique
+    // Utilisé les updates juste au dessus
     public void updateNombreDePas(String table, int nombreDePas) {
         SQLiteDatabase db = this.getWritableDatabase();
 
