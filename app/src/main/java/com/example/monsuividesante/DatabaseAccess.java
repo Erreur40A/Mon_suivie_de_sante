@@ -229,7 +229,7 @@ public class DatabaseAccess{
         long l = db.insert("connexion", null, value);
     }
 
-    public void addInfo(int user_id, String nom, String prenom, int age, int poids, int taille, String genre, String type_de_pers) {
+    public void addInfo(int user_id, String nom, String prenom, int age, int poids, int taille, String genre, int type_de_pers) {
         ContentValues value = new ContentValues();
         value.put("user_id", user_id);
         value.put("nom", nom);
