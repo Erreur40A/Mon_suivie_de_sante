@@ -1,5 +1,6 @@
 package com.example.monsuividesante;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,7 @@ import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 
@@ -100,35 +102,41 @@ public class NombreDePasActivity extends AppCompatActivity {
         bouton_mensuelle.setOnClickListener(this::onClickListenerObjectifMensuelle);
         bouton_hebdomadaire.setOnClickListener(this::onClickListenerObjectifHebdomadaire);
 
-        bar_journalier = journ.findViewById(R.id.progressBarJour);
-        bar_hebdomadaire = hebd.findViewById(R.id.progresshebdo);
-        bar_mensuelle = mens.findViewById(R.id.progressmensuel);
+        bar_journalier = findViewById(R.id.objectif_journalier).findViewById(R.id.progressBarJour);
+        bar_hebdomadaire = findViewById(R.id.objectif_hebdomadaire).findViewById(R.id.progresshebdo);
+        bar_mensuelle = findViewById(R.id.objectif_mensuelle).findViewById(R.id.progressmensuel);
 
-        pourcent_hebdomadaire = hebd.findViewById(R.id.progresstexthebd);
-        pourcent_journaier = journ.findViewById(R.id.progressTextjour);
-        pourcent_mensuelle = mens.findViewById(R.id.progressTextmens);
+        pourcent_hebdomadaire = findViewById(R.id.objectif_hebdomadaire).findViewById(R.id.progresstexthebd);
+        pourcent_journaier = findViewById(R.id.objectif_journalier).findViewById(R.id.progressTextjour);
+        pourcent_mensuelle = findViewById(R.id.objectif_mensuelle).findViewById(R.id.progressTextmens);
 
+        /*Calcule des pourcentage :
+        *
+        * nombre_pas_effectue / objetcif_pas * 100
+        *
+        * Ensuite on cast le résultat en int et on met à jour la barre de progression le textView pourcent
+        * */
         setCouleurProgressBar(bar_hebdomadaire, 70);
         setCouleurProgressBar(bar_mensuelle, 20);
         setCouleurProgressBar(bar_journalier, 50);
 
-        pourcent_mensuelle.setText(70+"%");
+        pourcent_mensuelle.setText(20+"%");
         pourcent_journaier.setText(50+"%");
-        pourcent_hebdomadaire.setText(20+"%");
+        pourcent_hebdomadaire.setText(70+"%");
     }
 
 
     public void setCouleurProgressBar(ProgressBar progressBar, int pourcentage){
         if(pourcentage<0 || pourcentage>100) return;
 
-        Drawable barre_progression = progressBar.getProgressDrawable().mutate();
+        Drawable barre_progression;
 
         if(pourcentage<36)
-            barre_progression.setColorFilter(getResources().getColor(R.color.rouge, getTheme()), PorterDuff.Mode.SRC_IN);
+            barre_progression = ContextCompat.getDrawable(this, R.drawable.progress);
         else if (pourcentage<66)
-            barre_progression.setColorFilter(getResources().getColor(R.color.orange, getTheme()), PorterDuff.Mode.SRC_IN);
+            barre_progression = ContextCompat.getDrawable(this, R.drawable.progress1);
         else
-            barre_progression.setColorFilter(getResources().getColor(R.color.vert, getTheme()), PorterDuff.Mode.SRC_IN);
+            barre_progression = ContextCompat.getDrawable(this, R.drawable.progress2);
 
         progressBar.setProgress(pourcentage);
         progressBar.setProgressDrawable(barre_progression);
