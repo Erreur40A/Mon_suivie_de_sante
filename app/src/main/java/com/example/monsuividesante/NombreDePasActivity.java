@@ -1,6 +1,8 @@
 package com.example.monsuividesante;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,7 @@ public class NombreDePasActivity extends AppCompatActivity {
     private TextView objectif_journalier, objectif_hebdomadaire, objectif_mensuelle;
     private TextView pourcent_journaier, pourcent_hebdomadaire, pourcent_mensuelle, msg_motivation;
     private ImageButton bouton_journalier, bouton_hebdomadaire, bouton_mensuelle;
+    private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
     private ProgressBar bar_journalier, bar_mensuelle, bar_hebdomadaire;
 
     //temporaire
@@ -66,12 +69,6 @@ public class NombreDePasActivity extends AppCompatActivity {
         msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
         db.close();
 
-        db_helper.updateObjectifMensuelle(user_id, 20);
-        db.open();
-        //il y a 19 msg entre 1 et 20
-        msg_motivation.setText(""+db.getObjectifMensuelle(user_id));
-        db.close();
-
         ConstraintLayout toolbar = findViewById(R.id.toolbar);
         ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
         ImageButton calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
@@ -102,6 +99,39 @@ public class NombreDePasActivity extends AppCompatActivity {
         bouton_journalier.setOnClickListener(this::onClickListenerObjectifJournalier);
         bouton_mensuelle.setOnClickListener(this::onClickListenerObjectifMensuelle);
         bouton_hebdomadaire.setOnClickListener(this::onClickListenerObjectifHebdomadaire);
+
+        bar_journalier = journ.findViewById(R.id.progressBarJour);
+        bar_hebdomadaire = hebd.findViewById(R.id.progresshebdo);
+        bar_mensuelle = mens.findViewById(R.id.progressmensuel);
+
+        pourcent_hebdomadaire = hebd.findViewById(R.id.progresstexthebd);
+        pourcent_journaier = journ.findViewById(R.id.progressTextjour);
+        pourcent_mensuelle = mens.findViewById(R.id.progressTextmens);
+
+        setCouleurProgressBar(bar_hebdomadaire, 70);
+        setCouleurProgressBar(bar_mensuelle, 20);
+        setCouleurProgressBar(bar_journalier, 50);
+
+        pourcent_mensuelle.setText(70+"%");
+        pourcent_journaier.setText(50+"%");
+        pourcent_hebdomadaire.setText(20+"%");
+    }
+
+
+    public void setCouleurProgressBar(ProgressBar progressBar, int pourcentage){
+        if(pourcentage<0 || pourcentage>100) return;
+
+        Drawable barre_progression = progressBar.getProgressDrawable().mutate();
+
+        if(pourcentage<36)
+            barre_progression.setColorFilter(getResources().getColor(R.color.rouge, getTheme()), PorterDuff.Mode.SRC_IN);
+        else if (pourcentage<66)
+            barre_progression.setColorFilter(getResources().getColor(R.color.orange, getTheme()), PorterDuff.Mode.SRC_IN);
+        else
+            barre_progression.setColorFilter(getResources().getColor(R.color.vert, getTheme()), PorterDuff.Mode.SRC_IN);
+
+        progressBar.setProgress(pourcentage);
+        progressBar.setProgressDrawable(barre_progression);
     }
 
     public void onClickListenerObjectifJournalier(View view){
