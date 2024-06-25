@@ -72,8 +72,10 @@
     <string-array name="vous_etes_array">
         <item>Vous etes</item>
         <item>Sédentaire</item>
-        <item>Sportif</item>
+        <item>Légerement actif</item>
+        <item>Modéremment actif</item>
         <item>Actif</item>
+        <item>Très actif</item>
     </string-array>
 
 
