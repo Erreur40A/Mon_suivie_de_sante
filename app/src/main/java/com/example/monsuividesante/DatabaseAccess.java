@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class DatabaseAccess{
 
@@ -42,11 +44,8 @@ public class DatabaseAccess{
     private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
 
     private static final String PAS$USER_ID = "user_id";
-    private static final String PAS$ANNEE = "annee";
     private static final String PAS$OBJECTIFS = "objectifs";
     private static final String PAS$NB_PAS_EFFECTUES = "nb_pas_effectues";
-    private static final String PAS$DIFF_PAS = "diff_pas";
-    private static final String PAS_HEBDOMADAIRE$MOIS = "mois";
 
     private static final String PAS_HEBDOMADAIRE$NO_SEMAINE = "no_semaine";
     private static final String PAS_MENSUELS$NO_MOIS = "no_mois";
@@ -210,24 +209,26 @@ public class DatabaseAccess{
     }
 
     public int getSemaineHebdomadaire(int user_id){
+        int semaine = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH);
+
         String requete = "SELECT " + PAS_HEBDOMADAIRE$NO_SEMAINE +
                          " FROM " + PAS_HEBDOMADAIRE +
-                         " WHERE " + PAS$USER_ID + " = ?" +
-                         " ORDER BY " + PAS_HEBDOMADAIRE$MOIS + ", " + PAS_HEBDOMADAIRE$NO_SEMAINE + " DESC";
+                         " WHERE " + PAS$USER_ID + " = ? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
 
-        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
         c.moveToFirst();
 
         return c.getInt(c.getColumnIndexOrThrow(PAS_HEBDOMADAIRE$NO_SEMAINE));
     }
 
     public int getMoisMensuelle(int user_id){
+        int mois = Calendar.getInstance().get(Calendar.MONTH);
+
         String requete = "SELECT " + PAS_MENSUELS$NO_MOIS +
                          " FROM " + PAS_MENSUELS +
-                         " WHERE " + PAS$USER_ID + " = ?" +
-                         " ORDER BY " + PAS$ANNEE + ", " + PAS_MENSUELS$NO_MOIS + " DESC";
+                         " WHERE " + PAS$USER_ID + " = ? AND " + PAS_MENSUELS$NO_MOIS + "=?";
 
-        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id),Integer.toString(mois)});
         c.moveToFirst();
 
         return c.getInt(c.getColumnIndexOrThrow(PAS_MENSUELS$NO_MOIS));
@@ -247,7 +248,6 @@ public class DatabaseAccess{
     }
 
     public int getObjectifMensuelle(int user_id){
-        //le mois est entre 0 et 11
         int mois = getMoisMensuelle(user_id);
 
         String requete = "SELECT " + PAS$OBJECTIFS +
@@ -273,6 +273,53 @@ public class DatabaseAccess{
 
         return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
     }
+
+    public int getPasJournalier(int user_id){
+        String date = getDateJournalier(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_JOURNALIERS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_JOURNALIERS$DATE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
+    public int getPasHebdomadaire(int user_id){
+        int semaine = getSemaineHebdomadaire(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_HEBDOMADAIRE +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
+    public int getPasMensuelle(int user_id){
+        int mois = getMoisMensuelle(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_MENSUELS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_MENSUELS$NO_MOIS + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(mois)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
+
+
+
+
+
+
+
 
     // Méthode auxiliaire pour récupérer la date depuis une table spécifique
     private String getDateFromTable(String tableName, String type) {
