@@ -1,3 +1,4 @@
+
 package com.example.monsuividesante;
 
 import android.content.ContentValues;
@@ -144,7 +145,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.delete(SOMMEIL, null, null);
         db.close();
     }
-    
+
     public void addLigneIdentite(int user_id){
         try(SQLiteDatabase db = getWritableDatabase()){
 
@@ -154,7 +155,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ligne.put(IDENTITE$USER_ID, user_id);
             ligne.put(IDENTITE$PRENOM, "Dieunel");
             ligne.put(IDENTITE$NOM, "MARCELIN");
-            ligne.put(IDENTITE$AGE, 19);
+            ligne.put(IDENTITE$AGE, 23);
             ligne.put(IDENTITE$POIDS, 68);
             ligne.put(IDENTITE$TAILLE, 185);
             ligne.put(IDENTITE$TYPE_DE_PERSONNE, 1);

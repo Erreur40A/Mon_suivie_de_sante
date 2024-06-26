@@ -36,11 +36,9 @@ public class ActivityMesInformations extends AppCompatActivity {
     private Spinner spinner_type;
     //private User user;
 
+    private User user;
+    private int user_id;
 
-
-    //a modifier
-   // private User user;
-    private int user_id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,13 @@ public class ActivityMesInformations extends AppCompatActivity {
             return insets;
         });
 
+
         //enlever le commentaire lors de la fusion
-        //user=getIntent().getSerializableExtra("user");
+
+        //a modifier
+
+        user= (User) getIntent().getSerializableExtra("user");
+        user_id = 1;
 
         // Initialiser l'accès à la base de données
         databaseAccess = DatabaseAccess.getInstance(this);
@@ -200,9 +203,7 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estNomPrenomValide(affichage)) {
                 nom.setText(affichage);
                 nom.setTextColor(Color.BLACK);
-                databaseAccess.open();
-                databaseAccess.setUserLastName(user_id, affichage);
-                databaseAccess.close();
+                user.setNom(affichage, db_helper);
             }
 
             pop_up.dismiss();
@@ -230,9 +231,7 @@ public class ActivityMesInformations extends AppCompatActivity {
                 prenom.setTextColor(Color.BLACK);
                 String bienv = "Bienvenue " + affichage;
                 bienvenue.setText(bienv);
-                databaseAccess.open();
-                databaseAccess.setUserFirstName(user_id, affichage);
-                databaseAccess.close();
+                user.setPrenom(affichage, db_helper);
             }
 
             pop_up.dismiss();
@@ -258,9 +257,7 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estPoidsValide(affichage)) {
                 poids.setText(affichage);
                 poids.setTextColor(Color.BLACK);
-                databaseAccess.open();
-                databaseAccess.setUserWeight(user_id, Integer.parseInt(affichage));
-                databaseAccess.close();
+                user.setPoids(Integer.parseInt(affichage), db_helper);
             }
 
             pop_up.dismiss();
@@ -286,9 +283,7 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estAgeValide(affichage)) {
                 age.setText(affichage);
                 age.setTextColor(Color.BLACK);
-                databaseAccess.open();
-                databaseAccess.setUserAge(user_id, Integer.parseInt(affichage));
-                databaseAccess.close();
+                user.setAge(Integer.parseInt(affichage), db_helper);
             }
 
             pop_up.dismiss();
@@ -314,9 +309,7 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estTailleValide(affichage)) {
                 taille.setText(affichage);
                 taille.setTextColor(Color.BLACK);
-                databaseAccess.open();
-                databaseAccess.setUserHeight(user_id, Integer.parseInt(affichage));
-                databaseAccess.close();
+                user.setTaille(Integer.parseInt(affichage), db_helper);
             }
 
             pop_up.dismiss();
@@ -363,16 +356,16 @@ public class ActivityMesInformations extends AppCompatActivity {
         // Charger les informations de l'utilisateur depuis la base de données
         databaseAccess.open();
 
-        String userLastName = databaseAccess.getUserLastName(user_id);
-       // String userLastName = databaseAccess.getMsgMotivation(2);
+        String userLastName = databaseAccess.getNomUtilisateur(user_id);
+        // String userLastName = databaseAccess.getMsgMotivation(2);
 
-        String userFirstName = databaseAccess.getUserFirstName(user_id);
+        String userFirstName = databaseAccess.getPrenomUtilisateur(user_id);
 
-        int userAge = databaseAccess.getUserAge(user_id);
-        int userWeight = databaseAccess.getUserWeight(user_id);
-        int userHeight = databaseAccess.getUserHeight(user_id);
-        Genre gender = databaseAccess.getUserGender(user_id);
-        String type_de_pers = databaseAccess.getUserType(user_id);
+        int userAge = databaseAccess.getAge(user_id);
+        int userWeight = databaseAccess.getPoids(user_id);
+        int userHeight = databaseAccess.getTaille(user_id);
+        Genre gender = Genre.valueOf(databaseAccess.getGenre(user_id));
+        String type_de_pers = String.valueOf(databaseAccess.getTypeDePersonne(user_id));
 
         databaseAccess.close();
 

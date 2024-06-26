@@ -1,3 +1,4 @@
+
 package com.example.monsuividesante;
 
 import android.content.ContentValues;
@@ -52,10 +53,10 @@ public class DatabaseAccess {
     private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
     private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
 
-   
+
 
     /*
-    * Syntaxe pour la table identite*/
+     * Syntaxe pour la table identite*/
     private static final String COL_USER_ID = "user_id";
     private static final String COL_NAME = "nom";
     private static final String COL_FIRST_NAME = "prenom";
@@ -91,8 +92,8 @@ public class DatabaseAccess {
         if(id < 0) return null;
 
         String requete = "SELECT " + MESSAGE$CONTENU +
-                         " FROM " + MESSAGE +
-                         " WHERE " + MESSAGE$ID + " = ?";
+                " FROM " + MESSAGE +
+                " WHERE " + MESSAGE$ID + " = ?";
 
         c = db.rawQuery(requete, new String[]{Integer.toString(id)});
         c.moveToFirst();
@@ -101,8 +102,8 @@ public class DatabaseAccess {
     }
 
     public ArrayList<String> getDuree(){
-        String requete = "SELECT * FROM " + DUREE +
-                         " ORDER BY " + DUREE$DUREE + " ASC";
+        String requete = "SELECT * FROM " + DUREE + " ORDER BY " + DUREE$DUREE + " ASC";
+
 
         c = db.rawQuery(requete, null);
 
@@ -117,8 +118,8 @@ public class DatabaseAccess {
 
     public HashMap<String, Float> getActiviteCalories(){
 
-        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +
-                         " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
+        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +  " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
+
 
         c = db.rawQuery(requete, null);
 
@@ -141,6 +142,7 @@ public class DatabaseAccess {
                        " FROM " + SOMMEIL +
                        " WHERE " + SOMMEIL$USER_ID + "=?";
 
+
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
@@ -151,6 +153,7 @@ public class DatabaseAccess {
         String requete="SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
                        " FROM " + SOMMEIL +
                        " WHERE " + SOMMEIL$USER_ID + "=?";
+
 
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
@@ -319,7 +322,7 @@ public class DatabaseAccess {
         return  c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
     }
 
-    
+
     public void setUserLastName(int user_id, String lastName) {
         String query = "UPDATE " + IDENTITE + " SET " + COL_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
         db.execSQL(query, new Object[]{lastName, user_id});
@@ -354,4 +357,6 @@ public class DatabaseAccess {
         String query = "UPDATE " + IDENTITE + " SET " + COL_TYPE_DE_PERS + " = ? WHERE " + COL_USER_ID + " = ?";
         db.execSQL(query, new Object[]{userType, user_id});
     }
+
 }
+
