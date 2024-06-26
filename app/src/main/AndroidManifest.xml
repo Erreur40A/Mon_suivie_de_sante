@@ -25,7 +25,7 @@
             android:name=".SommeilActivity"
             android:exported="true" />
         <activity
-            android:name=".ActivityMesInformations"
+            android:name=".CaloriesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

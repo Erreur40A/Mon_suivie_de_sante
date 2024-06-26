@@ -50,7 +50,6 @@
     <string name="rappel_notif_coucher">N\'oubliez pas d\'écrire l\'heure à la qu\'elle vous vous êtes réveillez et couchez</string>
     <string name="dec_img_lune">Image lune</string>
     <string name="explication_format_heure">hh:mm</string>
-    <string name="icone_sante">Health Icon</string>
     <string name="icon_account">Icon Account</string>
     <string name="seconnceter">Se connecter</string>
     <string name="inscription_invitation">Vous n\'avez pas de compte? Inscrivez-vous</string>
@@ -60,8 +59,6 @@
     <string name="ok">OK</string>
     <string name="identifiant_ou_mot_de_passe_incorrect">Identifiant ou mote de passe incorrect.</string>
     <string name="erreur">Erreur</string>
-    <string name="genre_prompt">Genre</string>
-    <string name="vous_etes_prompt">Vous êtes ?</string>
     <string name="entrer_information">Saisir vos informations</string>
 
     
@@ -80,8 +77,6 @@
     <string name="pop_up_hint_age">Entrez votre âge ici</string>
     <string name="pop_up_text_poids">Combien pesez vous ?</string>
     <string name="pop_up_hint_poids">Entrez votre poids ici (en kg)</string>
-    <string name="validation">OK</string>
-    <string name="annulation">Annuler</string>
     <string name="bienvenue">Bienvenue (prénom de l\'utilisateur)</string>
 
     <string name="age">Age</string>
@@ -102,8 +97,7 @@
     <string name="icone_sante">Health Icon</string>
     <string name="hello_icon">Hello Icon</string>
     <string name="choix_genre">Sexe</string>
-    <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
-    
+
 
     <string-array name="genre_array">
         <item>Homme</item>

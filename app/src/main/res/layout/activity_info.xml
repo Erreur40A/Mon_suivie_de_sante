@@ -122,7 +122,7 @@
             android:id="@+id/spinner_vous_etes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/vous_etes_array"
+            android:entries="@array/type_de_personne_array"
             android:prompt="@string/vous_etes_prompt" />
 
 

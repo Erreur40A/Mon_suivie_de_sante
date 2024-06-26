@@ -107,7 +107,7 @@
             android:scaleType="centerInside"
             android:layout_gravity="center"
             android:alpha="0.4"
-            app:srcCompat="@drawable/icone_calories"
+            app:srcCompat="@drawable/icone_calories"/>
 
 
         <TextView

@@ -14,7 +14,7 @@
         <!--en tete-->
 
         <include
-            layout="@layout/entete_mesinfo"
+            layout="@layout/entete"
             android:id="@+id/entete_mesinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

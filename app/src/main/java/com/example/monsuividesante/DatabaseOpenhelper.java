@@ -62,7 +62,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
 
     public DatabaseOpenhelper(Context context) {
-        super(context, DATABSE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     public void updatePrenom(String prenom, int id) {

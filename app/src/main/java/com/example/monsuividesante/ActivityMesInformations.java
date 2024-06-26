@@ -135,7 +135,7 @@ public class ActivityMesInformations extends AppCompatActivity {
         text_genre = findViewById(R.id.text_genre);
         text_type_de_pers = findViewById(R.id.text_type_de_pers);
 
-        bienvenue = findViewById(R.id.text_welcome);
+        bienvenue = findViewById(R.id.text_welcome).findViewById(R.id.welcome);
 
         // Charger les informations utilisateur
         loadUserInfo();
