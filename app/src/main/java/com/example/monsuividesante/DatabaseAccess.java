@@ -1,21 +1,25 @@
+
 package com.example.monsuividesante;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseAccess {
-
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
-    private Cursor c = null;
+
+    Cursor c = null;
+
 
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
@@ -38,8 +42,21 @@ public class DatabaseAccess {
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
 
+    private static final String APPORT_EN_ENERGIE$DATE = "date";
+    private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
+    private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
+    private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
+    private static final String SOMMEIL$USER_ID = "user_id";
+    private static final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
+    private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
+    private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
+    private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
+
+
+
     /*
-    * Syntaxe pour la table identite*/
+     * Syntaxe pour la table identite*/
     private static final String COL_USER_ID = "user_id";
     private static final String COL_NAME = "nom";
     private static final String COL_FIRST_NAME = "prenom";
@@ -51,7 +68,6 @@ public class DatabaseAccess {
 
 
     private DatabaseAccess(Context context) {
-
         this.openhelper = new DatabaseOpenhelper(context);
     }
 
@@ -76,8 +92,8 @@ public class DatabaseAccess {
         if(id < 0) return null;
 
         String requete = "SELECT " + MESSAGE$CONTENU +
-                         " FROM " + MESSAGE +
-                         " WHERE " + MESSAGE$ID + " = ?";
+                " FROM " + MESSAGE +
+                " WHERE " + MESSAGE$ID + " = ?";
 
         c = db.rawQuery(requete, new String[]{Integer.toString(id)});
         c.moveToFirst();
@@ -86,9 +102,11 @@ public class DatabaseAccess {
     }
 
     public ArrayList<String> getDuree(){
-        String requete = "SELECT * FROM " + DUREE;
+        String requete = "SELECT * FROM " + DUREE +
+                " ORDER BY " + DUREE$DUREE + " ASC";
 
-        c = db.rawQuery(requete, new String[]{});
+        c = db.rawQuery(requete, null);
+
         ArrayList<String> res = new ArrayList<String>();
 
         while (c.moveToNext()){
@@ -99,9 +117,12 @@ public class DatabaseAccess {
     }
 
     public HashMap<String, Float> getActiviteCalories(){
-        String requete = "SELECT * FROM " + ACTIVITE_CALORIE;
 
-        c = db.rawQuery(requete, new String[]{});
+        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +
+                " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
+
+        c = db.rawQuery(requete, null);
+
         HashMap<String, Float> res = new HashMap<String, Float>();
         String activite;
         float calories;
@@ -116,101 +137,189 @@ public class DatabaseAccess {
         return res;
     }
 
-    /**
-     * Pour obtenir le nom de l'utilisateur dans la base de donnees
-     */
+    public String getHeureCoucherReel(int user_id){
+        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_REEL +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
 
-    public String getUserLastName(int user_id) {
-        String query = "SELECT " + COL_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
         c.moveToFirst();
 
-        Log.println(Log.INFO, "azertyuiop", c.getString(c.getColumnIndexOrThrow(COL_NAME)));
-
-        return c.getString(c.getColumnIndexOrThrow(COL_NAME));
-        /*String userLastName = null;
-        if (c != null && c.moveToFirst()) {
-            userLastName = c.getString(c.getColumnIndexOrThrow(COL_NAME));
-        }
-        return userLastName;*/
-
-
-        /*String query = "SELECT " + COL_FIRST_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        String userFirstName = null;
-        if (c != null && c.moveToFirst()) {
-            userFirstName = c.getString(c.getColumnIndexOrThrow(COL_FIRST_NAME));
-        }
-        return userFirstName;
-        */
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
     }
 
-    public String getUserFirstName(int user_id) {
-        String query = "SELECT " + COL_FIRST_NAME + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        String userFirstName = null;
-        if (c != null && c.moveToFirst()) {
-            userFirstName = c.getString(c.getColumnIndexOrThrow(COL_FIRST_NAME));
-        }
-        return userFirstName;
+    public String getHeureCoucherPrevue(int user_id){
+        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
     }
 
-    public int getUserAge(int user_id) {
-        String query = "SELECT " + COL_AGE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        int userAge = -1;
-        if (c != null && c.moveToFirst()) {
-            userAge = c.getInt(c.getColumnIndexOrThrow(COL_AGE));
-        }
-        return userAge;
+    public String getHeureReveilReel(int user_id) {
+        String requete = "SELECT " + SOMMEIL$HEURE_REVEIL_REEL +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
     }
 
-    public int getUserWeight(int user_id) {
-        String query = "SELECT " + COL_POIDS + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        int userWeight = -1;
-        if (c != null && c.moveToFirst()) {
-            userWeight = c.getInt(c.getColumnIndexOrThrow(COL_POIDS));
-        }
-        return userWeight;
+    public String getHeureReveilPrevue(int user_id){
+        String requete = "SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
     }
 
-    public int getUserHeight(int user_id) {
-        String query = "SELECT " + COL_TAILLE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        int userHeight = -1;
-        if (c != null && c.moveToFirst()) {
-            userHeight = c.getInt(c.getColumnIndexOrThrow(COL_TAILLE));
-        }
-        return userHeight;
+    public String getDateApportEnEnergie(int user_id){
+        //Le ORDER BY sert a trier les dates du plus récent au plus ancien
+        String requete = "SELECT " + APPORT_EN_ENERGIE$DATE +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE user_id = ?" +
+                " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                "SUBSTR(date, 4, 2) || '/' || " +
+                "SUBSTR(date, 1, 2) DESC";
+
+        c=db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
     }
 
-    public Genre getUserGender(int user_id) {
-        String query = "SELECT " + COL_GENRE + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        Genre userGender = null;
-        if (c != null && c.moveToFirst()) {
-            String genderString = c.getString(c.getColumnIndexOrThrow(COL_GENRE));
-            if (genderString.equalsIgnoreCase(Genre.HOMME.getGenre())) {
-                userGender = Genre.HOMME;
-            }
-            else if (genderString.equalsIgnoreCase(Genre.FEMME.getGenre())) {
-                userGender = Genre.FEMME;
-            }
-        }
-        return userGender;
+    public float getCalorieConsomme(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_CONSOMME +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
     }
 
-    public String getUserType(int user_id) {
-        String query = "SELECT " + COL_TYPE_DE_PERS + " FROM " + IDENTITE + " WHERE " + COL_USER_ID + "=?";
-        c = db.rawQuery(query, new String[]{Integer.toString(user_id)});
-        String userType = null;
-        if (c != null && c.moveToFirst()) {
-            userType = c.getString(c.getColumnIndexOrThrow(COL_TYPE_DE_PERS));
-        }
-        return userType;
+    public float getCalorieDepense(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_DEPENSE +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
     }
+
+    public float getCalorieVariation(int user_id){
+        String date = getDateApportEnEnergie(user_id);
+
+        String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
+                " FROM " + APPORT_EN_ENERGIE +
+                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
+
+        c= db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
+    }
+
+    public boolean existUser(String utilisateur, String mdp) {
+        c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ? AND mot_de_passe = ?", new String[]{utilisateur, mdp});
+        return c.getCount() == 1;
+    }
+
+    public boolean existUser(String utilisateur) {
+        c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ?", new String[]{utilisateur});
+
+        return c.getCount() == 1;
+    }
+
+    public void addUser(String id_inscr, String mdp) {
+        ContentValues value = new ContentValues();
+        value.put("nom_utilisateur", id_inscr);
+        value.put("mot_de_passe", mdp);
+        long l = db.insert("connexion", null, value);
+    }
+
+    public void addInfo(int user_id, String nom, String prenom, int age, int poids, int taille, String genre, int type_de_pers) {
+        ContentValues value = new ContentValues();
+        value.put("user_id", user_id);
+        value.put("nom", nom);
+        value.put("prenom", prenom);
+        value.put("age", age);
+        value.put("poids", poids);
+        value.put("taille", taille);
+        value.put("genre", genre);
+        value.put("type_de_pers", type_de_pers);
+        long l = db.insert("identite", null, value);
+    }
+
+    public int getIdUtilisateur(String nom_utilisateur) {
+        c = db.rawQuery("SELECT identifiant from connexion WHERE nom_utilisateur = ?", new String[]{nom_utilisateur});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("user_id"));
+    }
+
+    public String getNomUtilisateur(int user_id) {
+        c = db.rawQuery("SELECT nom from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("nom"));
+    }
+
+    public String getPrenomUtilisateur(int user_id) {
+        c = db.rawQuery("SELECT prenom from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("prenom"));
+    }
+
+    public int getAge(int user_id) {
+        c = db.rawQuery("SELECT age from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("age"));
+    }
+
+    public int getPoids(int user_id) {
+        c = db.rawQuery("SELECT poids from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("poids"));
+    }
+
+    public int getTaille(int user_id) {
+        c = db.rawQuery("SELECT taille from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("taille"));
+    }
+
+    public String getGenre(int user_id) {
+        c = db.rawQuery("SELECT genre from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("genre"));
+    }
+
+    public int getTypeDePersonne(int user_id) {
+        c = db.rawQuery("SELECT type_de_pers from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+        return  c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
+    }
+
+    public String getHashMdp(String nom_utilisateur) {
+        c = db.rawQuery("SELECT mot_de_passe from connexion WHERE nom_utilisateur = ?", new String[]{nom_utilisateur});
+        c.moveToFirst();
+        return  c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
+    }
+
 
     public void setUserLastName(int user_id, String lastName) {
         String query = "UPDATE " + IDENTITE + " SET " + COL_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
@@ -246,8 +355,4 @@ public class DatabaseAccess {
         String query = "UPDATE " + IDENTITE + " SET " + COL_TYPE_DE_PERS + " = ? WHERE " + COL_USER_ID + " = ?";
         db.execSQL(query, new Object[]{userType, user_id});
     }
-
-
-
-
 }
