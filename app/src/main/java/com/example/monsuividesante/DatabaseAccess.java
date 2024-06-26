@@ -5,15 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DatabaseAccess{
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
+public class DatabaseAccess {
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
+
     Cursor c = null;
+
 
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
@@ -35,6 +40,7 @@ public class DatabaseAccess{
     private static final String DUREE$DUREE = "duree";
     private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+
     private static final String APPORT_EN_ENERGIE$DATE = "date";
     private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
     private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
@@ -45,6 +51,20 @@ public class DatabaseAccess{
     private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
     private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
     private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
+
+   
+
+    /*
+    * Syntaxe pour la table identite*/
+    private static final String COL_USER_ID = "user_id";
+    private static final String COL_NAME = "nom";
+    private static final String COL_FIRST_NAME = "prenom";
+    private static final String COL_AGE = "age";
+    private static final String COL_POIDS = "poids";
+    private static final String COL_TAILLE = "taille";
+    private static final String COL_GENRE = "genre";
+    private static final String COL_TYPE_DE_PERS = "type_de_pers";
+
 
     private DatabaseAccess(Context context) {
         this.openhelper = new DatabaseOpenhelper(context);
@@ -85,6 +105,7 @@ public class DatabaseAccess{
                          " ORDER BY " + DUREE$DUREE + " ASC";
 
         c = db.rawQuery(requete, null);
+
         ArrayList<String> res = new ArrayList<String>();
 
         while (c.moveToNext()){
@@ -95,10 +116,12 @@ public class DatabaseAccess{
     }
 
     public HashMap<String, Float> getActiviteCalories(){
+
         String requete = "SELECT * FROM " + ACTIVITE_CALORIE +
                          " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
 
         c = db.rawQuery(requete, null);
+
         HashMap<String, Float> res = new HashMap<String, Float>();
         String activite;
         float calories;
@@ -294,5 +317,41 @@ public class DatabaseAccess{
         c = db.rawQuery("SELECT mot_de_passe from connexion WHERE nom_utilisateur = ?", new String[]{nom_utilisateur});
         c.moveToFirst();
         return  c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
+    }
+
+    
+    public void setUserLastName(int user_id, String lastName) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{lastName, user_id});
+    }
+
+    public void setUserFirstName(int user_id, String firstName) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_FIRST_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{firstName, user_id});
+    }
+
+    public void setUserAge(int user_id, int age) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_AGE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{age, user_id});
+    }
+
+    public void setUserWeight(int user_id, int weight) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_POIDS + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{weight, user_id});
+    }
+
+    public void setUserHeight(int user_id, int height) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_TAILLE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{height, user_id});
+    }
+
+    public void setUserGender(int user_id, Genre gender) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_GENRE + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{gender.getGenre(), user_id});
+    }
+
+    public void setUserType(int user_id, String userType) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_TYPE_DE_PERS + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{userType, user_id});
     }
 }

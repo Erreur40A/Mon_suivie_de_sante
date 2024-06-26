@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mon Suivi de Sante</string>
+
     <string name="logo_app">Logo de l\'application</string>
     <string name="coucher">Vous vous êtes couchez à :</string>
     <string name="reveil">Vous vous êtes réveiller à :</string>
@@ -63,31 +64,60 @@
     <string name="vous_etes_prompt">Vous êtes ?</string>
     <string name="entrer_information">Saisir vos informations</string>
 
-    <string-array name="genre_array">
-        <item>Genre</item>
-        <item>Homme</item>
-        <item>Femme</item>
-    </string-array>
-
-    <string-array name="vous_etes_array">
-        <item>Vous etes</item>
-        <item>Sédentaire</item>
-        <item>Légerement actif</item>
-        <item>Modéremment actif</item>
-        <item>Actif</item>
-        <item>Très actif</item>
-    </string-array>
+    
 
 
     <string name="content_description_logo_app">Logo App</string>
     <string name="utilite">Ces informations sont utiles au bon fonctionnement de l\'application</string>
+
+    <string name="pop_up_text_nom">Quelle est votre nouveau nom ?</string>
+    <string name="pop_up_hint_nom">Entrez votre nouveau nom ici</string>
+    <string name="pop_up_text_prenom">Quelle est votre nouveau prénom ?</string>
+    <string name="pop_up_hint_prenom">Entrez votre nouveau prénom ici</string>
+    <string name="pop_up_text_taille">Quelle est votre taille ?</string>
+    <string name="pop_up_hint_taille">Entrez votre taille ici (en cm)</string>
+    <string name="pop_up_text_age">Quelle est votre âge ?</string>
+    <string name="pop_up_hint_age">Entrez votre âge ici</string>
+    <string name="pop_up_text_poids">Combien pesez vous ?</string>
+    <string name="pop_up_hint_poids">Entrez votre poids ici (en kg)</string>
+    <string name="validation">OK</string>
+    <string name="annulation">Annuler</string>
+    <string name="bienvenue">Bienvenue (prénom de l\'utilisateur)</string>
+
     <string name="age">Age</string>
     <string name="nom">Nom</string>
     <string name="prenom">Prénom</string>
     <string name="poids">Poids</string>
-    <string name="taille">Taille</string>
+
+    
     <string name="confirmer">Confirmer</string>
     <string name="creercompte">Créer votre compte</string>
     <string name="idenfiant">Identifiant</string>
     <string name="motdepass">Mot de passe</string>
+
+    <string name="taille">Taille (en cm)</string>
+    <string name="genre_prompt">Genre</string>
+    <string name="vous_etes_prompt">Vous êtes ?</string>
+
+    <string name="icone_sante">Health Icon</string>
+    <string name="hello_icon">Hello Icon</string>
+    <string name="choix_genre">Sexe</string>
+    <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
+    
+
+    <string-array name="genre_array">
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
+
+    <string-array name="type_de_personne_array">
+        <item>Sédentaire (peu ou pas d\'exercie)</item>
+        <item>Léger (exercice léger/sport 1 à 3 jours/semaine)</item>
+        <item>Modéré (exercice modéré/sport 3 à 5 jours/semaine)</item>
+        <item>Actif exercice intense/sport 6 à 7 jours/semaine</item>
+        <item>Très actif (exercice intense quotidien ou activité physique très difficile)</item>
+    </string-array>
+
+
+
 </resources>

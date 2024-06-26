@@ -23,6 +23,9 @@
         <!--_______________________A enlever quand tout sera merge________________________________-->
         <activity
             android:name=".SommeilActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ActivityMesInformations"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

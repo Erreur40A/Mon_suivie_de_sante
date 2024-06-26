@@ -1,5 +1,7 @@
 package com.example.monsuividesante;
 
+import androidx.annotation.Nullable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,4 +35,26 @@ public class Regex {
             return true;
         }
     }
+
+
+    public static boolean estNomPrenomValide(String nom){
+        String expr = "([a-zA-Z]|-)+";
+
+        return nom.matches(expr) && nom.length()>2;
+    }
+
+    public static boolean estAgeValide(String age){
+        //122 ans = age de la personne la plus veille au monde
+        return Integer.parseInt(age)<122;
+    }
+
+    public static boolean estTailleValide(String taille){
+        //251cm = taille de la personne la plus grande au monde
+        return Integer.parseInt(taille)<251;
+    }
+
+    public static boolean estPoidsValide(String poids){
+        return Integer.parseInt(poids)<200;
+    }
+
 }

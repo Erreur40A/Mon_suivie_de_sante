@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mes_informations"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityMesInformations">
+
+
+
+
+        <!--en tete-->
+
+        <include
+            layout="@layout/entete_mesinfo"
+            android:id="@+id/entete_mesinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <!-- ImageView for the hello icon -->
+        <include
+            layout="@layout/hello_icon"
+            android:id="@+id/hello_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/entete_mesinfo"
+            app:layout_constraintBottom_toTopOf="@id/text_welcome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <!-- TextView for the welcome message -->
+        <include
+            layout="@layout/welcome"
+            android:id="@+id/text_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/hello_icon"
+            app:layout_constraintBottom_toTopOf="@id/corps_page_mesinfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+        <!-- LinearLayout for user information inputs -->
+
+        <include
+            layout="@layout/corps_page_mesinfo"
+            android:id="@+id/corps_page_mesinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/text_welcome"
+            app:layout_constraintBottom_toTopOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Latout pour les 4 bouttons de menu en bas-->
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

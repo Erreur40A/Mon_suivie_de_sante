@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+        <LinearLayout
+            android:id="@+id/layout_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_nom"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nom"
+                    android:text="@string/nom"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_light"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/bouton_nom"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_prenom"
+                android:background="@drawable/border"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/prenom"
+                    android:text="@string/prenom"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_light"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/bouton_prenom"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_age"
+                android:background="@drawable/border"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/age"
+                    android:text="@string/age"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_light"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/bouton_age"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_poids"
+                android:background="@drawable/border"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/poids"
+                    android:text="@string/poids"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_light"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/bouton_poids"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_taille"
+                android:background="@drawable/border"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/taille"
+                    android:text="@string/taille"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_light"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/bouton_taille"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_bouton_modification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            <!--genre-->
+            <include
+                android:id="@+id/demande_genre_mesinfo"
+                layout="@layout/genre_mesinfo"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <!--Vous etes-->
+            <include
+                android:id="@+id/demande_type_de_personne_mesinfo"
+                layout="@layout/type_de_personne_mesinfo"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+               />
+        </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
