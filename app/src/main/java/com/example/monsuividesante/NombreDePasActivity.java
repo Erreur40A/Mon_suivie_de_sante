@@ -1,7 +1,11 @@
 package com.example.monsuividesante;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,17 +14,29 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import android.app.AlertDialog;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-
 import androidx.core.view.WindowInsetsCompat;
+import androidx.health.connect.client.HealthConnectClient;
+import androidx.health.connect.client.PermissionController;
+import androidx.health.connect.client.request.AggregateRequest;
+import androidx.health.connect.client.time.TimeRangeFilter;
 
-import java.util.HashMap;
+
+
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NombreDePasActivity extends AppCompatActivity {
 
@@ -35,6 +51,8 @@ public class NombreDePasActivity extends AppCompatActivity {
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
+    private HealthConnectClient healthConnectClient;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +117,125 @@ public class NombreDePasActivity extends AppCompatActivity {
         pas_hebdomadaire_fait = findViewById(R.id.objectif_hebdomadaire).findViewById(R.id.nb_pas_hebdomadaire);
         pas_mensuelle_fait = findViewById(R.id.objectif_mensuelle).findViewById(R.id.nb_pas_mensuelle);
 
+        bar_journalier = journ.findViewById(R.id.progressBarJour);
+        bar_hebdomadaire = hebd.findViewById(R.id.progresshebdo);
+        bar_mensuelle = mens.findViewById(R.id.progressmensuel);
+
         bouton_journalier.setOnClickListener(this::onClickListenerObjectifJournalier);
         bouton_mensuelle.setOnClickListener(this::onClickListenerObjectifMensuelle);
         bouton_hebdomadaire.setOnClickListener(this::onClickListenerObjectifHebdomadaire);
+
+        healthConnectClient = HealthConnectClient.getOrCreate(this);
+
+        checkAndRequestPermissions();
+
+        checkAndRequestPermissions();
+    }
+
+    private ActivityResultLauncher<Intent> permissionRequestLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                // Vérifier le résultat de la demande de permission
+                if (result.getResultCode() == RESULT_OK) {
+                    // Permissions accordées, lire les données de pas
+                    fetchAndDisplayStepsData();
+                } else {
+                    // Permissions refusées
+                    Log.e(TAG, "Permissions refusées par l'utilisateur");
+                }
+            }
+    );
+
+
+    private void checkAndRequestPermissions() {
+        executorService.execute(() -> {
+            try {
+                // Vérifier si les permissions nécessaires sont accordées
+                if (!hasRequiredPermissions()) {
+                    // Demander les permissions si elles ne sont pas accordées
+                    requestPermissions();
+                } else {
+                    // Permissions déjà accordées, lire les données de pas
+                    fetchAndDisplayStepsData();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Erreur lors de la vérification/demande des permissions", e);
+            }
+        });
+    }
+
+    private boolean hasRequiredPermissions() {
+        // Obtenir le nom complet de la classe StepsRecord
+        String stepsRecordPermission = androidx.health.connect.client.records.StepsRecord.class.getName();
+
+        // Créer un ensemble contenant la permission requise
+        Set<String> requiredPermissions = Collections.singleton(stepsRecordPermission);
+
+        try {
+            // Obtenir les permissions accordées par Health Connect
+            Set<String> grantedPermissions = healthConnectClient.getPermissionController()
+                    .getGrantedPermissions()
+                    .get();
+
+            // Vérifier si toutes les permissions requises sont accordées
+            return grantedPermissions.containsAll(requiredPermissions);
+        } catch (Exception e) {
+            Log.e("HealthConnect", "Erreur lors de la vérification des permissions", e);
+            return false;
+        }
+    }
+
+
+
+    private void requestPermissions() {
+        // Liste des permissions nécessaires pour Health Connect
+        List<String> permissions = Collections.singletonList(PermissionController.Permission.READ_RECORDS);
+
+        // Créer une intention pour la demande de permissions
+        Intent intent = healthConnectClient.getPermissionController()
+                .createRequestPermissionIntent(permissions);
+
+        // Lancer l'intention pour demander les permissions
+        permissionRequestLauncher.launch(intent);
+    }
+
+    private void fetchAndDisplayStepsData() {
+        executorService.execute(() -> {
+            try {
+                // Lire les pas journaliers
+                ZonedDateTime now = ZonedDateTime.now();
+                ZonedDateTime startOfDay = now.toLocalDate().atStartOfDay(now.getZone());
+                long startTime = startOfDay.toInstant().toEpochMilli();
+                long endTime = now.toInstant().toEpochMilli();
+
+                AggregateRequest request = new AggregateRequest.Builder()
+                        .setTimeRangeFilter(TimeRangeFilter.between(Instant.ofEpochMilli(startTime), Instant.ofEpochMilli(endTime)))
+                        .addMetric(AggregationType.STEP_COUNT_TOTAL)
+                        .build();
+
+                AggregationResults results = healthConnectClient.aggregate(request).get();
+                AggregationResult stepCountResult = results.getAggregateResult(AggregationType.STEP_COUNT_TOTAL);
+
+                int stepCount = stepCountResult != null ? (int) stepCountResult.getValue() : 0;
+                runOnUiThread(() -> updateUiWithStepData(stepCount));
+            } catch (Exception e) {
+                Log.e(TAG, "Erreur lors de la lecture des données de pas", e);
+            }
+        });
+    }
+    private void updateUiWithStepData(int stepCount) {
+        // Mettre à jour l'affichage du nombre de pas et la barre de progression
+        pas_journalier_fait.setText(String.valueOf(stepCount));
+
+        // Supposons un objectif journalier par défaut de 10000 pas
+        int objectifJournalier = 10000;
+
+        // Calculer le pourcentage atteint
+        int pourcentage = (int) ((stepCount / (float) objectifJournalier) * 100);
+        pourcent_journalier.setText(pourcentage + "%");
+
+        // Mettre à jour la barre de progression
+        bar_journalier.setProgress(pourcentage);
     }
 
     public void onClickListenerObjectifJournalier(View view){
