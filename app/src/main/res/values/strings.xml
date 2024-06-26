@@ -28,6 +28,7 @@
     <string name="hello_icon">Hello Icon</string>
     <string name="choix_genre">Sexe</string>
     <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
+    <string name="logo_app">Logo App</string>
 
     <string-array name="genre_array">
         <item>Homme</item>

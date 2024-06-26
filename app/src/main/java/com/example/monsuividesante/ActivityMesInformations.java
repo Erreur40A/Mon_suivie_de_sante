@@ -39,6 +39,7 @@ public class ActivityMesInformations extends AppCompatActivity {
 
 
     //a modifier
+   // private User user;
     private int user_id = 1;
 
     @Override
@@ -90,7 +91,7 @@ public class ActivityMesInformations extends AppCompatActivity {
         adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_type.setAdapter(adapter_type);
 
-        // Définir un OnItemSelectedListener sur le Spinner_genre
+        // OnItemSelectedListener sur le Spinner_genre
         spinner_genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -101,7 +102,7 @@ public class ActivityMesInformations extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Action à effectuer lorsque rien n'est sélectionné (facultatif)
+                // si rien n'est selectionne
             }
         });
 
@@ -117,7 +118,7 @@ public class ActivityMesInformations extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Action à effectuer lorsque rien n'est sélectionné (facultatif)
+                //
             }
         });
 
@@ -199,6 +200,9 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estNomPrenomValide(affichage)) {
                 nom.setText(affichage);
                 nom.setTextColor(Color.BLACK);
+                databaseAccess.open();
+                databaseAccess.setUserLastName(user_id, affichage);
+                databaseAccess.close();
             }
 
             pop_up.dismiss();
@@ -226,6 +230,9 @@ public class ActivityMesInformations extends AppCompatActivity {
                 prenom.setTextColor(Color.BLACK);
                 String bienv = "Bienvenue " + affichage;
                 bienvenue.setText(bienv);
+                databaseAccess.open();
+                databaseAccess.setUserFirstName(user_id, affichage);
+                databaseAccess.close();
             }
 
             pop_up.dismiss();
@@ -251,6 +258,9 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estPoidsValide(affichage)) {
                 poids.setText(affichage);
                 poids.setTextColor(Color.BLACK);
+                databaseAccess.open();
+                databaseAccess.setUserWeight(user_id, Integer.parseInt(affichage));
+                databaseAccess.close();
             }
 
             pop_up.dismiss();
@@ -276,6 +286,9 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estAgeValide(affichage)) {
                 age.setText(affichage);
                 age.setTextColor(Color.BLACK);
+                databaseAccess.open();
+                databaseAccess.setUserAge(user_id, Integer.parseInt(affichage));
+                databaseAccess.close();
             }
 
             pop_up.dismiss();
@@ -301,6 +314,9 @@ public class ActivityMesInformations extends AppCompatActivity {
             if(Regex.estTailleValide(affichage)) {
                 taille.setText(affichage);
                 taille.setTextColor(Color.BLACK);
+                databaseAccess.open();
+                databaseAccess.setUserHeight(user_id, Integer.parseInt(affichage));
+                databaseAccess.close();
             }
 
             pop_up.dismiss();

@@ -212,6 +212,11 @@ public class DatabaseAccess {
         return userType;
     }
 
+    public void setUserLastName(int user_id, String lastName) {
+        String query = "UPDATE " + IDENTITE + " SET " + COL_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
+        db.execSQL(query, new Object[]{lastName, user_id});
+    }
+
     public void setUserFirstName(int user_id, String firstName) {
         String query = "UPDATE " + IDENTITE + " SET " + COL_FIRST_NAME + " = ? WHERE " + COL_USER_ID + " = ?";
         db.execSQL(query, new Object[]{firstName, user_id});
