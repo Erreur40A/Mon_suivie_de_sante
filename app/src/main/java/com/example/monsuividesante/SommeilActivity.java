@@ -1,6 +1,7 @@
 package com.example.monsuividesante;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,13 +50,7 @@ public class SommeilActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = getIntent();
-
-        /*-------------Temporaire--------------*/
-        if(intent != null && intent.hasExtra("user"))
-            user = (User) getIntent().getSerializableExtra("user");
-        else
-            user = new User(1, "Jibril", "DOUZI", 20, 68, 172, "Homme", 1);
+        user = (User) getIntent().getSerializableExtra("user");
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
@@ -126,6 +121,7 @@ public class SommeilActivity extends AppCompatActivity {
         String heure = db.getHeureReveilReel(user.getId());
         db.close();
 
+        assert heure != null;
         heure_reveil.setText(heure);
     }
 
@@ -133,7 +129,7 @@ public class SommeilActivity extends AppCompatActivity {
         db.open();
         String heure = db.getHeureCoucherReel(user.getId());
         db.close();
-
+        assert heure != null;
         heure_coucher.setText(heure);
     }
 
@@ -177,6 +173,7 @@ public class SommeilActivity extends AppCompatActivity {
 
                 Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
                 heure_coucher.setText(affichage);
+                heure_reveil.setTextColor(Color.BLACK);
                 db_helper.updateHeureCoucherPrevue(user.getId(), affichage);
                 setObjectifHeureCoucher();
             }
@@ -207,6 +204,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
+                heure_reveil.setTextColor(Color.BLACK);
                 db_helper.updateHeureReveilPrevue(user.getId(), affichage);
                 setObjectifHeureReveil();
             }
@@ -237,6 +235,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_coucher.setText(affichage);
+                heure_reveil.setTextColor(Color.BLACK);
                 db_helper.updateHeureCoucherReel(user.getId(), affichage);
                 setHeureCoucher();
             }
@@ -267,6 +266,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_reveil.setText(affichage);
+                heure_reveil.setTextColor(Color.BLACK);
                 db_helper.updateHeureReveilReel(user.getId(), affichage);
                 setHeureReveil();
             }
@@ -281,7 +281,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void onClickListenerBoutonMesInfo(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
-        Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
+        Intent intent = new Intent(SommeilActivity.this, ActivityMesInformations.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }

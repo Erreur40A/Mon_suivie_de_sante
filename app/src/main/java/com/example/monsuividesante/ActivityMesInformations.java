@@ -34,11 +34,8 @@ public class ActivityMesInformations extends AppCompatActivity {
 
     private Spinner spinner_genre;
     private Spinner spinner_type;
-    //private User user;
 
     private User user;
-    private int user_id;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +49,11 @@ public class ActivityMesInformations extends AppCompatActivity {
             return insets;
         });
 
-
-        //enlever le commentaire lors de la fusion
-
-        //a modifier
-
-        user= (User) getIntent().getSerializableExtra("user");
-        user_id = 1;
+        user = (User) getIntent().getSerializableExtra("user");
 
         // Initialiser l'accès à la base de données
         databaseAccess = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
-
-        /*------Temporaire----------------*/
-        db_helper.deleteIdentite();
-        db_helper.addLigneIdentite(user_id);
-        /*--------------------------------*/
 
         /*------------------Avec pop-up-------------------*/
 
@@ -76,7 +62,6 @@ public class ActivityMesInformations extends AppCompatActivity {
         layout_prenom = findViewById(R.id.layout_prenom);
         layout_taille = findViewById(R.id.layout_taille);
         layout_poids = findViewById(R.id.layout_poids);
-
 
         // Référence au Spinner
         spinner_genre = findViewById(R.id.spinner_genre);
@@ -125,8 +110,6 @@ public class ActivityMesInformations extends AppCompatActivity {
             }
         });
 
-
-
         age = layout_age.findViewById(R.id.age);
         taille = layout_taille.findViewById(R.id.taille);
         nom = layout_nom.findViewById(R.id.nom);
@@ -146,33 +129,16 @@ public class ActivityMesInformations extends AppCompatActivity {
         layout_taille.setOnClickListener(this::onClickListenerTaille);
         layout_poids.setOnClickListener(this::onClickListenerPoids);
 
-        /*------------------------------------------------*/
-
-        /*-------Sans pop-up--------------------------*/
-        // Initialiser les vues
-        /*bienvenue = findViewById(R.id.text_welcome);
-        editName = findViewById(R.id.edit_name);
-        editFirstName = findViewById(R.id.edit_firstname);
-        editAge = findViewById(R.id.edit_age);
-        editWeight = findViewById(R.id.edit_weight);
-        editHeight = findViewById(R.id.edit_height);
-
-        // Charger les informations utilisateur
-        loadUserInfo();
-
-        // Ajouter les listeners pour les champs de texte
-        //a modfifier Matthias à deja fait
-        addTextWatchers();*/
-        /*---------------------------------------------*/
-
-
         //boutton de la toolbar
-        ConstraintLayout toolar = findViewById(R.id.toolbar);
+        ConstraintLayout toolbar = findViewById(R.id.toolbar);
+        LinearLayout pas = toolbar.findViewById(R.id.pas);
+        LinearLayout mes_info = toolbar.findViewById(R.id.mes_info);
+        LinearLayout calories = toolbar.findViewById(R.id.calories);
+        LinearLayout sommeil = toolbar.findViewById(R.id.sommeil);
 
-        LinearLayout pas = toolar.findViewById(R.id.pas);
-        LinearLayout mes_info = toolar.findViewById(R.id.mes_info);
-        LinearLayout sommeil = toolar.findViewById(R.id.sommeil);
-        LinearLayout calories = toolar.findViewById(R.id.calories);
+        pas.setAlpha(0.4F);
+        sommeil.setAlpha(0.4F);
+        calories.setAlpha(0.4F);
 
         ImageButton bouton_pas = pas.findViewById(R.id.bouton_pas);
         bouton_pas.setOnClickListener(this::onClickListenerBoutonPas);
@@ -329,45 +295,34 @@ public class ActivityMesInformations extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonCalorie(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Calories*/
-        Intent intent = new Intent(ActivityMesInformations.this, MainActivity.class);
-        /*enlever le // du dessous*/
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(ActivityMesInformations.this, CaloriesActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonMesInfo(View view){
         /*Soit on supprime ce listener soit on le garde*/
         Intent intent = new Intent(ActivityMesInformations.this, ActivityMesInformations.class);
-        /*enlever le // du dessous*/
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Sommeil)*/
-        Intent intent = new Intent(ActivityMesInformations.this, MainActivity.class);
-        /*enlever le // du dessous*/
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(ActivityMesInformations.this, SommeilActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     private void loadUserInfo() {
-        // Charger les informations de l'utilisateur depuis la base de données
-        databaseAccess.open();
+        // Charger les informations de l'utilisateur
+        String userLastName = user.getNom();
+        String userFirstName = user.getPrenom();
+        int userAge = user.getAge();
+        int userWeight = user.getPoids();
+        int userHeight = user.getTaille();
+        Genre gender = user.getGenre();
+        String type_de_pers = String.valueOf(user.getType_de_personne());
 
-        String userLastName = databaseAccess.getNomUtilisateur(user_id);
-        // String userLastName = databaseAccess.getMsgMotivation(2);
-
-        String userFirstName = databaseAccess.getPrenomUtilisateur(user_id);
-
-        int userAge = databaseAccess.getAge(user_id);
-        int userWeight = databaseAccess.getPoids(user_id);
-        int userHeight = databaseAccess.getTaille(user_id);
-        Genre gender = Genre.valueOf(databaseAccess.getGenre(user_id));
-        String type_de_pers = String.valueOf(databaseAccess.getTypeDePersonne(user_id));
-
-        databaseAccess.close();
 
         String bienv="Bienvenue " + userFirstName;
         // Mettre à jour les champs TextView avec les informations récupérées
@@ -378,7 +333,7 @@ public class ActivityMesInformations extends AppCompatActivity {
         poids.setText(String.valueOf(userWeight));
         taille.setText(String.valueOf(userHeight));
         text_genre.setText(String.valueOf(gender));
-        text_type_de_pers.setText(String.valueOf(type_de_pers));
+        text_type_de_pers.setText(type_de_pers);
     }
 
 

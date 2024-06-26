@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Connexion extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +57,15 @@ public class Connexion extends AppCompatActivity {
                 int user_taille = db.getTaille(user_id);
                 int user_poids = db.getPoids(user_id);
                 String user_genre = db.getGenre(user_id);
+                Genre genre;
+                if(user_genre.equals(Genre.HOMME.getGenre())) genre = Genre.HOMME;
+                else genre = Genre.FEMME;
+
                 int user_type = db.getTypeDePersonne(user_id);
-                User user = new User(user_id, user_nom, user_prenom, user_age, user_taille, user_poids, user_genre, user_type);
-                /* A changer quand il y aura mes infos */
-                Intent intent = new Intent(Connexion.this, MainActivity.class);
+
+                User user = new User(user_id, user_nom, user_prenom, user_age, user_taille, user_poids, genre, user_type);
+
+                Intent intent = new Intent(Connexion.this, ActivityMesInformations.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
             } else {

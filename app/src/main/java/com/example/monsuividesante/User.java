@@ -10,10 +10,10 @@ public class User implements Serializable {
     private int age;
     private int poids;
     private int taille;
-    private String genre;
+    private Genre genre;
     private int type_de_personne;
 
-    public User(int id, String prenom, String nom, int age, int poids, int taille, String genre, int type_de_personne){
+    public User(int id, String prenom, String nom, int age, int poids, int taille, Genre genre, int type_de_personne){
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
@@ -48,9 +48,11 @@ public class User implements Serializable {
         return taille;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getGenreString() {
+        return genre.getGenre();
     }
+
+    public Genre getGenre(){ return  genre; }
 
     public int getType_de_personne() {
         return type_de_personne;
@@ -83,7 +85,7 @@ public class User implements Serializable {
     }
 
     public void setGenre(String genre, DatabaseOpenhelper openhelper) {
-        this.genre = genre;
+        this.genre = Genre.valueOf(genre);
         openhelper.updateGenre(genre, this.id);
     }
 

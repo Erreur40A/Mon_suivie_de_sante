@@ -2,6 +2,7 @@ package com.example.monsuividesante;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,49 +33,48 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     public void setOnClickListenerContinuer(View view) {
+        int id=getIntent().getIntExtra("user_id", 0);
         String nom = ((EditText) findViewById(R.id.nom_mesinfo_inscr)).getText().toString();
+        if(nom.isEmpty()) return;
+
         String prenom = ((EditText) findViewById(R.id.prenom_mesinfo_inscr)).getText().toString();
+        if(prenom.isEmpty()) return;
+
         String editTextAge = ((EditText) findViewById(R.id.age_mesinfo_inscr)).getText().toString();
+        if(editTextAge.isEmpty()) return;
+
         int age = Integer.parseInt(editTextAge);
+
         String editTextPoids = ((EditText) findViewById(R.id.poids_mesinfo_inscr)).getText().toString();
+        if(editTextPoids.isEmpty()) return;
+
         int poids = Integer.parseInt(editTextPoids);
+
         String editTextTaille = ((EditText) findViewById(R.id.taille_mesinfo_inscr)).getText().toString();
+        if(editTextTaille.isEmpty()) return;
+
         int taille = Integer.parseInt(editTextTaille);
-        String genre = ((Spinner) findViewById(R.id.spinner_genre)).getSelectedItem().toString();
-        String activite = ((Spinner) findViewById(R.id.spinner_vous_etes)).getSelectedItem().toString();
-        int int_activite = 0;
-        if(activite.equals("Sédentaire")) {
-            int_activite = 1;
-        }
-        if(activite.equals("Légerement actif")) {
-            int_activite = 2;
-        }
-        if(activite.equals("Modéremment actif")) {
-            int_activite = 3;
-        }
-        if(activite.equals("Actif")) {
-            int_activite = 4;
-        }
-        if(activite.equals("Très actif")) {
-            int_activite = 5;
-        }
 
+        int int_genre = ((Spinner) findViewById(R.id.spinner_genre)).getSelectedItemPosition();
+        Genre genre;
+        if(int_genre == 0) genre = Genre.HOMME;
+        else genre = Genre.FEMME;
 
-        if(!nom.isEmpty() && !prenom.isEmpty() && ((age >= 13) && (age <= 110)) && ((poids >= 10) && (poids <= 300)) && ((taille >= 50) && (taille <= 230)) && int_activite != 0 && !genre.equals("Genre")){
+        int int_activite = ((Spinner) findViewById(R.id.spinner_vous_etes)).getSelectedItemPosition();
+        int_activite ++;
+
+        if(((age >= 13) && (age <= 110)) && ((poids >= 10) && (poids <= 300)) && ((taille >= 50) && (taille <= 230))){
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
             db.open();
-            db.addInfo(0, nom, prenom, age, poids, taille, genre, int_activite);
+            db.addInfo(id, nom, prenom, age, poids, taille, genre.getGenre(), int_activite);
             db.close();
-            /* A chager */
-            Intent intent = new Intent(InfoActivity.this, MainActivity.class);
+
+            User user = new User(id, prenom, nom, age, poids, taille, genre, int_activite);
+            Intent intent = new Intent(InfoActivity.this, ActivityMesInformations.class);
+            intent.putExtra("user", user);
             startActivity(intent);
         } else {
-            Toast.makeText(this,"donnée invalide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,""+int_activite, Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
     }
 }

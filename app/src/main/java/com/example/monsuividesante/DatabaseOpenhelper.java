@@ -60,7 +60,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "mon_suivi_de_sante_db.db";
 
 
-
     public DatabaseOpenhelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -125,9 +124,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ContentValues ligne = new ContentValues();
 
             ligne.put(SOMMEIL$USER_ID, user_id);
-            ligne.put(SOMMEIL$HEURE_COUCHER_REEL, "22:00");
-            ligne.put(SOMMEIL$HEURE_COUCHER_PREVUE, "20:00");
-            ligne.put(SOMMEIL$HEURE_REVEIL_REEL, "10:00");
+            ligne.put(SOMMEIL$HEURE_COUCHER_PREVUE, "22:00");
             ligne.put(SOMMEIL$HEURE_REVEIL_PREVUE, "08:00");
 
             db.insert(SOMMEIL, null, ligne);
@@ -136,9 +133,11 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         }
     }
 
-
-
-
+    public void deleteConnexion(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(CONNEXION, null, null);
+        db.close();
+    }
 
     public void deleteSommeil(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -146,20 +145,20 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public void addLigneIdentite(int user_id){
+    public void addLigneIdentite(int user_id, String prenom, String nom, int age, int poids, int taille, int type_pers, String genre){
         try(SQLiteDatabase db = getWritableDatabase()){
 
-            Genre genre = Genre.HOMME;
             ContentValues ligne = new ContentValues();
 
+
             ligne.put(IDENTITE$USER_ID, user_id);
-            ligne.put(IDENTITE$PRENOM, "Dieunel");
-            ligne.put(IDENTITE$NOM, "MARCELIN");
-            ligne.put(IDENTITE$AGE, 23);
-            ligne.put(IDENTITE$POIDS, 68);
-            ligne.put(IDENTITE$TAILLE, 185);
-            ligne.put(IDENTITE$TYPE_DE_PERSONNE, 1);
-            ligne.put(IDENTITE$GENRE,genre.getGenre());
+            ligne.put(IDENTITE$PRENOM, prenom);
+            ligne.put(IDENTITE$NOM, nom);
+            ligne.put(IDENTITE$AGE, age);
+            ligne.put(IDENTITE$POIDS, poids);
+            ligne.put(IDENTITE$TAILLE, taille);
+            ligne.put(IDENTITE$TYPE_DE_PERSONNE, type_pers);
+            ligne.put(IDENTITE$GENRE, genre);
 
             db.insert(IDENTITE, null, ligne);
 

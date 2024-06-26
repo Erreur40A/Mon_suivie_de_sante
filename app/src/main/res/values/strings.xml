@@ -57,7 +57,7 @@
     <string name="sinscrire">S\'inscrire</string>
     <string name="motdepasse">Mot de passe</string>
     <string name="ok">OK</string>
-    <string name="identifiant_ou_mot_de_passe_incorrect">Identifiant ou mote de passe incorrect.</string>
+    <string name="identifiant_ou_mot_de_passe_incorrect">Identifiant ou mot de passe incorrect.</string>
     <string name="erreur">Erreur</string>
     <string name="entrer_information">Saisir vos informations</string>
 

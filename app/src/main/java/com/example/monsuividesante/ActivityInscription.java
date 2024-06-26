@@ -44,12 +44,15 @@ public class ActivityInscription extends AppCompatActivity {
 
             if(exist) {
                 Toast.makeText(this, "utilisateur deja existant", Toast.LENGTH_SHORT).show();
-
+                db.close();
             } else {
                 String hashMpd = Hashage.hasherMdpHexa(mdp_inscr);
+                db.open();
                 db.addUser(id_inscr, hashMpd);
+                int user_id=db.getIdUtilisateur(id_inscr);
                 db.close();
                 Intent intent = new Intent(ActivityInscription.this, InfoActivity.class);
+                intent.putExtra("user_id", user_id);
                 startActivity(intent);
             }
         } else {

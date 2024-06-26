@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/nom"
                     android:text="@string/nom"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/gray_light"
                     android:layout_marginStart="8dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -38,8 +38,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_nom"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/prenom"
                     android:text="@string/prenom"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/gray_light"
                     android:layout_marginStart="8dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -69,8 +69,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_prenom"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/age"
                     android:text="@string/age"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/gray_light"
                     android:layout_marginStart="8dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -100,8 +100,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_age"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/poids"
                     android:text="@string/poids"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/gray_light"
                     android:layout_marginStart="8dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -131,8 +131,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_poids"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"
@@ -153,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/taille"
                     android:text="@string/taille"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/gray_light"
                     android:layout_marginStart="8dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -162,8 +162,8 @@
 
                 <ImageButton
                     android:id="@+id/bouton_taille"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@drawable/icon_bouton_modification"

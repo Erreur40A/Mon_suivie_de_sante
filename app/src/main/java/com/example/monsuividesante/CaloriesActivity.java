@@ -158,7 +158,7 @@ public class CaloriesActivity extends AppCompatActivity {
     public float setTextViewCalorieDepense(TextView textView){
         float kcal;
 
-        if(user.getGenre().equals("homme")){
+        if(user.getGenreString().equals("homme")){
             kcal = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
         }else{
             kcal = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
@@ -283,12 +283,9 @@ public class CaloriesActivity extends AppCompatActivity {
         ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(liste_items, view1 -> {
             String choix = getChoixListeDeroulanteActivite(view1, liste_deroulante_choix_activite);
 
-            /*formule reel pour calories_depense:
-            *
-            * calories_depense = tmp * poids * heure
-            */
             Float tmp = items_choix_activite.get(choix);
-            calories_activite = tmp!=null ? tmp : 0;
+            assert tmp != null;
+            calories_activite = tmp;
             pop_up_choix_activite.dismiss();
         });
         liste_deroulante.setAdapter(adapter);
@@ -334,14 +331,12 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonMesInfo(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
-        Intent intent = new Intent(CaloriesActivity.this, MainActivity.class);
+        Intent intent = new Intent(CaloriesActivity.this, ActivityMesInformations.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Sommeil)*/
         Intent intent = new Intent(CaloriesActivity.this, SommeilActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);
@@ -351,7 +346,6 @@ public class CaloriesActivity extends AppCompatActivity {
         calories_perdue -= calories_consomme;
 
         db.open();
-        /*Remplacer userTest par user.getId()*/
         String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
@@ -375,14 +369,9 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonActiviteOK(View view){
-        /*formule reel de calories_depense:
-         *
-         * calories_perdue += calories_activite * poids * duree_activite
-         */
-        calories_perdue += calories_activite * dureeStringToFloat(duree_activite);
+        calories_perdue += calories_activite * user.getPoids() * dureeStringToFloat(duree_activite);
 
         db.open();
-        /*Remplacer userTest par user.getId()*/
         String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
