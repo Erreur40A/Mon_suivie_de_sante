@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
     private int pas_journalier_fait, pas_hebdomadaire_fait, pas_mensuelle_fait;
     private int pas_journalier_objectif, pas_hebdomadaire_objectif, pas_mensuelle_objectif;
-    private int compteur;
+    private int compteur = 0;
     private String date;
     private int semaine;
     private int mois;
@@ -90,11 +91,19 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
 
+        db.open();
+
+        /*db_helper.deletePasHebdomadaire();
+        db_helper.addLignePasHebdomadaire(user_id, 100);
+        db_helper.deletePasJournalier();
+        db_helper.addLignePasJournaliers(user_id, 10);
+        db_helper.deletePasMensuelle();
+        db_helper.addLignePasMensuelle(user_id, 1000);*/
+
         date = db.getDateJournalier(user_id);
         mois = db.getMoisMensuelle(user_id);
         semaine = db.getSemaineHebdomadaire(user_id);
 
-        db.open();
         if(Regex.estDateDuJour(date)){
             db_helper.updateLigneJournalier(user_id,date);
             date = db.getDateJournalier(user_id);
@@ -111,20 +120,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         }
 
         db.close();
-
-
-
-
-
-
-        /*-----------Temporaire----------
-        db_helper.deletePasHebdomadaire();
-        db_helper.addLignePasHebdomadaire(user_id, 100);
-        db_helper.deletePasJournalier();
-        db_helper.addLignePasJournaliers(user_id, 10);
-        db_helper.deletePasMensuelle();
-        db_helper.addLignePasMensuelle(user_id, 1000);
-        /*-------------------------------*/
 
         Random random = new Random();
         TextView msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
@@ -202,12 +197,8 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             pas_mensuelle_textView.setText("Le capteur de pas n'est pas disponible");
         }
 
-        /*-------------------Les modifications-------------------------*/
-
         handler = new Handler();
         runner = this::callBack;
-
-
     }
 
     public void callBack(){
@@ -392,14 +383,27 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             // Le capteur de pas renvoie le nombre total de pas depuis le dernier redémarrage de l'appareil.
-            // Si vous voulez le nombre de pas depuis que l'application a commencé à fonctionner, il faut stocker la valeur de départ.
             if (compteur == 0) {
                 compteur = (int) event.values[0];
             }
+
             int steps = (int) event.values[0] - compteur;
-            pas_journalier_textView.setText(String.format(Locale.FRANCE, "%d", steps));
-            pas_hebdomadaire_textView.setText(String.format(Locale.FRANCE, "%d", steps));
-            pas_mensuelle_textView.setText(String.format(Locale.FRANCE, "%d", steps));
+
+            pas_journalier_fait += steps;
+            pas_hebdomadaire_fait += steps;
+            pas_mensuelle_fait += steps;
+
+            pas_journalier_textView.setText(String.format(Locale.FRANCE, "%d", pas_journalier_fait));
+            pas_hebdomadaire_textView.setText(String.format(Locale.FRANCE, "%d", pas_hebdomadaire_fait));
+            pas_mensuelle_textView.setText(String.format(Locale.FRANCE, "%d", pas_mensuelle_fait));
+
+            compteur = (int) event.values[0];
+
+            pourcentage_journalier = setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+            pourcentage_hebdomadaire = setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+            pourcentage_mensuelle = setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
+
+            setTextViewPourcentage();
 
             handler.removeCallbacks(runner);
             handler.postDelayed(runner, delai);
