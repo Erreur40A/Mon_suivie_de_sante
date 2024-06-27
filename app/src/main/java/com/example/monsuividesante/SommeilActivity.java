@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -158,18 +159,17 @@ public class SommeilActivity extends AppCompatActivity {
 
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
-            assert saisie != null;
 
             TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher);
 
-            String affichage = String.valueOf(saisie.getText());
+            String affichage = saisie.getText().toString();
 
             if(Regex.estHeureValide(affichage)){
                 String[] horaire = affichage.split(":");
 
                 Rappel.setRappel(this, Integer.parseInt(horaire[0]), Integer.parseInt(horaire[1]));
                 heure_coucher.setText(affichage);
-                heure_reveil.setTextColor(Color.BLACK);
+                heure_coucher.setTextColor(Color.BLACK);
                 db_helper.updateHeureCoucherPrevue(user.getId(), affichage);
                 setObjectifHeureCoucher();
             }
@@ -178,7 +178,6 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        assert bouton_annuler != null;
         bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 
@@ -190,10 +189,8 @@ public class SommeilActivity extends AppCompatActivity {
         pop_up.show();
 
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
-        assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
-            assert saisie != null;
 
             TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_reveil);
             String affichage = String.valueOf(saisie.getText());
@@ -209,7 +206,6 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        assert bouton_annuler != null;
         bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 
@@ -221,10 +217,8 @@ public class SommeilActivity extends AppCompatActivity {
         pop_up.show();
 
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
-        assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
-            assert saisie != null;
 
             TextView heure_coucher = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_coucher_reel);
             String affichage = String.valueOf(saisie.getText());
@@ -240,7 +234,6 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        assert bouton_annuler != null;
         bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 
@@ -252,10 +245,8 @@ public class SommeilActivity extends AppCompatActivity {
         pop_up.show();
 
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
-        assert bouton_ok != null;
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
-            assert saisie != null;
 
             TextView heure_reveil = objectif_sommeil.findViewById(R.id.objectif_sommeil).findViewById(R.id.heure_reveil_reel);
             String affichage = String.valueOf(saisie.getText());
@@ -271,7 +262,6 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        assert bouton_annuler != null;
         bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
     }
 

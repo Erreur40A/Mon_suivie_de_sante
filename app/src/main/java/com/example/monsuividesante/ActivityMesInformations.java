@@ -28,6 +28,7 @@ public class ActivityMesInformations extends AppCompatActivity {
 
     private DatabaseAccess databaseAccess;
     private DatabaseOpenhelper db_helper;
+    private ImageButton bouton_nom, bouton_prenom, bouton_age, bouton_taille, bouton_poids;
     private ConstraintLayout layout_nom, layout_prenom, layout_age, layout_taille, layout_poids;
     private TextView bienvenue, nom, prenom, age, taille, poids, text_genre, text_type_de_pers;
 
@@ -111,10 +112,15 @@ public class ActivityMesInformations extends AppCompatActivity {
         });
 
         age = layout_age.findViewById(R.id.age);
+        bouton_age = layout_age.findViewById(R.id.bouton_age);
         taille = layout_taille.findViewById(R.id.taille);
+        bouton_taille = layout_taille.findViewById(R.id.bouton_taille);
         nom = layout_nom.findViewById(R.id.nom);
+        bouton_nom = layout_nom.findViewById(R.id.bouton_nom);
         prenom = layout_prenom.findViewById(R.id.prenom);
+        bouton_prenom = layout_prenom.findViewById(R.id.bouton_prenom);
         poids = layout_poids.findViewById(R.id.poids);
+        bouton_poids = layout_poids.findViewById(R.id.bouton_poids);
         text_genre = findViewById(R.id.text_genre);
         text_type_de_pers = findViewById(R.id.text_type_de_pers);
 
@@ -128,6 +134,12 @@ public class ActivityMesInformations extends AppCompatActivity {
         layout_prenom.setOnClickListener(this::onClickListenerPrenom);
         layout_taille.setOnClickListener(this::onClickListenerTaille);
         layout_poids.setOnClickListener(this::onClickListenerPoids);
+
+        bouton_age.setOnClickListener(this::onClickListenerAge);
+        bouton_nom.setOnClickListener(this::onClickListenerNom);
+        bouton_prenom.setOnClickListener(this::onClickListenerPrenom);
+        bouton_taille.setOnClickListener(this::onClickListenerTaille);
+        bouton_poids.setOnClickListener(this::onClickListenerPoids);
 
         //boutton de la toolbar
         ConstraintLayout toolbar = findViewById(R.id.toolbar);

@@ -67,12 +67,12 @@ public class CaloriesActivity extends AppCompatActivity {
         db_helper = new DatabaseOpenhelper(this);
 
         textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_perdue = setTextViewCalorieDepenseReel(textViewCalDepReel);
+        calories_perdue = setTextViewAndCalorieDepenseReel(textViewCalDepReel);
 
         ConstraintLayout tmp_CL = findViewById(R.id.calories_depense);
 
         TextView textViewCalDep = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_depense = setTextViewCalorieDepense(textViewCalDep);
+        calories_depense = setTextViewAndCalorieDepense(textViewCalDep);
 
         ImageButton bouton_explication = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.bouton_explication);
         bouton_explication.setOnClickListener(this::onClickListenerBoutonExplication);
@@ -130,18 +130,22 @@ public class CaloriesActivity extends AppCompatActivity {
         bouton_liste_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
     }
 
-    public float setTextViewCalorieDepenseReel(TextView textView){
+    public float setTextViewAndCalorieDepenseReel(TextView textView){
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
-        /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
         if(date == null || !Regex.estDateDuJour(date)){
             db_helper.addLigneActiviteCalorie(user.getId());
         }
 
         db.open();
         float res = db.getCalorieVariation(user.getId());
+
+        if(res==-1){
+            Toast.makeText(this, "Une Erreur c'est produite lors du calcule des calories dépensées", Toast.LENGTH_SHORT).show();
+        }
+
         String calorie = res + " kcal";
         textView.setText(calorie);
         db.close();
@@ -149,11 +153,11 @@ public class CaloriesActivity extends AppCompatActivity {
         return res;
     }
 
-    public float setTextViewCalorieDepense(TextView textView){
+    public float setTextViewAndCalorieDepense(TextView textView){
         float kcal;
 
-        if(user.getGenreString().equals("Homme")){
-            kcal = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
+        if(user.getGenreString().equals(Genre.HOMME.getGenre())){
+            kcal = 88.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
         }else{
             kcal = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
         }
@@ -174,6 +178,8 @@ public class CaloriesActivity extends AppCompatActivity {
             case 5:
                 kcal *= 1.9F;
                 break;
+            default:
+                Toast.makeText(this, "Une Erreur c'est produite lors du calcule du métabolisme de base", Toast.LENGTH_SHORT).show();
         }
 
         String affichage = kcal + " kcal";
@@ -187,7 +193,8 @@ public class CaloriesActivity extends AppCompatActivity {
         ArrayList<String> res = db.getDuree();
         db.close();
 
-        if(res==null) Toast.makeText(this, "La liste des durée est vide", Toast.LENGTH_SHORT).show();
+        if(res==null)
+            Toast.makeText(this, "La liste des durée est vide", Toast.LENGTH_SHORT).show();
 
         return res;
     }
@@ -197,7 +204,8 @@ public class CaloriesActivity extends AppCompatActivity {
         HashMap<String, Float> res = db.getActiviteCalories();
         db.close();
 
-        if(res==null) Toast.makeText(this, "La liste des activités est vide", Toast.LENGTH_SHORT).show();
+        if(res==null)
+            Toast.makeText(this, "La liste des activités est vide", Toast.LENGTH_SHORT).show();
 
         return res;
     }
@@ -233,6 +241,11 @@ public class CaloriesActivity extends AppCompatActivity {
             if(Regex.estCaloriesSaisieValide(affichage)) {
                 calories_consomme = Float.parseFloat(affichage);
                 affichage = saisie.getText() + " kcal";
+                choix.setText(affichage);
+                choix.setTextColor(Color.BLACK);
+            }else {
+                calories_consomme = 0;
+                affichage = "0 kcal";
                 choix.setText(affichage);
                 choix.setTextColor(Color.BLACK);
             }
@@ -281,9 +294,7 @@ public class CaloriesActivity extends AppCompatActivity {
         ListeDeroulanteAdapter adapter = new ListeDeroulanteAdapter(liste_items, view1 -> {
             String choix = getChoixListeDeroulanteActivite(view1, liste_deroulante_choix_activite);
 
-            Float tmp = items_choix_activite.get(choix);
-            assert tmp != null;
-            calories_activite = tmp;
+            calories_activite = items_choix_activite.get(choix);
             pop_up_choix_activite.dismiss();
         });
         liste_deroulante.setAdapter(adapter);
@@ -345,11 +356,16 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
+
+        if(date==null){
+            db_helper.addLigneActiviteCalorie(user.getId());
+            date = db.getDateApportEnEnergie(user.getId());
+        }
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);
 
-        setTextViewCalorieDepenseReel(textViewCalDepReel);
+        setTextViewAndCalorieDepenseReel(textViewCalDepReel);
     }
 
     public float dureeStringToFloat(String duree){
@@ -371,10 +387,15 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
+
+        if(date==null){
+            db_helper.addLigneActiviteCalorie(user.getId());
+            date = db.getDateApportEnEnergie(user.getId());
+        }
         db.close();
 
         db_helper.updateCaloriesVariation(calories_perdue, date);
 
-        setTextViewCalorieDepenseReel(textViewCalDepReel);
+        setTextViewAndCalorieDepenseReel(textViewCalDepReel);
     }
 }
