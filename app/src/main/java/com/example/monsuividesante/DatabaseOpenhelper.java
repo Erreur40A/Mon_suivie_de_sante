@@ -195,8 +195,8 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         values.put(PAS$NB_PAS_EFFECTUES, 0);
         values.put(PAS_JOURNALIERS$DATE, nouvelle_date);
 
-        db.update(PAS_JOURNALIERS, values, condition, new String[]{Integer.toString(user_id), ancienne_date});
 
+        db.update(PAS_JOURNALIERS, values, condition, new String[]{Integer.toString(user_id), ancienne_date});
         db.close();
     }
 

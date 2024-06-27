@@ -35,6 +35,7 @@ public class Regex {
         }
     }
 
+
     public static boolean estSemaineCourante(int semaine){
         Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
         int semaineCourante = calendrier.get(Calendar.WEEK_OF_MONTH);

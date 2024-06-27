@@ -1,12 +1,7 @@
 package com.example.monsuividesante;
 
-
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
-
 import android.content.Context;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
@@ -14,7 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,40 +18,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
-import android.app.AlertDialog;
-import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.health.connect.client.HealthConnectClient;
-import androidx.health.connect.client.PermissionController;
-import androidx.health.connect.client.request.AggregateRequest;
-import androidx.health.connect.client.time.TimeRangeFilter;
-
-
-
-
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.List;
 
 import java.util.Locale;
-
 import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class NombreDePasActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -71,7 +41,14 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
     private int pas_journalier_fait, pas_hebdomadaire_fait, pas_mensuelle_fait;
     private int pas_journalier_objectif, pas_hebdomadaire_objectif, pas_mensuelle_objectif;
+
     private int compteur;
+    private String date;
+    private int semaine;
+    private int mois;
+    private Runnable runner;
+    private Handler handler;
+    private final long delai = 5000; //quand ca va marcher on remplace 5000 par 60000
 
     //Enlever commentaire de la ligne en dessous apres la fusion avec main
     //private User user;
@@ -81,22 +58,20 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
-    private HealthConnectClient healthConnectClient;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
     /*Faire en sorte de recuperer la date la plus récente (methode getDateJournalier()) puis,
-    * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
-    * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
-    * updateLigneJournalier de db_helper*/
+     * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
+     * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
+     * updateLigneJournalier de db_helper*/
 
     /*Faire en sorte de recuperer la semaine la plus récente (methode getSemaineHebdomadaire()) puis,
-    * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
-    * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
+     * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
+     * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
 
     /*Faire en sorte de recuperer le mois le plus récente (methode getMoisMensuelle()) puis,
-    * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
-    * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
+     * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
+     * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
 
     /*Utilise les constantes qu'il y a dans DatabaseAccess et DatabaseOpenHelper*/
     @Override
@@ -116,20 +91,49 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
 
-        /*-----------Temporaire----------*/
+        date = db.getDateJournalier(user_id);
+        mois = db.getMoisMensuelle(user_id);
+        semaine = db.getSemaineHebdomadaire(user_id);
+
+        db.open();
+        if(Regex.estDateDuJour(date)){
+            db_helper.updateLigneJournalier(user_id,date);
+            date = db.getDateJournalier(user_id);
+        }
+
+        if(Regex.estMoisCourant(mois)){
+            db_helper.updateLigneMensuelle(user_id,mois);
+            mois = db.getMoisMensuelle(user_id);
+        }
+
+        if(Regex.estSemaineCourante(semaine)){
+            db_helper.updateLigneHebdomadaire(user_id,semaine);
+            semaine = db.getSemaineHebdomadaire(user_id);
+        }
+
+        db.close();
+
+
+
+
+
+
+        /*-----------Temporaire----------
         db_helper.deletePasHebdomadaire();
         db_helper.addLignePasHebdomadaire(user_id, 100);
         db_helper.deletePasJournalier();
         db_helper.addLignePasJournaliers(user_id, 10);
         db_helper.deletePasMensuelle();
         db_helper.addLignePasMensuelle(user_id, 1000);
-        /*-------------------------------*/
+        -------------------------------*/
 
         Random random = new Random();
         TextView msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
         db.open();
         msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
         db.close();
+
+
 
         ConstraintLayout toolbar = findViewById(R.id.toolbar);
         ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
@@ -170,131 +174,9 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         objectif_hebdomadaire = hebd.findViewById(R.id.val_objectif_hebdomadaire);
         objectif_mensuelle = mens.findViewById(R.id.val_objectif_mensuelle);
 
-
-        pas_journalier_fait = findViewById(R.id.objectif_journalier).findViewById(R.id.nb_pas_journalier);
-        pas_hebdomadaire_fait = findViewById(R.id.objectif_hebdomadaire).findViewById(R.id.nb_pas_hebdomadaire);
-        pas_mensuelle_fait = findViewById(R.id.objectif_mensuelle).findViewById(R.id.nb_pas_mensuelle);
-
-        bar_journalier = journ.findViewById(R.id.progressBarJour);
-        bar_hebdomadaire = hebd.findViewById(R.id.progresshebdo);
-        bar_mensuelle = mens.findViewById(R.id.progressmensuel);
-
-
         bouton_journalier.setOnClickListener(this::onClickListenerObjectifJournalier);
         bouton_mensuelle.setOnClickListener(this::onClickListenerObjectifMensuelle);
         bouton_hebdomadaire.setOnClickListener(this::onClickListenerObjectifHebdomadaire);
-
-        healthConnectClient = HealthConnectClient.getOrCreate(this);
-
-        checkAndRequestPermissions();
-
-        checkAndRequestPermissions();
-    }
-
-    private ActivityResultLauncher<Intent> permissionRequestLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                // Vérifier le résultat de la demande de permission
-                if (result.getResultCode() == RESULT_OK) {
-                    // Permissions accordées, lire les données de pas
-                    fetchAndDisplayStepsData();
-                } else {
-                    // Permissions refusées
-                    Log.e(TAG, "Permissions refusées par l'utilisateur");
-                }
-            }
-    );
-
-
-    private void checkAndRequestPermissions() {
-        executorService.execute(() -> {
-            try {
-                // Vérifier si les permissions nécessaires sont accordées
-                if (!hasRequiredPermissions()) {
-                    // Demander les permissions si elles ne sont pas accordées
-                    requestPermissions();
-                } else {
-                    // Permissions déjà accordées, lire les données de pas
-                    fetchAndDisplayStepsData();
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Erreur lors de la vérification/demande des permissions", e);
-            }
-        });
-    }
-
-    private boolean hasRequiredPermissions() {
-        // Obtenir le nom complet de la classe StepsRecord
-        String stepsRecordPermission = androidx.health.connect.client.records.StepsRecord.class.getName();
-
-        // Créer un ensemble contenant la permission requise
-        Set<String> requiredPermissions = Collections.singleton(stepsRecordPermission);
-
-        try {
-            // Obtenir les permissions accordées par Health Connect
-            Set<String> grantedPermissions = healthConnectClient.getPermissionController()
-                    .getGrantedPermissions()
-                    .get();
-
-            // Vérifier si toutes les permissions requises sont accordées
-            return grantedPermissions.containsAll(requiredPermissions);
-        } catch (Exception e) {
-            Log.e("HealthConnect", "Erreur lors de la vérification des permissions", e);
-            return false;
-        }
-    }
-
-
-
-    private void requestPermissions() {
-        // Liste des permissions nécessaires pour Health Connect
-        List<String> permissions = Collections.singletonList(PermissionController.Permission.READ_RECORDS);
-
-        // Créer une intention pour la demande de permissions
-        Intent intent = healthConnectClient.getPermissionController()
-                .createRequestPermissionIntent(permissions);
-
-        // Lancer l'intention pour demander les permissions
-        permissionRequestLauncher.launch(intent);
-    }
-
-    private void fetchAndDisplayStepsData() {
-        executorService.execute(() -> {
-            try {
-                // Lire les pas journaliers
-                ZonedDateTime now = ZonedDateTime.now();
-                ZonedDateTime startOfDay = now.toLocalDate().atStartOfDay(now.getZone());
-                long startTime = startOfDay.toInstant().toEpochMilli();
-                long endTime = now.toInstant().toEpochMilli();
-
-                AggregateRequest request = new AggregateRequest.Builder()
-                        .setTimeRangeFilter(TimeRangeFilter.between(Instant.ofEpochMilli(startTime), Instant.ofEpochMilli(endTime)))
-                        .addMetric(AggregationType.STEP_COUNT_TOTAL)
-                        .build();
-
-                AggregationResults results = healthConnectClient.aggregate(request).get();
-                AggregationResult stepCountResult = results.getAggregateResult(AggregationType.STEP_COUNT_TOTAL);
-
-                int stepCount = stepCountResult != null ? (int) stepCountResult.getValue() : 0;
-                runOnUiThread(() -> updateUiWithStepData(stepCount));
-            } catch (Exception e) {
-                Log.e(TAG, "Erreur lors de la lecture des données de pas", e);
-            }
-        });
-    }
-    private void updateUiWithStepData(int stepCount) {
-        // Mettre à jour l'affichage du nombre de pas et la barre de progression
-        pas_journalier_fait.setText(String.valueOf(stepCount));
-
-        // Supposons un objectif journalier par défaut de 10000 pas
-        int objectifJournalier = 10000;
-
-        // Calculer le pourcentage atteint
-        int pourcentage = (int) ((stepCount / (float) objectifJournalier) * 100);
-        pourcent_journalier.setText(pourcentage + "%");
-
-        // Mettre à jour la barre de progression
-        bar_journalier.setProgress(pourcentage);
 
         db.open();
 
@@ -317,11 +199,35 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
-        /*if (stepCounterSensor == null) {
+        if (stepCounterSensor == null) {
             pas_journalier_textView.setText("Le capteur de pas n'est pas disponible");
             pas_hebdomadaire_textView.setText("Le capteur de pas n'est pas disponible");
             pas_mensuelle_textView.setText("Le capteur de pas n'est pas disponible");
-        }*/
+        }
+
+        /*-------------------Les modifications-------------------------*/
+        db.open();
+        date=db.getDateJournalier(user_id);
+        semaine=db.getSemaineHebdomadaire(user_id);
+        mois=db.getMoisMensuelle(user_id);
+        db.close();
+
+        handler = new Handler();
+        runner = this::callBack;
+
+
+    }
+
+    public void callBack(){
+        db_helper.updateNombrePasJournalier(user_id, date, pas_journalier_fait);
+        db_helper.updateNombrePasHebdomadaire(user_id, semaine, pas_hebdomadaire_fait);
+        db_helper.updateNombrePasMensuelle(user_id, mois, pas_mensuelle_fait);
+
+        setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+        setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+        setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
+
+        setTextViewPourcentage();
     }
 
     public void setTextViewPourcentage(){
@@ -350,7 +256,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         progressBar.setProgressDrawable(barre_progression);
 
         return pourcentage;
-
     }
 
     public void onClickListenerObjectifJournalier(View view){
@@ -470,12 +375,12 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
 
     /*Faire en sorte que si le capteur ne donne pas de signal on met à jour la db avec les
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
-    *
-    * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
-    * setProgressBar sur toute les ProgressBar.
-    * */
+     * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
+     *
+     * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
+     * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
+     * setProgressBar sur toute les ProgressBar.
+     * */
     @Override
     protected void onResume() {
         super.onResume();
@@ -501,9 +406,13 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
                 compteur = (int) event.values[0];
             }
             int steps = (int) event.values[0] - compteur;
+
             pas_journalier_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_hebdomadaire_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_mensuelle_textView.setText(String.format(Locale.FRANCE, "%d", steps));
+
+            handler.removeCallbacks(runner);
+            handler.postDelayed(runner, delai);
         }
     }
 

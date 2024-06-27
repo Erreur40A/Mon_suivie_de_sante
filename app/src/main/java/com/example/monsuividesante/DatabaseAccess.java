@@ -9,7 +9,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class DatabaseAccess{
 
@@ -312,11 +311,6 @@ public class DatabaseAccess{
 
         return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
     }
-
-
-
-
-
 
 
 
