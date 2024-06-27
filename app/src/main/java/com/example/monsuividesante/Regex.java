@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Regex {
     public static boolean estHeureValide(String heure){
@@ -36,6 +38,22 @@ public class Regex {
         }
     }
 
+    public static boolean estMdpValide(String mdp){
+        String exprLettre = "[a-z]+";
+        String exprLettreMaj = "[A-Z]+";
+        String exprChiffre = "[0-9]+";
+
+        Pattern patternLettre = Pattern.compile(exprLettre);
+        Matcher matcherLettre = patternLettre.matcher(mdp);
+
+        Pattern patternLettreMaj = Pattern.compile(exprLettreMaj);
+        Matcher matcherLettreMaj = patternLettre.matcher(mdp);
+
+        Pattern patternChiffre = Pattern.compile(exprChiffre);
+        Matcher matcherChiffree = patternChiffre.matcher(mdp);
+
+        return mdp.length() >= 8 && matcherChiffree.find() && matcherLettre.find() && matcherLettreMaj.find();
+    }
 
     public static boolean estNomPrenomValide(String nom){
         String expr = "([a-zA-Z]|-)+";

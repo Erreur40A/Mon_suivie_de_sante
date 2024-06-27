@@ -40,25 +40,29 @@ public class ActivityInscription extends AppCompatActivity {
 
         if(!id_inscr.isEmpty() && !mdp_inscr.isEmpty()) {
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
+
             db.open();
-
             boolean exist = db.existUser(id_inscr);
+            db.close();
 
-            if(exist) {
-                Toast.makeText(this, "utilisateur deja existant", Toast.LENGTH_SHORT).show();
-                db.close();
+            if (exist) {
+                Toast.makeText(this, "Identifiant deja existant", Toast.LENGTH_SHORT).show();
+            } else if (!Regex.estMdpValide(mdp_inscr)) {
+                Toast.makeText(this, "Le mot de passe n'est pas assez sécuriser.\nVeuillez utiliser au moins un chiffre, une lettre minuscule et une lettre majuscule", Toast.LENGTH_LONG).show();
             } else {
                 String hashMpd = Hashage.hasherMdpHexa(mdp_inscr);
+
                 db.open();
                 db.addUser(id_inscr, hashMpd);
                 int user_id=db.getIdUtilisateur(id_inscr);
                 db.close();
+
                 Intent intent = new Intent(ActivityInscription.this, InfoActivity.class);
                 intent.putExtra("user_id", user_id);
                 startActivity(intent);
             }
         } else {
-            Toast.makeText(this, "entrer un nom d'utilisateur et un mdp", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Entrer un identifiant et un mot de passe", Toast.LENGTH_SHORT).show();
         }
     }
 }
