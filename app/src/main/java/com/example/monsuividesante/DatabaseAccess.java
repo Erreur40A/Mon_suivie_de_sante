@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,11 +98,12 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow(MESSAGE$CONTENU));
+        }catch (Exception e){
+            Log.e("getMsgMotivation", e.getMessage(), e);
+            return null;
         }finally {
             c.close();
         }
-
-
     }
 
     public ArrayList<String> getDuree(){
@@ -119,6 +121,7 @@ public class DatabaseAccess {
 
             return res;
         }catch (Exception e){
+            Log.e("getDuree", e.getMessage(), e);
             return null;
         }finally{
             c.close();
@@ -145,6 +148,7 @@ public class DatabaseAccess {
             }
             return res;
         }catch (Exception e){
+            Log.e("getActiviteCalories", e.getMessage(), e);
             return null;
         }finally{
             c.close();
@@ -164,6 +168,7 @@ public class DatabaseAccess {
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
         }catch (Exception e){
+            Log.e("getHeureCoucherReel", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -183,6 +188,7 @@ public class DatabaseAccess {
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
         }catch (Exception e){
+            Log.e("getHeureCoucherPrevue", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -202,6 +208,7 @@ public class DatabaseAccess {
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
         }catch (Exception e){
+            Log.e("getHeureReveilReel", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -219,6 +226,7 @@ public class DatabaseAccess {
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
         }catch (Exception e){
+            Log.e("getHeureReveilPrevue", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -242,49 +250,8 @@ public class DatabaseAccess {
 
             return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
         }catch (Exception e){
+            Log.e("getDateApportEnEnergie", e.getMessage(), e);
             return null;
-        }finally {
-            c.close();
-        }
-    }
-
-    public float getCalorieConsomme(int user_id){
-        String date = getDateApportEnEnergie(user_id);
-
-        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_CONSOMME +
-                " FROM " + APPORT_EN_ENERGIE +
-                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
-
-        c = null;
-        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
-
-        try {
-            c.moveToFirst();
-
-            return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
-        }catch (Exception e){
-            return -1;
-        }finally {
-            c.close();
-        }
-    }
-
-    public float getCalorieDepense(int user_id){
-        String date = getDateApportEnEnergie(user_id);
-
-        String requete = "SELECT " + APPORT_EN_ENERGIE$CALORIE_DEPENSE +
-                " FROM " + APPORT_EN_ENERGIE +
-                " WHERE " + APPORT_EN_ENERGIE$USER_ID + "=? AND " + APPORT_EN_ENERGIE$DATE + "=?";
-
-        c = null;
-        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
-
-        try {
-            c.moveToFirst();
-
-            return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
-        }catch (Exception e){
-            return -1;
         }finally {
             c.close();
         }
@@ -305,17 +272,34 @@ public class DatabaseAccess {
 
             return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
         }catch (Exception e){
+            Log.e("getCalorieVariation", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
         }
     }
 
-    public boolean existUser(String utilisateur, String mdp) {
+    public boolean existUserConnexion(String utilisateur, String mdp) {
         c = null;
         c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ? AND mot_de_passe = ?", new String[]{utilisateur, mdp});
         try{
             return c.getCount() == 1;
+        }catch (Exception e){
+            Log.e("existUserConnexion", e.getMessage(), e);
+            return false;
+        }finally {
+            c.close();
+        }
+    }
+
+    public boolean existUserSommeil(int user_id) {
+        c = null;
+        c = db.rawQuery("SELECT " + SOMMEIL$USER_ID + " FROM " + SOMMEIL + " WHERE " + SOMMEIL$USER_ID + "= ?", new String[]{Integer.toString(user_id)});
+        try{
+            return c.getCount() == 1;
+        }catch (Exception e){
+            Log.e("existUserSommeil", e.getMessage(), e);
+            return false;
         }finally {
             c.close();
         }
@@ -327,6 +311,9 @@ public class DatabaseAccess {
 
         try{
             return c.getCount() == 1;
+        }catch (Exception e){
+            Log.e("existUser", e.getMessage(), e);
+            return false;
         }finally {
             c.close();
         }
@@ -360,6 +347,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("identifiant"));
         }catch (Exception e){
+            Log.e("getIdUtilisateur", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
@@ -373,6 +361,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("nom"));
         }catch (Exception e){
+            Log.e("getNomUtilisateur", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -387,6 +376,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("prenom"));
         }catch (Exception e){
+            Log.e("getPrenomUtilisateur", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -401,6 +391,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("age"));
         }catch (Exception e){
+            Log.e("getAge", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
@@ -415,6 +406,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("poids"));
         }catch (Exception e){
+            Log.e("getPoids", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
@@ -429,6 +421,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("taille"));
         }catch (Exception e){
+            Log.e("getTaille", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
@@ -443,6 +436,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("genre"));
         }catch (Exception e){
+            Log.e("getGenre", e.getMessage(), e);
             return null;
         }finally {
             c.close();
@@ -457,6 +451,7 @@ public class DatabaseAccess {
             c.moveToFirst();
             return  c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
         }catch (Exception e){
+            Log.e("getTypeDePersonne", e.getMessage(), e);
             return -1;
         }finally {
             c.close();
@@ -471,12 +466,12 @@ public class DatabaseAccess {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
         }catch (Exception e){
+            Log.e("getHashMdp", e.getMessage(), e);
             return null;
         }finally {
             c.close();
         }
     }
-
 
     public void setUserLastName(int user_id, String lastName) {
         String query = "UPDATE " + IDENTITE + " SET " + COL_NAME + " = ? WHERE " + COL_USER_ID + " = ?";

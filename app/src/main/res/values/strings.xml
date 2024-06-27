@@ -4,7 +4,7 @@
     <string name="logo_app">Logo de l\'application</string>
     <string name="coucher">Vous vous êtes couchez à :</string>
     <string name="reveil">Vous vous êtes réveiller à :</string>
-    <string name="objectif_sommeil">Votre objectif était de ce couchez à :</string>
+    <string name="objectif_sommeil">L\'objectif est de ce couchez à :</string>
     <string name="demande_reveil">Vous voulez vous réveillez à :</string>
     <string name="demande_coucher">Vous voulez vous couchez à :</string>
     <string name="image_de_motivation">image de motivation</string>
@@ -12,7 +12,7 @@
     <string name="heure_reveil_dft">8h00</string>
     <string name="demande_reveil_reel">Vous vous êtes réveiller à ?</string>
     <string name="demande_coucher_reel">Vous vous êtes couchez à ?</string>
-    <string name="objectif_reveil">Votre objectif était de ce réveillez à : </string>
+    <string name="objectif_reveil">L\'objectif est de ce réveillez à : </string>
     <string name="desc_bouton_mes_informations">bouton mes informations</string>
     <string name="mes_informations">Mes informations</string>
     <string name="desc_bouton_pas">bouton pas</string>
@@ -108,7 +108,7 @@
         <item>Sédentaire (peu ou pas d\'exercie)</item>
         <item>Léger (exercice léger/sport 1 à 3 jours/semaine)</item>
         <item>Modéré (exercice modéré/sport 3 à 5 jours/semaine)</item>
-        <item>Actif exercice intense/sport 6 à 7 jours/semaine</item>
+        <item>Actif (exercice intense/sport 6 à 7 jours/semaine</item>
         <item>Très actif (exercice intense quotidien ou activité physique très difficile)</item>
     </string-array>
 
