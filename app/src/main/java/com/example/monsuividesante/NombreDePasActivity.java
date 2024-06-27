@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +45,14 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
     private int pas_journalier_fait, pas_hebdomadaire_fait, pas_mensuelle_fait;
     private int pas_journalier_objectif, pas_hebdomadaire_objectif, pas_mensuelle_objectif;
+
     private int compteur;
+    private String date;
+    private int semaine;
+    private int mois;
+    private Runnable runner;
+    private Handler handler;
+    private final long delai = 5000; //quand ca va marcher on remplace 5000 par 60000
 
     //Enlever commentaire de la ligne en dessous apres la fusion avec main
     //private User user;
@@ -166,11 +174,27 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
-        /*if (stepCounterSensor == null) {
+        if (stepCounterSensor == null) {
             pas_journalier_textView.setText("Le capteur de pas n'est pas disponible");
             pas_hebdomadaire_textView.setText("Le capteur de pas n'est pas disponible");
             pas_mensuelle_textView.setText("Le capteur de pas n'est pas disponible");
-        }*/
+        }
+
+        /*-------------------Les modifications-------------------------*/
+        db.open();
+        date=db.getDateJournalier(user_id);
+        semaine=db.getSemaineHebdomadaire(user_id);
+        mois=db.getMoisMensuelle(user_id);
+        db.close();
+
+        handler = new Handler();
+        runner = this::callBack;
+    }
+
+    public void callBack(){
+        db_helper.updateNombrePasJournalier(user_id, date, pas_journalier_fait);
+        db_helper.updateNombrePasHebdomadaire(user_id, semaine, pas_hebdomadaire_fait);
+        db_helper.updateNombrePasMensuelle(user_id, mois, pas_mensuelle_fait);
     }
 
     public void setTextViewPourcentage(){
@@ -349,9 +373,13 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
                 compteur = (int) event.values[0];
             }
             int steps = (int) event.values[0] - compteur;
+
             pas_journalier_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_hebdomadaire_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_mensuelle_textView.setText(String.format(Locale.FRANCE, "%d", steps));
+
+            handler.removeCallbacks(runner);
+            handler.postDelayed(runner, delai);
         }
     }
 
