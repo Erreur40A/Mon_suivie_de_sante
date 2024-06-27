@@ -41,7 +41,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private int pourcentage_journalier, pourcentage_hebdomadaire, pourcentage_mensuelle;
     private int pas_journalier_fait, pas_hebdomadaire_fait, pas_mensuelle_fait;
     private int pas_journalier_objectif, pas_hebdomadaire_objectif, pas_mensuelle_objectif;
-
     private int compteur;
     private String date;
     private int semaine;
@@ -61,17 +60,17 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
 
     /*Faire en sorte de recuperer la date la plus récente (methode getDateJournalier()) puis,
-     * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
-     * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
-     * updateLigneJournalier de db_helper*/
+    * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
+    * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
+    * updateLigneJournalier de db_helper*/
 
     /*Faire en sorte de recuperer la semaine la plus récente (methode getSemaineHebdomadaire()) puis,
-     * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
-     * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
+    * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
+    * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
 
     /*Faire en sorte de recuperer le mois le plus récente (methode getMoisMensuelle()) puis,
-     * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
-     * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
+    * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
+    * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
 
     /*Utilise les constantes qu'il y a dans DatabaseAccess et DatabaseOpenHelper*/
     @Override
@@ -125,15 +124,13 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         db_helper.addLignePasJournaliers(user_id, 10);
         db_helper.deletePasMensuelle();
         db_helper.addLignePasMensuelle(user_id, 1000);
-        -------------------------------*/
+        /*-------------------------------*/
 
         Random random = new Random();
         TextView msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
         db.open();
         msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
         db.close();
-
-
 
         ConstraintLayout toolbar = findViewById(R.id.toolbar);
         ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
@@ -206,11 +203,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         }
 
         /*-------------------Les modifications-------------------------*/
-        db.open();
-        date=db.getDateJournalier(user_id);
-        semaine=db.getSemaineHebdomadaire(user_id);
-        mois=db.getMoisMensuelle(user_id);
-        db.close();
 
         handler = new Handler();
         runner = this::callBack;
@@ -223,10 +215,9 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         db_helper.updateNombrePasHebdomadaire(user_id, semaine, pas_hebdomadaire_fait);
         db_helper.updateNombrePasMensuelle(user_id, mois, pas_mensuelle_fait);
 
-        setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
-        setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
-        setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
-
+        pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+        pourcentage_hebdomadaire=setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+        pourcentage_mensuelle=setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
         setTextViewPourcentage();
     }
 
@@ -375,12 +366,12 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
 
     /*Faire en sorte que si le capteur ne donne pas de signal on met à jour la db avec les
-     * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
-     *
-     * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
-     * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
-     * setProgressBar sur toute les ProgressBar.
-     * */
+    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
+    *
+    * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
+    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
+    * setProgressBar sur toute les ProgressBar.
+    * */
     @Override
     protected void onResume() {
         super.onResume();
@@ -406,7 +397,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
                 compteur = (int) event.values[0];
             }
             int steps = (int) event.values[0] - compteur;
-
             pas_journalier_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_hebdomadaire_textView.setText(String.format(Locale.FRANCE, "%d", steps));
             pas_mensuelle_textView.setText(String.format(Locale.FRANCE, "%d", steps));
