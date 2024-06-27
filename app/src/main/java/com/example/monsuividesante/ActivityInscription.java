@@ -35,6 +35,8 @@ public class ActivityInscription extends AppCompatActivity {
         String id_inscr = ((EditText) findViewById(R.id.identifiant_inscription)).getText().toString();
         String mdp_inscr = ((EditText) findViewById(R.id.password_inscription)).getText().toString();
 
+        //on supprime les espaces au début et à la fin
+        id_inscr=id_inscr.trim();
 
         if(!id_inscr.isEmpty() && !mdp_inscr.isEmpty()) {
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());

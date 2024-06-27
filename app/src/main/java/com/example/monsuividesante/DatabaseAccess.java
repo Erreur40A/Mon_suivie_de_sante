@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,46 +21,46 @@ public class DatabaseAccess {
 
     /*Syntaxe des constantes des nom des tables : nom de la table*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
-    private static final String MESSAGE = "message";
-    private static final String DUREE = "duree";
-    private static final String ACTIVITE_CALORIE = "activite_calories";
-    private static final String SOMMEIL = "sommeil";
-    private static final String CONNEXION = "connexion";
-    private static final String APPORT_EN_ENERGIE = "apport_en_energie";
-    private static final String IDENTITE = "identite";
-    private static final String PAS_HEBDOMADAIRE = "pas_hebdo";
-    private static final String PAS_JOURNALIERS = "pas_journaliers";
-    private static final String PAS_MENSUELS = "pas_mensuels";
+    private final String MESSAGE = "message";
+    private final String DUREE = "duree";
+    private final String ACTIVITE_CALORIE = "activite_calories";
+    private final String SOMMEIL = "sommeil";
+    private final String CONNEXION = "connexion";
+    private final String APPORT_EN_ENERGIE = "apport_en_energie";
+    private final String IDENTITE = "identite";
+    private final String PAS_HEBDOMADAIRE = "pas_hebdo";
+    private final String PAS_JOURNALIERS = "pas_journaliers";
+    private final String PAS_MENSUELS = "pas_mensuels";
 
     /*Syntaxe des constantes des colonnes : nom de la table suivit de $ puis du nom de la colonne*/
     /*Sa va nous permettre d'éviter les fautes de frappes*/
-    private static final String MESSAGE$ID = "id";
-    private static final String MESSAGE$CONTENU = "contenu";
-    private static final String DUREE$DUREE = "duree";
-    private static final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
-    private static final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
+    private final String MESSAGE$ID = "id";
+    private final String MESSAGE$CONTENU = "contenu";
+    private final String DUREE$DUREE = "duree";
+    private final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
+    private final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
 
-    private static final String APPORT_EN_ENERGIE$DATE = "date";
-    private static final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
-    private static final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
-    private static final String APPORT_EN_ENERGIE$VARIATION = "variation";
-    private static final String APPORT_EN_ENERGIE$USER_ID = "user_id";
-    private static final String SOMMEIL$USER_ID = "user_id";
-    private static final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
-    private static final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
-    private static final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
-    private static final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
+    private final String APPORT_EN_ENERGIE$DATE = "date";
+    private final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
+    private final String APPORT_EN_ENERGIE$VARIATION = "variation";
+    private final String APPORT_EN_ENERGIE$USER_ID = "user_id";
+    private final String SOMMEIL$USER_ID = "user_id";
+    private final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
+    private final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
+    private final String SOMMEIL$HEURE_COUCHER_REEL = "heure_de_coucher_reelle";
+    private final String SOMMEIL$HEURE_COUCHER_PREVUE = "heure_de_coucher_prevue";
 
     /*
      * Syntaxe pour la table identite*/
-    private static final String COL_USER_ID = "user_id";
-    private static final String COL_NAME = "nom";
-    private static final String COL_FIRST_NAME = "prenom";
-    private static final String COL_AGE = "age";
-    private static final String COL_POIDS = "poids";
-    private static final String COL_TAILLE = "taille";
-    private static final String COL_GENRE = "genre";
-    private static final String COL_TYPE_DE_PERS = "type_de_pers";
+    private final String COL_USER_ID = "user_id";
+    private final String COL_NAME = "nom";
+    private final String COL_FIRST_NAME = "prenom";
+    private final String COL_AGE = "age";
+    private final String COL_POIDS = "poids";
+    private final String COL_TAILLE = "taille";
+    private final String COL_GENRE = "genre";
+    private final String COL_TYPE_DE_PERS = "type_de_pers";
 
 
     private DatabaseAccess(Context context) {
@@ -86,7 +85,8 @@ public class DatabaseAccess {
     }
 
     public String getMsgMotivation(int id) {
-        if(id < 0) return null;
+        if(id < 0) id = 0;
+        if(id > 20) id = 20;
 
         String requete = "SELECT " + MESSAGE$CONTENU +
                 " FROM " + MESSAGE +
@@ -118,7 +118,9 @@ public class DatabaseAccess {
             }
 
             return res;
-        }finally {
+        }catch (Exception e){
+            return null;
+        }finally{
             c.close();
         }
     }
@@ -142,7 +144,9 @@ public class DatabaseAccess {
                 res.put(activite, calories);
             }
             return res;
-        }finally {
+        }catch (Exception e){
+            return null;
+        }finally{
             c.close();
         }
     }
@@ -159,6 +163,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -176,6 +182,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -193,6 +201,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -208,6 +218,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -229,6 +241,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -248,6 +262,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_CONSOMME));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -267,6 +283,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$CALORIE_DEPENSE));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -286,6 +304,8 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -339,6 +359,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("identifiant"));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -350,6 +372,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("nom"));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -362,6 +386,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("prenom"));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -374,6 +400,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("age"));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -386,6 +414,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("poids"));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -398,6 +428,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("taille"));
+        }catch (Exception e){
+            return -1;
         }finally {
             c.close();
         }
@@ -410,6 +442,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("genre"));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }
@@ -422,8 +456,9 @@ public class DatabaseAccess {
         try{
             c.moveToFirst();
             return  c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
-        }
-        finally {
+        }catch (Exception e){
+            return -1;
+        }finally {
             c.close();
         }
     }
@@ -435,6 +470,8 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
+        }catch (Exception e){
+            return null;
         }finally {
             c.close();
         }

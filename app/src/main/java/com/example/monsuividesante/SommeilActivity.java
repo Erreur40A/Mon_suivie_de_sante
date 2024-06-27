@@ -23,11 +23,6 @@ import java.util.Random;
 
 public class SommeilActivity extends AppCompatActivity {
 
-    private String heure_coucher_prevue;
-    private String heure_coucher_reel;
-    private String heure_reveil_prevue;
-    private String heure_reveil_reel;
-
     private ConstraintLayout objectif_sommeil;
     private ConstraintLayout info_sommeil;
     private TextView objectif_heure_reveil;
@@ -54,8 +49,6 @@ public class SommeilActivity extends AppCompatActivity {
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
-        db_helper.deleteSommeil();
-        db_helper.addLigneSommeil(user.getId());
         /*------------------------------------*/
 
         TextView msg_motivation = findViewById(R.id.msg_motivation).findViewById(R.id.msg_motiv);
@@ -111,6 +104,11 @@ public class SommeilActivity extends AppCompatActivity {
     public void setObjectifHeureCoucher(){
         db.open();
         String objectif = db.getHeureCoucherPrevue(user.getId());
+
+        if(objectif==null) {
+            db_helper.addLigneSommeil(user.getId());
+            objectif = db.getHeureCoucherPrevue(user.getId());
+        }
         db.close();
 
         objectif_heure_coucher.setText(objectif);
@@ -119,6 +117,11 @@ public class SommeilActivity extends AppCompatActivity {
     public void setHeureReveil(){
         db.open();
         String heure = db.getHeureReveilReel(user.getId());
+
+        if(heure==null){
+            db_helper.addLigneSommeil(user.getId());
+            heure = db.getHeureReveilReel(user.getId());
+        }
         db.close();
 
         assert heure != null;
@@ -128,14 +131,24 @@ public class SommeilActivity extends AppCompatActivity {
     public void setHeureCoucher(){
         db.open();
         String heure = db.getHeureCoucherReel(user.getId());
+
+        if(heure==null){
+            db_helper.addLigneSommeil(user.getId());
+            heure = db.getHeureCoucherReel(user.getId());
+        }
         db.close();
-        assert heure != null;
+
         heure_coucher.setText(heure);
     }
 
     public void setObjectifHeureReveil(){
         db.open();
         String objectif = db.getHeureReveilPrevue(user.getId());
+
+        if(objectif==null){
+            db_helper.addLigneSommeil(user.getId());
+            objectif = db.getHeureReveilPrevue(user.getId());
+        }
         db.close();
 
         objectif_heure_reveil.setText(objectif);
@@ -145,7 +158,7 @@ public class SommeilActivity extends AppCompatActivity {
         Random ramdom = new Random();
 
         db.open();
-            String msg = db.getMsgMotivation(ramdom.nextInt(20)  + 1);
+        String msg = db.getMsgMotivation(ramdom.nextInt(20)  + 1);
         db.close();
 
         textView.setText(msg);
@@ -159,7 +172,7 @@ public class SommeilActivity extends AppCompatActivity {
         pop_up.show();
 
         Button bouton_ok = pop_up.findViewById(R.id.bouton_ok);
-        assert bouton_ok != null;
+
         bouton_ok.setOnClickListener(v -> {
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
             assert saisie != null;

@@ -40,6 +40,8 @@ public class Connexion extends AppCompatActivity {
         String id = ((EditText) findViewById(R.id.identifiant_connexion)).getText().toString();
         String mdp = ((EditText) findViewById(R.id.password_connexion)).getText().toString();
 
+        //on supprime les espaces au début et à la fin
+        id=id.trim();
 
         if(!id.isEmpty() && !mdp.isEmpty()) {
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());

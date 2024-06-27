@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,11 +65,6 @@ public class CaloriesActivity extends AppCompatActivity {
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
-
-        /*-------------------Temporaire---------------------*/
-        db_helper.deleteApportEnEnergie();
-        db_helper.addLigneActiviteCalorie(user.getId());
-        /*--------------------------------------------------*/
 
         textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
         calories_perdue = setTextViewCalorieDepenseReel(textViewCalDepReel);
@@ -132,24 +128,22 @@ public class CaloriesActivity extends AppCompatActivity {
         items_choix_activite = setHashMapActivite();
         liste_deroulante_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
         bouton_liste_choix_activite.setOnClickListener(this::onClickListenerChoixActivite);
-
-        db.close();
     }
 
     public float setTextViewCalorieDepenseReel(TextView textView){
         db.open();
-            String date = db.getDateApportEnEnergie(user.getId());
+        String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
         /*Utiliser les getter de Utilisateur pour avoir les données de Utilisateur*/
-        if(!Regex.estDateDuJour(date)){
+        if(date == null || !Regex.estDateDuJour(date)){
             db_helper.addLigneActiviteCalorie(user.getId());
         }
 
         db.open();
-            float res = db.getCalorieVariation(user.getId());
-            String calorie = res + " kcal";
-            textView.setText(calorie);
+        float res = db.getCalorieVariation(user.getId());
+        String calorie = res + " kcal";
+        textView.setText(calorie);
         db.close();
 
         return res;
@@ -158,7 +152,7 @@ public class CaloriesActivity extends AppCompatActivity {
     public float setTextViewCalorieDepense(TextView textView){
         float kcal;
 
-        if(user.getGenreString().equals("homme")){
+        if(user.getGenreString().equals("Homme")){
             kcal = 8.362F + (13.397F * user.getPoids()) + (4.799F * user.getTaille()) - (5.677F * user.getAge());
         }else{
             kcal = 447.593F + (9.247F * user.getPoids()) + (3.098F * user.getTaille()) - (4.330F * user.getAge());
@@ -193,6 +187,8 @@ public class CaloriesActivity extends AppCompatActivity {
         ArrayList<String> res = db.getDuree();
         db.close();
 
+        if(res==null) Toast.makeText(this, "La liste des durée est vide", Toast.LENGTH_SHORT).show();
+
         return res;
     }
 
@@ -200,6 +196,8 @@ public class CaloriesActivity extends AppCompatActivity {
         db.open();
         HashMap<String, Float> res = db.getActiviteCalories();
         db.close();
+
+        if(res==null) Toast.makeText(this, "La liste des activités est vide", Toast.LENGTH_SHORT).show();
 
         return res;
     }
@@ -214,7 +212,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
-        String explication = "Si vous dépensez plus de " + calories_depense + " vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + " vous allez grossir";
+        String explication = "Si vous dépensez plus de " + calories_depense + ", vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + ", vous allez grossir";
         textExplication.setText(explication);
     }
 

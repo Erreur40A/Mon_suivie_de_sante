@@ -29,7 +29,6 @@ public class ActivityMesInformations extends AppCompatActivity {
     private DatabaseAccess databaseAccess;
     private DatabaseOpenhelper db_helper;
     private ConstraintLayout layout_nom, layout_prenom, layout_age, layout_taille, layout_poids;
-    //private EditText editName, editFirstName, editAge, editWeight, editHeight;
     private TextView bienvenue, nom, prenom, age, taille, poids, text_genre, text_type_de_pers;
 
     private Spinner spinner_genre;
@@ -86,6 +85,7 @@ public class ActivityMesInformations extends AppCompatActivity {
                 // Récupérer l'élément sélectionné
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 Toast.makeText(ActivityMesInformations.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                user.setType_de_personne(position, db_helper);
             }
 
             @Override
@@ -289,8 +289,7 @@ public class ActivityMesInformations extends AppCompatActivity {
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(ActivityMesInformations.this, MainActivity.class);
-        /*enlever le // du dessous*/
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
@@ -335,50 +334,4 @@ public class ActivityMesInformations extends AppCompatActivity {
         text_genre.setText(String.valueOf(gender));
         text_type_de_pers.setText(type_de_pers);
     }
-
-
-
-    /*private void addTextWatchers() {
-        editName.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                updateUserInfo("nom", editName.getText().toString());
-            }
-        });
-
-        editFirstName.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                updateUserInfo("prenom", editFirstName.getText().toString());
-                bienvenue.setText("Bienvenue " + editFirstName.getText().toString());
-            }
-        });
-
-        editAge.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                updateUserInfo("age", editAge.getText().toString());
-            }
-        });
-
-        editWeight.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                updateUserInfo("poids", editWeight.getText().toString());
-            }
-        });
-
-        editHeight.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                updateUserInfo("taille", editHeight.getText().toString());
-            }
-        });
-    }
-
-
-    private void updateUserInfo(String column, String value) {
-        databaseAccess.open();
-        String query = "UPDATE identite SET " + column + " = ? WHERE id = 1";
-        //modification a faire
-        //databaseAccess.open();
-        //SQLiteDatabase db = databaseAccess.getWritableDatabase();
-        //db.execSQL(query, new String[]{value});
-        databaseAccess.close(); // Ferme la connexion à la base de données
-    }*/
 }
