@@ -195,6 +195,12 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         db_helper.updateNombrePasJournalier(user_id, date, pas_journalier_fait);
         db_helper.updateNombrePasHebdomadaire(user_id, semaine, pas_hebdomadaire_fait);
         db_helper.updateNombrePasMensuelle(user_id, mois, pas_mensuelle_fait);
+
+        setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+        setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+        setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
+
+        setTextViewPourcentage();
     }
 
     public void setTextViewPourcentage(){
