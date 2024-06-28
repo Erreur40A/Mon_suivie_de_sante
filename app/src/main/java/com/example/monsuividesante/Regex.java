@@ -1,8 +1,11 @@
 package com.example.monsuividesante;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -31,7 +34,11 @@ public class Regex {
 
             Date dateDuJour = format.parse(format.format(new Date()));
 
-            assert dateDuJour != null;
+            if(dateDuJour==null) {
+                Log.e("estDateDuJour", "La date du jour est null");
+                return false;
+            }
+
             return dateDuJour.equals(dateATest);
         } catch (Exception e) {
             return true;
@@ -75,4 +82,17 @@ public class Regex {
         return Integer.parseInt(poids)<200;
     }
 
+    public static boolean estSemaineCourante(int semaine){
+        Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
+        int semaineCourante = calendrier.get(Calendar.WEEK_OF_MONTH);
+
+        return semaineCourante == semaine;
+    }
+
+    public static boolean estMoisCourant(int mois){
+        Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
+        int moisCourante = calendrier.get(Calendar.MONTH);
+
+        return moisCourante == mois;
+    }
 }

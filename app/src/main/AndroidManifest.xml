@@ -65,11 +65,11 @@
         </activity>
         <activity android:name=".ActivityInscription"
             android:exported="true">
-            
+
         </activity>
         <activity android:name=".ActivityMesInformations"
             android:exported="true">
-            
+
         </activity>
         <activity android:name=".NombreDePasActivity"
             android:exported="true">

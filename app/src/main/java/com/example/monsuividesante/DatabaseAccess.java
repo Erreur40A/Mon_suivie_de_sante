@@ -1,4 +1,3 @@
-
 package com.example.monsuividesante;
 
 import android.content.ContentValues;
@@ -8,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -40,12 +39,12 @@ public class DatabaseAccess {
     private final String DUREE$DUREE = "duree";
     private final String ACTIVITE_CALORIE$NOM_ACTIVITE = "nom_activites";
     private final String ACTIVITE_CALORIE$CALORIES_PAR_KG = "calories_par_kg";
-
     private final String APPORT_EN_ENERGIE$DATE = "date";
-    private final String APPORT_EN_ENERGIE$CALORIE_DEPENSE ="calories_depensees";
+    private final String APPORT_EN_ENERGIE$CALORIE_DEPENSE = "calories_depensees";
     private final String APPORT_EN_ENERGIE$CALORIE_CONSOMME = "calories_consommees";
     private final String APPORT_EN_ENERGIE$VARIATION = "variation";
     private final String APPORT_EN_ENERGIE$USER_ID = "user_id";
+
     private final String SOMMEIL$USER_ID = "user_id";
     private final String SOMMEIL$HEURE_REVEIL_REEL = "heure_de_reveil_reelle";
     private final String SOMMEIL$HEURE_REVEIL_PREVUE = "heure_de_reveil_prevue";
@@ -62,7 +61,13 @@ public class DatabaseAccess {
     private final String COL_TAILLE = "taille";
     private final String COL_GENRE = "genre";
     private final String COL_TYPE_DE_PERS = "type_de_pers";
+    private final String PAS$USER_ID = "user_id";
+    private final String PAS$OBJECTIFS = "objectifs";
+    private final String PAS$NB_PAS_EFFECTUES = "nb_pas_effectues";
 
+    private final String PAS_HEBDOMADAIRE$NO_SEMAINE = "no_semaine";
+    private final String PAS_MENSUELS$NO_MOIS = "no_mois";
+    private final String PAS_JOURNALIERS$DATE = "date";
 
     private DatabaseAccess(Context context) {
         this.openhelper = new DatabaseOpenhelper(context);
@@ -80,14 +85,14 @@ public class DatabaseAccess {
     }
 
     public void close() {
-        if(db != null) {
+        if (db != null) {
             this.db.close();
         }
     }
 
     public String getMsgMotivation(int id) {
-        if(id < 0) id = 0;
-        if(id > 20) id = 20;
+        if (id < 0) id = 0;
+        if (id > 20) id = 20;
 
         String requete = "SELECT " + MESSAGE$CONTENU +
                 " FROM " + MESSAGE +
@@ -98,15 +103,15 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow(MESSAGE$CONTENU));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getMsgMotivation", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
 
-    public ArrayList<String> getDuree(){
+    public ArrayList<String> getDuree() {
         String requete = "SELECT * FROM " + DUREE + " ORDER BY " + DUREE$DUREE + " ASC";
 
         c = null;
@@ -115,22 +120,22 @@ public class DatabaseAccess {
         ArrayList<String> res = new ArrayList<String>();
 
         try {
-            while (c.moveToNext()){
+            while (c.moveToNext()) {
                 res.add(c.getString(c.getColumnIndexOrThrow(DUREE$DUREE)));
             }
 
             return res;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getDuree", e.getMessage(), e);
             return null;
-        }finally{
+        } finally {
             c.close();
         }
     }
 
-    public HashMap<String, Float> getActiviteCalories(){
+    public HashMap<String, Float> getActiviteCalories() {
 
-        String requete = "SELECT * FROM " + ACTIVITE_CALORIE +  " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
+        String requete = "SELECT * FROM " + ACTIVITE_CALORIE + " ORDER BY " + ACTIVITE_CALORIE$NOM_ACTIVITE + " ASC";
 
         c = null;
         c = db.rawQuery(requete, null);
@@ -140,25 +145,25 @@ public class DatabaseAccess {
         float calories;
 
         try {
-            while (c.moveToNext()){
+            while (c.moveToNext()) {
                 activite = c.getString(c.getColumnIndexOrThrow(ACTIVITE_CALORIE$NOM_ACTIVITE));
                 calories = c.getFloat(c.getColumnIndexOrThrow(ACTIVITE_CALORIE$CALORIES_PAR_KG));
 
                 res.put(activite, calories);
             }
             return res;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getActiviteCalories", e.getMessage(), e);
             return null;
-        }finally{
+        } finally {
             c.close();
         }
     }
 
-    public String getHeureCoucherReel(int user_id){
-        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_REEL +
-                       " FROM " + SOMMEIL +
-                       " WHERE " + SOMMEIL$USER_ID + "=?";
+    public String getHeureCoucherReel(int user_id) {
+        String requete = "SELECT " + SOMMEIL$HEURE_COUCHER_REEL +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
 
         c = null;
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
@@ -167,19 +172,19 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_REEL));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getHeureCoucherReel", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
 
     }
 
-    public String getHeureCoucherPrevue(int user_id){
-        String requete="SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
-                       " FROM " + SOMMEIL +
-                       " WHERE " + SOMMEIL$USER_ID + "=?";
+    public String getHeureCoucherPrevue(int user_id) {
+        String requete = "SELECT " + SOMMEIL$HEURE_COUCHER_PREVUE +
+                " FROM " + SOMMEIL +
+                " WHERE " + SOMMEIL$USER_ID + "=?";
 
 
         c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
@@ -187,10 +192,10 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_COUCHER_PREVUE));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getHeureCoucherPrevue", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -207,15 +212,15 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_REEL));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getHeureReveilReel", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
 
-    public String getHeureReveilPrevue(int user_id){
+    public String getHeureReveilPrevue(int user_id) {
         String requete = "SELECT " + SOMMEIL$HEURE_REVEIL_PREVUE +
                 " FROM " + SOMMEIL +
                 " WHERE " + SOMMEIL$USER_ID + "=?";
@@ -225,15 +230,15 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(SOMMEIL$HEURE_REVEIL_PREVUE));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getHeureReveilPrevue", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
 
-    public String getDateApportEnEnergie(int user_id){
+    public String getDateApportEnEnergie(int user_id) {
         //Le ORDER BY sert a trier les dates du plus récent au plus ancien
         String requete = "SELECT " + APPORT_EN_ENERGIE$DATE +
                 " FROM " + APPORT_EN_ENERGIE +
@@ -249,15 +254,15 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getString(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$DATE));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getDateApportEnEnergie", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
 
-    public float getCalorieVariation(int user_id){
+    public float getCalorieVariation(int user_id) {
         String date = getDateApportEnEnergie(user_id);
 
         String requete = "SELECT " + APPORT_EN_ENERGIE$VARIATION +
@@ -271,10 +276,10 @@ public class DatabaseAccess {
             c.moveToFirst();
 
             return c.getFloat(c.getColumnIndexOrThrow(APPORT_EN_ENERGIE$VARIATION));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getCalorieVariation", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -282,12 +287,12 @@ public class DatabaseAccess {
     public boolean existUserConnexion(String utilisateur, String mdp) {
         c = null;
         c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ? AND mot_de_passe = ?", new String[]{utilisateur, mdp});
-        try{
+        try {
             return c.getCount() == 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("existUserConnexion", e.getMessage(), e);
             return false;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -295,12 +300,12 @@ public class DatabaseAccess {
     public boolean existUserSommeil(int user_id) {
         c = null;
         c = db.rawQuery("SELECT " + SOMMEIL$USER_ID + " FROM " + SOMMEIL + " WHERE " + SOMMEIL$USER_ID + "= ?", new String[]{Integer.toString(user_id)});
-        try{
+        try {
             return c.getCount() == 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("existUserSommeil", e.getMessage(), e);
             return false;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -309,12 +314,12 @@ public class DatabaseAccess {
         c = null;
         c = db.rawQuery("SELECT nom_utilisateur FROM connexion WHERE nom_utilisateur = ?", new String[]{utilisateur});
 
-        try{
+        try {
             return c.getCount() == 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("existUser", e.getMessage(), e);
             return false;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -346,10 +351,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("identifiant"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getIdUtilisateur", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -360,10 +365,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("nom"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getNomUtilisateur", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -375,10 +380,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("prenom"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getPrenomUtilisateur", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -390,10 +395,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("age"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getAge", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -405,10 +410,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("poids"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getPoids", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -420,10 +425,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getInt(c.getColumnIndexOrThrow("taille"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getTaille", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -435,10 +440,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("genre"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getGenre", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -447,13 +452,13 @@ public class DatabaseAccess {
         c = null;
         c = db.rawQuery("SELECT type_de_pers from identite WHERE user_id = ?", new String[]{Integer.toString(user_id)});
 
-        try{
+        try {
             c.moveToFirst();
-            return  c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
-        }catch (Exception e){
+            return c.getInt(c.getColumnIndexOrThrow("type_de_pers"));
+        } catch (Exception e) {
             Log.e("getTypeDePersonne", e.getMessage(), e);
             return -1;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -465,10 +470,10 @@ public class DatabaseAccess {
         try {
             c.moveToFirst();
             return c.getString(c.getColumnIndexOrThrow("mot_de_passe"));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("getHashMdp", e.getMessage(), e);
             return null;
-        }finally {
+        } finally {
             c.close();
         }
     }
@@ -508,5 +513,122 @@ public class DatabaseAccess {
         db.execSQL(query, new Object[]{userType, user_id});
     }
 
-}
+    public String getDateJournalier(int user_id) {
+        String requete = "SELECT " + PAS_JOURNALIERS$DATE +
+                " FROM " + PAS_JOURNALIERS +
+                " WHERE " + PAS$USER_ID + " = ?" +
+                " ORDER BY SUBSTR(date, 7, 4) || '/' || " +
+                "SUBSTR(date, 4, 2) || '/' || " +
+                "SUBSTR(date, 1, 2) DESC";
 
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id)});
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndexOrThrow(PAS_JOURNALIERS$DATE));
+    }
+
+    public int getSemaineHebdomadaire(int user_id) {
+        int semaine = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH);
+
+        String requete = "SELECT " + PAS_HEBDOMADAIRE$NO_SEMAINE +
+                " FROM " + PAS_HEBDOMADAIRE +
+                " WHERE " + PAS$USER_ID + " = ? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS_HEBDOMADAIRE$NO_SEMAINE));
+    }
+
+    public int getMoisMensuelle(int user_id) {
+        int mois = Calendar.getInstance().get(Calendar.MONTH);
+
+        String requete = "SELECT " + PAS_MENSUELS$NO_MOIS +
+                " FROM " + PAS_MENSUELS +
+                " WHERE " + PAS$USER_ID + " = ? AND " + PAS_MENSUELS$NO_MOIS + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(mois)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS_MENSUELS$NO_MOIS));
+    }
+
+    public int getObjectifJournalier(int user_id) {
+        String date = getDateJournalier(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                " FROM " + PAS_JOURNALIERS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_JOURNALIERS$DATE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
+    public int getObjectifMensuelle(int user_id) {
+        int mois = getMoisMensuelle(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                " FROM " + PAS_MENSUELS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_MENSUELS$NO_MOIS + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(mois)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
+    public int getObjectifHedbomadaire(int user_id) {
+        //le mois est entre 0 et 11
+        int semaine = getSemaineHebdomadaire(user_id);
+
+        String requete = "SELECT " + PAS$OBJECTIFS +
+                " FROM " + PAS_HEBDOMADAIRE +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$OBJECTIFS));
+    }
+
+    public int getPasJournalier(int user_id) {
+        String date = getDateJournalier(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_JOURNALIERS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_JOURNALIERS$DATE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), date});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
+    public int getPasHebdomadaire(int user_id) {
+        int semaine = getSemaineHebdomadaire(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_HEBDOMADAIRE +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_HEBDOMADAIRE$NO_SEMAINE + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(semaine)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+    }
+
+    public int getPasMensuelle(int user_id) {
+        int mois = getMoisMensuelle(user_id);
+
+        String requete = "SELECT " + PAS$NB_PAS_EFFECTUES +
+                " FROM " + PAS_MENSUELS +
+                " WHERE " + PAS$USER_ID + "=? AND " + PAS_MENSUELS$NO_MOIS + "=?";
+
+        c = db.rawQuery(requete, new String[]{Integer.toString(user_id), Integer.toString(mois)});
+        c.moveToFirst();
+
+        return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
+}
+}

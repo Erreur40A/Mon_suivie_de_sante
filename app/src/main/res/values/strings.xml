@@ -29,15 +29,11 @@
     <string name="calories_depense_activite">Selon votre type d’activité physique vous devez dépenser</string>
     <string name="demande_calories_consomme">Combien de calories avez-vous consommées lors de votre repas ?</string>
     <string name="calorie_consome">200 kcal</string>
-    <string name="validation">OK</string>
-    <string name="annulation">Annuler</string>
     <string name="demande_activite">Quelle activité avez vous faites ?</string>
     <string name="champ_modif_activite">Choisissez une activité</string>
     <string name="desc_bouton_liste_deroulante">bouton liste déroulante</string>
     <string name="demande_duree_activite">Pendant combien de temps ?</string>
     <string name="champ_modification_dure_activite">1:00</string>
-    <string name="pop_up_text_calorie">Vous avez consommé combien de calories ?</string>
-    <string name="pop_up_hint_calories">Entrez la quantité consommé en kcal</string>
     <string name="explication_choix_activite">Choisissez une activité</string>
     <string name="explication_choix_duree">Choisissez une durée</string>
     <string name="pop_up_demande_heure_coucher">À quelle heure voulez vous vous couchez ?</string>
@@ -61,7 +57,7 @@
     <string name="erreur">Erreur</string>
     <string name="entrer_information">Saisir vos informations</string>
 
-    
+
 
 
     <string name="content_description_logo_app">Logo App</string>
@@ -84,7 +80,7 @@
     <string name="prenom">Prénom</string>
     <string name="poids">Poids</string>
 
-    
+
     <string name="confirmer">Confirmer</string>
     <string name="creercompte">Créer votre compte</string>
     <string name="idenfiant">Identifiant</string>
@@ -94,7 +90,6 @@
     <string name="genre_prompt">Genre</string>
     <string name="vous_etes_prompt">Vous êtes ?</string>
 
-    <string name="icone_sante">Health Icon</string>
     <string name="hello_icon">Hello Icon</string>
     <string name="choix_genre">Sexe</string>
 
@@ -114,4 +109,21 @@
 
 
 
+    <string name="pop_up_text_obj_journalier">Quelle est votre objectif de pas journalier ?</string>
+    <string name="pop_up_hint_obj_journalier">2000 pas</string>
+    <string name="pop_up_text_obj_mensuelle">Quelle est votre objectif de pas mensuelle ?</string>
+    <string name="pop_up_hint_obj_mensuelle">28000 pas</string>
+    <string name="pop_up_text_obj_hebdomadaire">Quelle est votre objectif de pas hebdomadaire ?</string>
+    <string name="pop_up_hint_obj_hebdomadaire">7000 pas</string>
+    <string name="icone_sante">Health Icon</string>
+    <string name="message_motivation">Votre message de motivation ici</string>
+    <string name="mesobjectifsjournaliers">Mes objectifs journaliers :</string>
+    <string name="mesobjectifshebdo">Mes objectifs hebdomadaires :</string>
+    <string name="mesobjectifsMensuels">Mes objectifs mensuels :</string>
+    <string name="saisir_nb_pas">Saisir pas</string>
+    <string name="nombre_de_pas_fait">Le nombre de pas que je fais :</string>
+    <string name="pop_up_hint_calories">1000 kcal</string>
+    <string name="pop_up_text_calorie">Quel est ton objectif ?</string>
+    <string name="annulation">Annuler</string>
+    <string name="validation">OK</string>
 </resources>

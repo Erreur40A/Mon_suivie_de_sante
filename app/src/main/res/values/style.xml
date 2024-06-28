@@ -1,0 +1,7 @@
+<!-- res/values/progress_bar_custom.xml -->
+<resources>
+<style name="Progress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <item name="android:indeterminateOnly">false</item>
+    <item name="android:progressDrawable">@drawable/progress</item>
+</style>
+</resources>
