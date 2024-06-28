@@ -20,34 +20,7 @@
 
         <receiver android:name=".NotificationsBroadcast"
             android:enabled="true"/>
-        <!--_______________________A enlever quand tout sera merge________________________________-->
-        <activity
-            android:name=".Connexion"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ActivityInscription"
-            android:exported="true"/>
-
-        <activity android:name=".SommeilActivity"
-            android:exported="true" />
-
-        <activity android:name=".CaloriesActivity"
-            android:exported="true"/>
-
-        <activity android:name=".ActivityMesInformations"
-            android:exported="true"/>
-
-        <activity android:name=".InfoActivity"
-            android:exported="true"/>
-        <!--______________________________________________________________________________________-->
-        <!--*********************Enlevez les commentaire quand tout sera merge********************-->
-
-        <!--<activity android:name=".Connexion"
+        <activity android:name=".Connexion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,9 +47,7 @@
         <activity android:name=".NombreDePasActivity"
             android:exported="true">
 
-        </activity>-->
-
-        <!--*******************************************************************-->
+        </activity>
     </application>
 
 </manifest>

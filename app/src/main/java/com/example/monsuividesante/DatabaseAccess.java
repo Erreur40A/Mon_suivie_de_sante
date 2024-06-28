@@ -527,7 +527,6 @@ public class DatabaseAccess {
 
         try {
             c.moveToFirst();
-
             return c.getString(c.getColumnIndexOrThrow(PAS_JOURNALIERS$DATE));
         }catch (Exception e){
             Log.e("getDateJournalier", e.getMessage(), e);

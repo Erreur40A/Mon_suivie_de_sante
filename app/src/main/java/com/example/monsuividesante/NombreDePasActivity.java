@@ -25,6 +25,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
@@ -169,6 +170,19 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         date = db.getDateJournalier(user.getId());
         mois = db.getMoisMensuelle(user.getId());
         semaine = db.getSemaineHebdomadaire(user.getId());
+
+        if(date==null){
+            db_helper.addLignePasJournaliers(user.getId(), 0);
+            date = db.getDateJournalier(user.getId());
+        }
+        if(mois==-1){
+            db_helper.addLignePasMensuelle(user.getId(), 0);
+            mois = db.getMoisMensuelle(user.getId());
+        }
+        if(semaine==-1){
+            db_helper.addLignePasHebdomadaire(user.getId(), 0);
+            semaine = db.getSemaineHebdomadaire(user.getId());
+        }
 
         if(Regex.estDateDuJour(date)){
             db_helper.updateLigneJournalier(user.getId(),date);
