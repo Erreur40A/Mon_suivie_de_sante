@@ -312,9 +312,6 @@ public class DatabaseAccess{
         return c.getInt(c.getColumnIndexOrThrow(PAS$NB_PAS_EFFECTUES));
     }
 
-
-
-
     // Méthode auxiliaire pour récupérer la date depuis une table spécifique
     private String getDateFromTable(String tableName, String type) {
         String requete = "SELECT date FROM " + tableName +

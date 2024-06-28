@@ -59,21 +59,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
 
-
-    /*Faire en sorte de recuperer la date la plus récente (methode getDateJournalier()) puis,
-    * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
-    * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
-    * updateLigneJournalier de db_helper*/
-
-    /*Faire en sorte de recuperer la semaine la plus récente (methode getSemaineHebdomadaire()) puis,
-    * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
-    * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
-
-    /*Faire en sorte de recuperer le mois le plus récente (methode getMoisMensuelle()) puis,
-    * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
-    * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
-
-    /*Utilise les constantes qu'il y a dans DatabaseAccess et DatabaseOpenHelper*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,32 +112,13 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
         db.close();
 
-        ConstraintLayout toolbar = findViewById(R.id.toolbar);
-        ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
-        ImageButton calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
-        ImageButton mes_info = toolbar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
-        ImageButton sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
-
-        pas.setOnClickListener(this::onClickListenerBoutonPas);
-        mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
-        calories.setOnClickListener(this::onClickListenerBoutonCalorie);
-        sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
+        setToolbarListener();
 
         ConstraintLayout layout_journalier = findViewById(R.id.objectif_journalier);
         ConstraintLayout layout_hebdomadaire = findViewById(R.id.objectif_hebdomadaire);
         ConstraintLayout layout_mensuelle = findViewById(R.id.objectif_mensuelle);
 
-        bar_journalier = layout_journalier.findViewById(R.id.progressBarJour);
-        bar_hebdomadaire = layout_hebdomadaire.findViewById(R.id.progresshebdo);
-        bar_mensuelle = layout_mensuelle.findViewById(R.id.progressmensuel);
-
-        pourcent_hebdomadaire = layout_hebdomadaire.findViewById(R.id.progresstexthebd);
-        pourcent_journalier = layout_journalier.findViewById(R.id.progressTextjour);
-        pourcent_mensuelle = layout_mensuelle.findViewById(R.id.progressTextmens);
-
-        pas_journalier_textView = layout_journalier.findViewById(R.id.nb_pas_journalier);
-        pas_hebdomadaire_textView = layout_hebdomadaire.findViewById(R.id.nb_pas_hebdomadaire);
-        pas_mensuelle_textView = layout_mensuelle.findViewById(R.id.nb_pas_mensuelle);
+        setViewAndBlocBas(layout_journalier, layout_hebdomadaire, layout_mensuelle);
 
         ConstraintLayout journ = layout_journalier.findViewById(R.id.rec);
         ConstraintLayout hebd = layout_hebdomadaire.findViewById(R.id.rec1);
@@ -199,6 +165,33 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
         handler = new Handler();
         runner = this::callBack;
+    }
+
+    public void setViewAndBlocBas(ConstraintLayout layout_journalier, ConstraintLayout layout_hebdomadaire, ConstraintLayout layout_mensuelle){
+        bar_journalier = layout_journalier.findViewById(R.id.progressBarJour);
+        bar_hebdomadaire = layout_hebdomadaire.findViewById(R.id.progresshebdo);
+        bar_mensuelle = layout_mensuelle.findViewById(R.id.progressmensuel);
+
+        pourcent_hebdomadaire = layout_hebdomadaire.findViewById(R.id.progresstexthebd);
+        pourcent_journalier = layout_journalier.findViewById(R.id.progressTextjour);
+        pourcent_mensuelle = layout_mensuelle.findViewById(R.id.progressTextmens);
+
+        pas_journalier_textView = layout_journalier.findViewById(R.id.nb_pas_journalier);
+        pas_hebdomadaire_textView = layout_hebdomadaire.findViewById(R.id.nb_pas_hebdomadaire);
+        pas_mensuelle_textView = layout_mensuelle.findViewById(R.id.nb_pas_mensuelle);
+    }
+
+    public void setToolbarListener(){
+        ConstraintLayout toolbar = findViewById(R.id.toolbar);
+        ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
+        ImageButton calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        ImageButton mes_info = toolbar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
+        ImageButton sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
+
+        pas.setOnClickListener(this::onClickListenerBoutonPas);
+        mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
+        calories.setOnClickListener(this::onClickListenerBoutonCalorie);
+        sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
     }
 
     public void callBack(){
@@ -355,14 +348,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         startActivity(intent);
     }
 
-
-    /*Faire en sorte que si le capteur ne donne pas de signal on met à jour la db avec les
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
-    *
-    * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
-    * setProgressBar sur toute les ProgressBar.
-    * */
     @Override
     protected void onResume() {
         super.onResume();
@@ -377,6 +362,8 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         if (stepCounterSensor != null) {
             sensorManager.unregisterListener(this, stepCounterSensor);
         }
+
+        callBack();
     }
 
     @Override
