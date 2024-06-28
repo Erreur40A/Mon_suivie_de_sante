@@ -195,17 +195,17 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             semaine = db.getSemaineHebdomadaire(user.getId());
         }
 
-        if(Regex.estDateDuJour(date)){
+        if(!Regex.estDateDuJour(date)){
             db_helper.updateLigneJournalier(user.getId(),date);
             date = db.getDateJournalier(user.getId());
         }
 
-        if(Regex.estMoisCourant(mois)){
+        if(!Regex.estMoisCourant(mois)){
             db_helper.updateLigneMensuelle(user.getId(),mois);
             mois = db.getMoisMensuelle(user.getId());
         }
 
-        if(Regex.estSemaineCourante(semaine)){
+        if(!Regex.estSemaineCourante(semaine)){
             db_helper.updateLigneHebdomadaire(user.getId(),semaine);
             semaine = db.getSemaineHebdomadaire(user.getId());
         }

@@ -30,7 +30,7 @@ public class ActivityMesInformations extends AppCompatActivity {
     private DatabaseOpenhelper db_helper;
     private ImageButton bouton_nom, bouton_prenom, bouton_age, bouton_taille, bouton_poids;
     private ConstraintLayout layout_nom, layout_prenom, layout_age, layout_taille, layout_poids;
-    private TextView bienvenue, nom, prenom, age, taille, poids, text_genre, text_type_de_pers;
+    private TextView bienvenue, nom, prenom, age, taille, poids;
 
     private Spinner spinner_genre;
     private Spinner spinner_type;
@@ -79,35 +79,53 @@ public class ActivityMesInformations extends AppCompatActivity {
         adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_type.setAdapter(adapter_type);
 
+        int position = 0;
+
+        if(user.getGenre().equals(Genre.FEMME))
+            position=1;
+
+        spinner_genre.setSelection(position);
+
         // OnItemSelectedListener sur le Spinner_genre
         spinner_genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Récupérer l'élément sélectionné
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                Toast.makeText(ActivityMesInformations.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
-                user.setType_de_personne(position, db_helper);
+                Genre genre;
+                if(position == 0) {
+                    genre = Genre.HOMME;
+                } else {
+                    genre = Genre.FEMME;
+                }
+                user.setGenre(genre, db_helper);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // si rien n'est selectionne
+                int selection=0;
+
+                if(user.getGenre().equals(Genre.FEMME))
+                    selection=1;
+
+                spinner_genre.setSelection(selection);
             }
         });
 
+        spinner_type.setSelection(user.getType_de_personne()-1);
 
         // Définir un OnItemSelectedListener sur le Spinner_type
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Récupérer l'élément sélectionné
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                Toast.makeText(ActivityMesInformations.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                position++;
+                user.setType_de_personne(position, db_helper);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //
+                int selection = user.getType_de_personne();
+                spinner_type.setSelection(selection-1);
             }
         });
 
@@ -121,8 +139,6 @@ public class ActivityMesInformations extends AppCompatActivity {
         bouton_prenom = layout_prenom.findViewById(R.id.bouton_prenom);
         poids = layout_poids.findViewById(R.id.poids);
         bouton_poids = layout_poids.findViewById(R.id.bouton_poids);
-        text_genre = findViewById(R.id.text_genre);
-        text_type_de_pers = findViewById(R.id.text_type_de_pers);
 
         bienvenue = findViewById(R.id.text_welcome).findViewById(R.id.welcome);
 
@@ -343,7 +359,5 @@ public class ActivityMesInformations extends AppCompatActivity {
         age.setText(String.valueOf(userAge));
         poids.setText(String.valueOf(userWeight));
         taille.setText(String.valueOf(userHeight));
-        text_genre.setText(String.valueOf(gender));
-        text_type_de_pers.setText(type_de_pers);
     }
 }

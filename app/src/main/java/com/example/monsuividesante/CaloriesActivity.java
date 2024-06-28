@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -352,7 +353,7 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonConsommeOK(View view){
-        calories_perdue -= calories_consomme;
+        calories_perdue += calories_consomme;
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
@@ -383,7 +384,7 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonActiviteOK(View view){
-        calories_perdue += calories_activite * user.getPoids() * dureeStringToFloat(duree_activite);
+        calories_perdue -= calories_activite * user.getPoids() * dureeStringToFloat(duree_activite);
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());

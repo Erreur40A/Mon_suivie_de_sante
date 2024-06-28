@@ -212,14 +212,24 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     public void addLigneActiviteCalorie(int user_id){
         try(SQLiteDatabase db = getWritableDatabase()){
 
-            Date aujourdhui = new Date();
+            String nouvelle_date = null;
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-            String dateAujourdhui = format.format(aujourdhui);
+            Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
+            int jour = calendrier.get(Calendar.DAY_OF_MONTH);
+            int mois = calendrier.get(Calendar.MONTH);
+            int annee = calendrier.get(Calendar.YEAR);
+
+            if(jour<10) nouvelle_date += "0" + jour + "/";
+            else nouvelle_date = jour + "/";
+
+            if(mois<10) nouvelle_date += "0" + mois + "/";
+            else nouvelle_date += mois + "/";
+
+            nouvelle_date += annee;
 
             ContentValues ligne = new ContentValues();
             ligne.put(APPORT_EN_ENERGIE$USER_ID, user_id);
-            ligne.put(APPORT_EN_ENERGIE$DATE, dateAujourdhui);
+            ligne.put(APPORT_EN_ENERGIE$DATE, nouvelle_date);
             ligne.put(APPORT_EN_ENERGIE$VARIATION, 0);
 
             db.insert(APPORT_EN_ENERGIE, null, ligne);

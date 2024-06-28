@@ -84,9 +84,9 @@ public class User implements Serializable {
         openhelper.updateTaille(taille, this.id);
     }
 
-    public void setGenre(String genre, DatabaseOpenhelper openhelper) {
-        this.genre = Genre.valueOf(genre);
-        openhelper.updateGenre(genre, this.id);
+    public void setGenre(Genre genre, DatabaseOpenhelper openhelper) {
+        this.genre = genre;
+        openhelper.updateGenre(genre.getGenre(), this.id);
     }
 
     public void setType_de_personne(int type_de_personne, DatabaseOpenhelper openhelper) {

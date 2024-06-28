@@ -12,37 +12,39 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Regex {
-    public static boolean estHeureValide(String heure){
+    public static boolean estHeureValide(String heure) {
         String expr = "([0-1][0-9]|2[0-3]):[0-5][0-9]";
 
         return heure.matches(expr);
     }
 
-    public static boolean estCaloriesSaisieValide(String calorie){
-        if(calorie.matches("[0-9]+"))
-            //En moyenne un humain peut consomme au maximum 3000 kcal en une journée
+    public static boolean estCaloriesSaisieValide(String calorie) {
+        if (calorie.matches("[0-9]+"))
+            // En moyenne un humain peut consomme au maximum 3000 kcal en une journée
             return Float.parseFloat(calorie) <= 3000;
         return false;
     }
 
-    public static boolean estDateDuJour(String d){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-        format.setLenient(false);
+    public static boolean estDateDuJour(String d) {
+        String[] tab = d.split("/");
 
-        try {
-            Date dateATest = format.parse(d);
+        Calendar calendrier1 = Calendar.getInstance(Locale.FRANCE);
+        calendrier1.set(Calendar.HOUR_OF_DAY, 0);
+        calendrier1.set(Calendar.MINUTE, 0);
+        calendrier1.set(Calendar.SECOND, 0);
+        calendrier1.set(Calendar.MILLISECOND, 0);
+        calendrier1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tab[0]));
+        calendrier1.set(Calendar.MONTH, Integer.parseInt(tab[1])-1);
+        calendrier1.set(Calendar.YEAR, Integer.parseInt(tab[2]));
 
-            Date dateDuJour = format.parse(format.format(new Date()));
+        Calendar calendrier2 = Calendar.getInstance(Locale.FRANCE);
+        calendrier2.set(Calendar.HOUR_OF_DAY, 0);
+        calendrier2.set(Calendar.MINUTE, 0);
+        calendrier2.set(Calendar.SECOND, 0);
+        calendrier2.set(Calendar.MILLISECOND, 0);
 
-            if(dateDuJour==null) {
-                Log.e("estDateDuJour", "La date du jour est null");
-                return false;
-            }
-
-            return dateDuJour.equals(dateATest);
-        } catch (Exception e) {
-            return true;
-        }
+        // Comparer les deux calendriers
+        return calendrier1.equals(calendrier2);
     }
 
     public static boolean estMdpValide(String mdp){
@@ -54,7 +56,7 @@ public class Regex {
         Matcher matcherLettre = patternLettre.matcher(mdp);
 
         Pattern patternLettreMaj = Pattern.compile(exprLettreMaj);
-        Matcher matcherLettreMaj = patternLettre.matcher(mdp);
+        Matcher matcherLettreMaj = patternLettreMaj.matcher(mdp);
 
         Pattern patternChiffre = Pattern.compile(exprChiffre);
         Matcher matcherChiffree = patternChiffre.matcher(mdp);
@@ -66,7 +68,7 @@ public class Regex {
         String expr = "([a-zA-Z]|-)+";
 
         return nom.matches(expr) && nom.length()>2;
-    }
+    } 
 
     public static boolean estAgeValide(String age){
         //122 ans = age de la personne la plus veille au monde
@@ -86,13 +88,14 @@ public class Regex {
         Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
         int semaineCourante = calendrier.get(Calendar.WEEK_OF_MONTH);
 
-        return semaineCourante == semaine;
+        return semaineCourante == semaine;  
     }
 
-    public static boolean estMoisCourant(int mois){
+    public static boolean estMoisCourant(int mois) {
         Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
-        int moisCourante = calendrier.get(Calendar.MONTH);
+        int moisCourante = calendrier .get(Calendar.MONTH);
 
         return moisCourante == mois;
-    }
-}
+    } 
+} 
+       
