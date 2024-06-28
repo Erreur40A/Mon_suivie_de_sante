@@ -10,14 +10,12 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,60 +65,14 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             return insets;
         });
 
-        user= (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
-        db.open();
 
-        date = db.getDateJournalier(user.getId());
-        mois = db.getMoisMensuelle(user.getId());
-        semaine = db.getSemaineHebdomadaire(user.getId());
-
-
-
-        if(Regex.estDateDuJour(date)){
-            db_helper.updateLigneJournalier(user.getId(),date);
-            date = db.getDateJournalier(user.getId());
-        }
-
-        if(Regex.estMoisCourant(mois)){
-            db_helper.updateLigneMensuelle(user.getId(),mois);
-            mois = db.getMoisMensuelle(user.getId());
-        }
-
-        if(Regex.estSemaineCourante(semaine)){
-            db_helper.updateLigneHebdomadaire(user.getId(),semaine);
-            semaine = db.getSemaineHebdomadaire(user.getId());
-        }
-
-        db.close();
-
-
-
-
-
-
-
-
-        /*-------------------------------*/
-
-        Random random = new Random();
-        TextView msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
-        db.open();
-        msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
-        db.close();
-
-        ConstraintLayout toolbar = findViewById(R.id.toolbar);
-        ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
-        ImageButton calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
-        ImageButton mes_info = toolbar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
-        ImageButton sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
-
-        pas.setOnClickListener(this::onClickListenerBoutonPas);
-        mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
-        calories.setOnClickListener(this::onClickListenerBoutonCalorie);
-        sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
+        setNouveauObjectif();
+        setMsgMotivation();
+        setToolBar();
 
         ConstraintLayout layout_journalier = findViewById(R.id.objectif_journalier);
         ConstraintLayout layout_hebdomadaire = findViewById(R.id.objectif_hebdomadaire);
@@ -154,17 +106,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         bouton_mensuelle.setOnClickListener(this::onClickListenerObjectifMensuelle);
         bouton_hebdomadaire.setOnClickListener(this::onClickListenerObjectifHebdomadaire);
 
-        db.open();
-
-        pas_journalier_fait = db.getPasJournalier(user.getId());
-        pas_hebdomadaire_fait = db.getPasHebdomadaire(user.getId());
-        pas_mensuelle_fait = db.getPasMensuelle(user.getId());
-
-        pas_journalier_objectif = db.getObjectifJournalier(user.getId());
-        pas_hebdomadaire_objectif = db.getObjectifHedbomadaire(user.getId());
-        pas_mensuelle_objectif = db.getObjectifMensuelle(user.getId());
-
-        db.close();
+        setObjectif();
 
         pourcentage_hebdomadaire=setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
         pourcentage_mensuelle=setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
@@ -181,23 +123,69 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             pas_mensuelle_textView.setText("Le capteur de pas n'est pas disponible");
         }
 
-        /*-------------------Les modifications-------------------------*/
-
         handler = new Handler();
         runner = this::callBack;
+    }
 
+    public void setObjectif(){
+        db.open();
+
+        pas_journalier_fait = db.getPasJournalier(user.getId());
+        pas_hebdomadaire_fait = db.getPasHebdomadaire(user.getId());
+        pas_mensuelle_fait = db.getPasMensuelle(user.getId());
+
+        pas_journalier_objectif = db.getObjectifJournalier(user.getId());
+        pas_hebdomadaire_objectif = db.getObjectifHedbomadaire(user.getId());
+        pas_mensuelle_objectif = db.getObjectifMensuelle(user.getId());
+
+        db.close();
+    }
+
+    public void setToolBar(){
+        ConstraintLayout toolbar = findViewById(R.id.toolbar);
+        ImageButton pas = toolbar.findViewById(R.id.pas).findViewById(R.id.bouton_pas);
+        ImageButton calories = toolbar.findViewById(R.id.calories).findViewById(R.id.bouton_calories);
+        ImageButton mes_info = toolbar.findViewById(R.id.mes_info).findViewById(R.id.bouton_mes_info);
+        ImageButton sommeil = toolbar.findViewById(R.id.sommeil).findViewById(R.id.bouton_sommeil);
+
+        pas.setOnClickListener(this::onClickListenerBoutonPas);
+        mes_info.setOnClickListener(this::onClickListenerBoutonMesInfo);
+        calories.setOnClickListener(this::onClickListenerBoutonCalorie);
+        sommeil.setOnClickListener(this::onClickListenerBoutonSommeil);
 
     }
 
-    public void callBack(){
-        db_helper.updateNombrePasJournalier(user.getId(), date, pas_journalier_fait);
-        db_helper.updateNombrePasHebdomadaire(user.getId(), semaine, pas_hebdomadaire_fait);
-        db_helper.updateNombrePasMensuelle(user.getId(), mois, pas_mensuelle_fait);
+    public void setMsgMotivation(){
+        Random random = new Random();
+        TextView msg_motivation = findViewById(R.id.motivation).findViewById(R.id.textMotivation);
+        db.open();
+        msg_motivation.setText(db.getMsgMotivation(random.nextInt(20) + 1));
+        db.close();
+    }
 
-        pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
-        pourcentage_hebdomadaire=setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
-        pourcentage_mensuelle=setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
-        setTextViewPourcentage();
+    public void setNouveauObjectif(){
+        db.open();
+
+        date = db.getDateJournalier(user.getId());
+        mois = db.getMoisMensuelle(user.getId());
+        semaine = db.getSemaineHebdomadaire(user.getId());
+
+        if(Regex.estDateDuJour(date)){
+            db_helper.updateLigneJournalier(user.getId(),date);
+            date = db.getDateJournalier(user.getId());
+        }
+
+        if(Regex.estMoisCourant(mois)){
+            db_helper.updateLigneMensuelle(user.getId(),mois);
+            mois = db.getMoisMensuelle(user.getId());
+        }
+
+        if(Regex.estSemaineCourante(semaine)){
+            db_helper.updateLigneHebdomadaire(user.getId(),semaine);
+            semaine = db.getSemaineHebdomadaire(user.getId());
+        }
+
+        db.close();
     }
 
     public void setTextViewPourcentage(){
@@ -335,6 +323,17 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         Intent intent = new Intent(NombreDePasActivity.this, SommeilActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);
+    }
+
+    public void callBack(){
+        db_helper.updateNombrePasJournalier(user.getId(), date, pas_journalier_fait);
+        db_helper.updateNombrePasHebdomadaire(user.getId(), semaine, pas_hebdomadaire_fait);
+        db_helper.updateNombrePasMensuelle(user.getId(), mois, pas_mensuelle_fait);
+
+        pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+        pourcentage_hebdomadaire=setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+        pourcentage_mensuelle=setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
+        setTextViewPourcentage();
     }
 
     @Override
