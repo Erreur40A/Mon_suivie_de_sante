@@ -300,7 +300,7 @@ public class ActivityMesInformations extends AppCompatActivity {
     /*Listener des boutons de la toolbar*/
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
-        Intent intent = new Intent(ActivityMesInformations.this, MainActivity.class);
+        Intent intent = new Intent(ActivityMesInformations.this, NombreDePasActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }

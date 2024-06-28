@@ -51,30 +51,11 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private Handler handler;
     private final long delai = 5000; //quand ca va marcher on remplace 5000 par 60000
 
-    //Enlever commentaire de la ligne en dessous apres la fusion avec main
-    //private User user;
-
-    //temporaire
-    private final int user_id=1;
+    private User user;
 
     private DatabaseAccess db;
     private DatabaseOpenhelper db_helper;
 
-
-    /*Faire en sorte de recuperer la date la plus récente (methode getDateJournalier()) puis,
-    * verifier si la data correspond a la date courante(grace à Regex.estDateDuJour) sinon on met a j
-    * our la ligne de l'user d'id user.getId() et de date getDateJournalier(), grace a la methode
-    * updateLigneJournalier de db_helper*/
-
-    /*Faire en sorte de recuperer la semaine la plus récente (methode getSemaineHebdomadaire()) puis,
-    * verifier si la semaine correspond a la semaine courante (grace à Regex.estSemaineCourante) sinon
-    * on verifie si cette semaine est dans la table pas_hedbo si oui on met a jour cette ligne sinon on l'ajoute*/
-
-    /*Faire en sorte de recuperer le mois le plus récente (methode getMoisMensuelle()) puis,
-    * verifier si le mois correspond au mois courante (grace à Regex.estMoisCourant) sinon
-    * on verifie si ce mois est dans la table pas_mensuels si oui on met a jour cette ligne sinon on l'ajout*/
-
-    /*Utilise les constantes qu'il y a dans DatabaseAccess et DatabaseOpenHelper*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,39 +67,31 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             return insets;
         });
 
-        //Enlever commentaire de la ligne en dessous apres la fusion avec main
-        //user=getIntent().getSerializableExtra("user");
+        user= (User) getIntent().getSerializableExtra("user");
 
         db = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
         db.open();
 
-        /*db_helper.deletePasHebdomadaire();
-        db_helper.addLignePasHebdomadaire(user_id, 100);
-        db_helper.deletePasJournalier();
-        db_helper.addLignePasJournaliers(user_id, 10);
-        db_helper.deletePasMensuelle();
-        db_helper.addLignePasMensuelle(user_id, 1000);*/
-
-        date = db.getDateJournalier(user_id);
-        mois = db.getMoisMensuelle(user_id);
-        semaine = db.getSemaineHebdomadaire(user_id);
+        date = db.getDateJournalier(user.getId());
+        mois = db.getMoisMensuelle(user.getId());
+        semaine = db.getSemaineHebdomadaire(user.getId());
 
 
 
         if(Regex.estDateDuJour(date)){
-            db_helper.updateLigneJournalier(user_id,date);
-            date = db.getDateJournalier(user_id);
+            db_helper.updateLigneJournalier(user.getId(),date);
+            date = db.getDateJournalier(user.getId());
         }
 
         if(Regex.estMoisCourant(mois)){
-            db_helper.updateLigneMensuelle(user_id,mois);
-            mois = db.getMoisMensuelle(user_id);
+            db_helper.updateLigneMensuelle(user.getId(),mois);
+            mois = db.getMoisMensuelle(user.getId());
         }
 
         if(Regex.estSemaineCourante(semaine)){
-            db_helper.updateLigneHebdomadaire(user_id,semaine);
-            semaine = db.getSemaineHebdomadaire(user_id);
+            db_helper.updateLigneHebdomadaire(user.getId(),semaine);
+            semaine = db.getSemaineHebdomadaire(user.getId());
         }
 
         db.close();
@@ -183,13 +156,13 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
 
         db.open();
 
-        pas_journalier_fait = db.getPasJournalier(user_id);
-        pas_hebdomadaire_fait = db.getPasHebdomadaire(user_id);
-        pas_mensuelle_fait = db.getPasMensuelle(user_id);
+        pas_journalier_fait = db.getPasJournalier(user.getId());
+        pas_hebdomadaire_fait = db.getPasHebdomadaire(user.getId());
+        pas_mensuelle_fait = db.getPasMensuelle(user.getId());
 
-        pas_journalier_objectif = db.getObjectifJournalier(user_id);
-        pas_hebdomadaire_objectif = db.getObjectifHedbomadaire(user_id);
-        pas_mensuelle_objectif = db.getObjectifMensuelle(user_id);
+        pas_journalier_objectif = db.getObjectifJournalier(user.getId());
+        pas_hebdomadaire_objectif = db.getObjectifHedbomadaire(user.getId());
+        pas_mensuelle_objectif = db.getObjectifMensuelle(user.getId());
 
         db.close();
 
@@ -217,9 +190,9 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     }
 
     public void callBack(){
-        db_helper.updateNombrePasJournalier(user_id, date, pas_journalier_fait);
-        db_helper.updateNombrePasHebdomadaire(user_id, semaine, pas_hebdomadaire_fait);
-        db_helper.updateNombrePasMensuelle(user_id, mois, pas_mensuelle_fait);
+        db_helper.updateNombrePasJournalier(user.getId(), date, pas_journalier_fait);
+        db_helper.updateNombrePasHebdomadaire(user.getId(), semaine, pas_hebdomadaire_fait);
+        db_helper.updateNombrePasMensuelle(user.getId(), mois, pas_mensuelle_fait);
 
         pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
         pourcentage_hebdomadaire=setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
@@ -270,7 +243,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             String affichage = saisie.getText().toString();
             pas_journalier_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifJournalier(user_id, Integer.parseInt(affichage));
+            db_helper.updateObjectifJournalier(user.getId(), Integer.parseInt(affichage));
 
             pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
             setTextViewPourcentage();
@@ -298,7 +271,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             String affichage = saisie.getText().toString();
             pas_hebdomadaire_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifHebdomadaire(user_id, Integer.parseInt(affichage));
+            db_helper.updateObjectifHebdomadaire(user.getId(), Integer.parseInt(affichage));
 
             pourcentage_hebdomadaire = setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
             setTextViewPourcentage();
@@ -326,7 +299,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             String affichage = saisie.getText().toString();
             pas_mensuelle_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifMensuelle(user_id, Integer.parseInt(affichage));
+            db_helper.updateObjectifMensuelle(user.getId(), Integer.parseInt(affichage));
 
             pourcentage_mensuelle = setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
             setTextViewPourcentage();
@@ -339,45 +312,31 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         bouton_annuler.setOnClickListener(v -> pop_up.dismiss());
     }
 
+    //A supprimer ou a laisser
     public void onClickListenerBoutonPas(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
         Intent intent = new Intent(NombreDePasActivity.this, NombreDePasActivity.class);
-        //intent.putExtra("user", user);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonCalorie(View view){
-        /*Soit on supprime ce listener soit on le garde*/
-        Intent intent = new Intent(NombreDePasActivity.this, MainActivity.class);
-        //Enlever commentaire de la ligne en dessous apres la fusion avec main
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(NombreDePasActivity.this, CaloriesActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonMesInfo(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Mes informations)*/
-        Intent intent = new Intent(NombreDePasActivity.this, MainActivity.class);
-        //Enlever commentaire de la ligne en dessous apres la fusion avec main
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(NombreDePasActivity.this, ActivityMesInformations.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
     public void onClickListenerBoutonSommeil(View view){
-        /*Modifier MainActivity.class par la classe java de l'activity Sommeil)*/
-        Intent intent = new Intent(NombreDePasActivity.this, MainActivity.class);
-        //Enlever commentaire de la ligne en dessous apres la fusion avec main
-        //intent.putExtra("user", user);
+        Intent intent = new Intent(NombreDePasActivity.this, SommeilActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
-
-    /*Faire en sorte que si le capteur ne donne pas de signal on met à jour la db avec les
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait
-    *
-    * Faire en sorte que si le capteur donne un signal on rajoute le nombre de pas aux
-    * variables pas_journalier_fait, pas_hebdomadaire_fait et pas_mensuelle_fait et on appelle
-    * setProgressBar sur toute les ProgressBar.
-    * */
     @Override
     protected void onResume() {
         super.onResume();

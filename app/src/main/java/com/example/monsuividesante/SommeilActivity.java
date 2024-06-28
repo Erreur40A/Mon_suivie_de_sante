@@ -274,7 +274,7 @@ public class SommeilActivity extends AppCompatActivity {
 
     public void onClickListenerBoutonPas(View view){
         /*Modifier MainActivity.class par la classe java de l'activity Pas)*/
-        Intent intent = new Intent(SommeilActivity.this, MainActivity.class);
+        Intent intent = new Intent(SommeilActivity.this, NombreDePasActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
