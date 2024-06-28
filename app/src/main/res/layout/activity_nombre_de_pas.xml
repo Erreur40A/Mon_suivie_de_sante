@@ -148,9 +148,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/nb_pas_journalier"
                 android:textColor="@color/blue"
+                android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/textPasFaitJournalier"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/bande"
+                app:layout_constraintBottom_toTopOf="@id/progressBarJour"/>
 
             <!-- Barre de progression -->
             <ProgressBar
@@ -266,9 +267,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/nb_pas_hebdomadaire"
                 android:textColor="@color/blue"
+                android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/editHebdo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/bande1"
+                app:layout_constraintBottom_toTopOf="@id/progresshebdo"/>
 
             <!-- Barre de progression -->
             <ProgressBar
@@ -380,9 +382,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/nb_pas_mensuelle"
                     android:textColor="@color/blue"
+                    android:textSize="20sp"
                     app:layout_constraintStart_toEndOf="@id/editmensuel"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="@id/bande2"
+                    app:layout_constraintBottom_toTopOf="@id/progressmensuel"/>
 
                 <!-- Barre de progression -->
                 <ProgressBar

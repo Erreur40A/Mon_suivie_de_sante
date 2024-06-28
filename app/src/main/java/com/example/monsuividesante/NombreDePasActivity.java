@@ -3,6 +3,7 @@ package com.example.monsuividesante;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,9 +121,18 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         if (stepCounterSensor == null) {
-            pas_journalier_textView.setText("Le capteur de pas n'est pas disponible");
-            pas_hebdomadaire_textView.setText("Le capteur de pas n'est pas disponible");
-            pas_mensuelle_textView.setText("Le capteur de pas n'est pas disponible");
+            String msg="Le capteur de pas n'est pas disponible";
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            TextView txtJour = (TextView) layout_journalier.findViewById(R.id.textPasFaitJournalier);
+            TextView txtHebd = (TextView) layout_hebdomadaire.findViewById(R.id.editHebdo);
+            TextView txtMens = (TextView) layout_mensuelle.findViewById(R.id.editmensuel);
+
+            txtMens.setText(msg);
+            txtMens.setTextColor(Color.RED);
+            txtJour.setText(msg);
+            txtJour.setTextColor(Color.RED);
+            txtHebd.setText(msg);
+            txtHebd.setTextColor(Color.RED);
         }
 
         handler = new Handler();
