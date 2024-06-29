@@ -225,7 +225,7 @@ public class SommeilActivity extends AppCompatActivity {
 
             if(Regex.estHeureValide(affichage)){
                 heure_coucher.setText(affichage);
-                heure_reveil.setTextColor(Color.BLACK);
+                heure_coucher.setTextColor(Color.BLACK);
                 db_helper.updateHeureCoucherReel(user.getId(), affichage);
                 setHeureCoucher();
             }

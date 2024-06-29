@@ -77,7 +77,7 @@ public class Connexion extends AppCompatActivity {
             }
             db.close();
         } else {
-            Toast.makeText(this, "entrer un nom d'utilisateur et un mdp", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Entrer un nom d'utilisateur et un mot de passe", Toast.LENGTH_SHORT).show();
         }
     }
 

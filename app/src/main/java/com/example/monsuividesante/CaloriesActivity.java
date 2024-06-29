@@ -221,7 +221,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
-        String explication = "Si vous dépensez plus de " + calories_depense + ", vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + ", vous allez grossir";
+        String explication = "Voici votre métabolisme de base.\nSi vous dépensez plus de " + calories_depense + ", vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + ", vous allez grossir";
         textExplication.setText(explication);
     }
 

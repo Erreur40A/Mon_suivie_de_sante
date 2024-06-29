@@ -78,7 +78,7 @@
     <string name="age">Age</string>
     <string name="nom">Nom</string>
     <string name="prenom">Prénom</string>
-    <string name="poids">Poids</string>
+    <string name="poids">Poids (en kg)</string>
 
 
     <string name="confirmer">Confirmer</string>

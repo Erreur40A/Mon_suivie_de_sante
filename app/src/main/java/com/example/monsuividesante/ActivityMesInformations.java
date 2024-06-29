@@ -347,9 +347,6 @@ public class ActivityMesInformations extends AppCompatActivity {
         int userAge = user.getAge();
         int userWeight = user.getPoids();
         int userHeight = user.getTaille();
-        Genre gender = user.getGenre();
-        String type_de_pers = String.valueOf(user.getType_de_personne());
-
 
         String bienv="Bienvenue " + userFirstName;
         // Mettre à jour les champs TextView avec les informations récupérées

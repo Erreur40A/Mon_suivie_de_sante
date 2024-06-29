@@ -133,8 +133,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             ContentValues ligne = new ContentValues();
 
             ligne.put(SOMMEIL$USER_ID, user_id);
-            ligne.put(SOMMEIL$HEURE_COUCHER_PREVUE, "22:00");
-            ligne.put(SOMMEIL$HEURE_REVEIL_PREVUE, "08:00");
 
             db.insert(SOMMEIL, null, ligne);
         }catch (SQLiteException e){
