@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
 public class DatabaseAccess {
     private DatabaseOpenhelper openhelper;
     private SQLiteDatabase db;
