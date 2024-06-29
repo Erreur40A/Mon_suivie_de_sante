@@ -60,7 +60,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     private final String PAS$USER_ID = "user_id";
     private final String PAS$OBJECTIFS = "objectifs";
     private final String PAS$NB_PAS_EFFECTUES = "nb_pas_effectues";
-    private final String PAS$DIFF_PAS = "diff_pas";
 
     private final String PAS_HEBDOMADAIRE$NO_SEMAINE = "no_semaine";
     private final String PAS_MENSUELS$NO_MOIS = "no_mois";
@@ -156,7 +155,6 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         try(SQLiteDatabase db = getWritableDatabase()){
 
             ContentValues ligne = new ContentValues();
-
 
             ligne.put(IDENTITE$USER_ID, user_id);
             ligne.put(IDENTITE$PRENOM, prenom);
@@ -263,16 +261,25 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     public void addLignePasJournaliers(int user_id, int objectif){
         try(SQLiteDatabase db = getWritableDatabase()){
 
-            Date aujourdhui = new Date();
+            Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
+            int jour = calendrier.get(Calendar.DAY_OF_MONTH);
+            int mois = calendrier.get(Calendar.MONTH);
+            int annee = calendrier.get(Calendar.YEAR);
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-            String dateAujourdhui = format.format(aujourdhui);
+            String dateAujourdhui=null;
+
+            if(jour<10) dateAujourdhui += "0" + jour + "/";
+            else dateAujourdhui = jour + "/";
+
+            if(mois<10) dateAujourdhui += "0" + mois + "/";
+            else dateAujourdhui += mois + "/";
+
+            dateAujourdhui += annee;
 
             ContentValues ligne = new ContentValues();
             ligne.put(PAS$USER_ID, user_id);
-            ligne.put(PAS$NB_PAS_EFFECTUES,10);
+            ligne.put(PAS$NB_PAS_EFFECTUES, 0);
             ligne.put(PAS$OBJECTIFS, objectif);
-            ligne.put(PAS$DIFF_PAS, 0);
             ligne.put(PAS$USER_ID, user_id);
             ligne.put(PAS_JOURNALIERS$DATE, dateAujourdhui);
 
@@ -290,9 +297,8 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
             ContentValues ligne = new ContentValues();
             ligne.put(PAS$USER_ID, user_id);
-            ligne.put(PAS$NB_PAS_EFFECTUES, 10);
+            ligne.put(PAS$NB_PAS_EFFECTUES, 0);
             ligne.put(PAS$OBJECTIFS, objectif);
-            ligne.put(PAS$DIFF_PAS, 0);
             ligne.put(PAS$USER_ID, user_id);
             ligne.put(PAS_HEBDOMADAIRE$NO_SEMAINE, calendrier.get(Calendar.WEEK_OF_MONTH));
 
@@ -310,9 +316,8 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
 
             ContentValues ligne = new ContentValues();
             ligne.put(PAS$USER_ID, user_id);
-            ligne.put(PAS$NB_PAS_EFFECTUES, 10);
+            ligne.put(PAS$NB_PAS_EFFECTUES, 0);
             ligne.put(PAS$OBJECTIFS, objectif);
-            ligne.put(PAS$DIFF_PAS, 0);
             ligne.put(PAS$USER_ID, user_id);
             ligne.put(PAS_MENSUELS$NO_MOIS, calendrier.get(Calendar.MONTH));
 
