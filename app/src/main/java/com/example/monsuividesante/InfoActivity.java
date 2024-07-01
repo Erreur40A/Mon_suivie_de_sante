@@ -63,7 +63,7 @@ public class InfoActivity extends AppCompatActivity {
         int int_activite = ((Spinner) findViewById(R.id.spinner_vous_etes)).getSelectedItemPosition();
         int_activite ++;
 
-        if(((age >= 13) && (age <= 110)) && ((poids >= 10) && (poids <= 300)) && ((taille >= 50) && (taille <= 230))){
+        if(Regex.estAgeValide(editTextAge) && Regex.estPoidsValide(editTextPoids) && Regex.estTailleValide(editTextTaille)){
             final DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
             db.open();
             db.addInfo(id, nom, prenom, age, poids, taille, genre.getGenre(), int_activite);
@@ -74,7 +74,7 @@ public class InfoActivity extends AppCompatActivity {
             intent.putExtra("user", user);
             startActivity(intent);
         } else {
-            Toast.makeText(this,""+int_activite, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Certaines données saisie ne peuvent pas correspondre à la réalité", Toast.LENGTH_SHORT).show();
         }
     }
 }

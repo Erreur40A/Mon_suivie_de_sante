@@ -62,6 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/utilite"
             android:textSize="14sp"
+            android:gravity="center"
             android:layout_marginTop="8dp" />
 
         <EditText
@@ -69,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nom"
-            android:inputType="textPersonName"
+            android:inputType="textCapCharacters"
             android:autofillHints="name"
             android:layout_marginTop="8dp" />
 
@@ -78,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prenom"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             android:autofillHints="givenName"
             android:layout_marginTop="8dp" />
 

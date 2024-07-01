@@ -249,9 +249,10 @@ public class ActivityMesInformations extends AppCompatActivity {
             String affichage = saisie.getText().toString();
 
             if(Regex.estPoidsValide(affichage)) {
-                poids.setText(affichage);
                 poids.setTextColor(Color.BLACK);
                 user.setPoids(Integer.parseInt(affichage), db_helper);
+                affichage += " kg";
+                poids.setText(affichage);
             }
 
             pop_up.dismiss();
@@ -275,9 +276,10 @@ public class ActivityMesInformations extends AppCompatActivity {
             String affichage = saisie.getText().toString();
 
             if(Regex.estAgeValide(affichage)) {
-                age.setText(affichage);
                 age.setTextColor(Color.BLACK);
                 user.setAge(Integer.parseInt(affichage), db_helper);
+                affichage += " ans";
+                age.setText(affichage);
             }
 
             pop_up.dismiss();
@@ -301,9 +303,10 @@ public class ActivityMesInformations extends AppCompatActivity {
             String affichage = saisie.getText().toString();
 
             if(Regex.estTailleValide(affichage)) {
-                taille.setText(affichage);
                 taille.setTextColor(Color.BLACK);
                 user.setTaille(Integer.parseInt(affichage), db_helper);
+                affichage += " cm";
+                taille.setText(affichage);
             }
 
             pop_up.dismiss();
@@ -341,20 +344,22 @@ public class ActivityMesInformations extends AppCompatActivity {
     }
 
     private void loadUserInfo() {
-        // Charger les informations de l'utilisateur
         String userLastName = user.getNom();
         String userFirstName = user.getPrenom();
         int userAge = user.getAge();
         int userWeight = user.getPoids();
         int userHeight = user.getTaille();
 
-        String bienv="Bienvenue " + userFirstName;
-        // Mettre à jour les champs TextView avec les informations récupérées
+        String bienv = "Bienvenue " + userFirstName;
+        String poids_afficher = userWeight + " kg";
+        String taille_afficher = userHeight + " cm";
+        String age_afficher = userAge + " ans";
+
         nom.setText(userLastName);
         bienvenue.setText(bienv);
         prenom.setText(userFirstName);
-        age.setText(String.valueOf(userAge));
-        poids.setText(String.valueOf(userWeight));
-        taille.setText(String.valueOf(userHeight));
+        age.setText(age_afficher);
+        poids.setText(poids_afficher);
+        taille.setText(taille_afficher);
     }
 }

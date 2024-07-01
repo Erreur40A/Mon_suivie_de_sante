@@ -71,17 +71,18 @@ public class Regex {
     } 
 
     public static boolean estAgeValide(String age){
-        //122 ans = age de la personne la plus veille au monde
-        return Integer.parseInt(age)<122;
+        int ageInt = Integer.parseInt(age);
+        return !age.isEmpty() && ageInt <= 110 && ageInt >= 13;
     }
 
     public static boolean estTailleValide(String taille){
-        //251cm = taille de la personne la plus grande au monde
-        return Integer.parseInt(taille)<251;
+        int tailleInt = Integer.parseInt(taille);
+        return !taille.isEmpty() && tailleInt<=230 && tailleInt>=50;
     }
 
     public static boolean estPoidsValide(String poids){
-        return Integer.parseInt(poids)<200;
+        int poidsInt = Integer.parseInt(poids);
+        return !poids.isEmpty() && poidsInt<=300 && poidsInt>=50;
     }
 
     public static boolean estSemaineCourante(int semaine){
