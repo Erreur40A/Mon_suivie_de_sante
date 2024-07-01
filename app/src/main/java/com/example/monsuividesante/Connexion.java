@@ -65,7 +65,7 @@ public class Connexion extends AppCompatActivity {
 
                 int user_type = db.getTypeDePersonne(user_id);
 
-                User user = new User(user_id, user_nom, user_prenom, user_age, user_taille, user_poids, genre, user_type);
+                User user = new User(user_id, user_prenom, user_nom, user_age, user_poids, user_taille, genre, user_type);
 
                 Intent intent = new Intent(Connexion.this, ActivityMesInformations.class);
                 intent.putExtra("user", user);
