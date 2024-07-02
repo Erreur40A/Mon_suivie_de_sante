@@ -71,18 +71,30 @@ public class Regex {
     } 
 
     public static boolean estAgeValide(String age){
-        int ageInt = Integer.parseInt(age);
-        return !age.isEmpty() && ageInt <= 110 && ageInt >= 13;
+        if(age.matches("[0-9]+")) {
+            int ageInt = Integer.parseInt(age);
+            return !age.isEmpty() && ageInt <= 110 && ageInt >= 13;
+        }
+        return false;
     }
 
     public static boolean estTailleValide(String taille){
-        int tailleInt = Integer.parseInt(taille);
-        return !taille.isEmpty() && tailleInt<=230 && tailleInt>=50;
+        if(taille.matches("[0-9]+")) {
+            int tailleInt = Integer.parseInt(taille);
+
+            return tailleInt <= 230 && tailleInt >= 50;
+        }
+        return false;
     }
 
     public static boolean estPoidsValide(String poids){
-        int poidsInt = Integer.parseInt(poids);
-        return !poids.isEmpty() && poidsInt<=300 && poidsInt>=50;
+        if(poids.matches("[0-9]+")) {
+            int poidsInt = Integer.parseInt(poids);
+
+            return poidsInt <= 300 && poidsInt >= 50;
+        }
+        return false;
+
     }
 
     public static boolean estSemaineCourante(int semaine){
@@ -97,6 +109,11 @@ public class Regex {
         int moisCourante = calendrier .get(Calendar.MONTH);
 
         return moisCourante == mois;
-    } 
+    }
+
+    public static boolean estNombrePasSaisieValide(String pas){
+        String expr = "[0-9]+";
+        return  pas.matches(expr);
+    }
 } 
        

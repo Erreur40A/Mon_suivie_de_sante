@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +25,7 @@ import android.widget.TextView;
 public class ActivityMesInformations extends AppCompatActivity {
 
 
-    private DatabaseAccess databaseAccess;
     private DatabaseOpenhelper db_helper;
-    private ImageButton bouton_nom, bouton_prenom, bouton_age, bouton_taille, bouton_poids;
-    private ConstraintLayout layout_nom, layout_prenom, layout_age, layout_taille, layout_poids;
     private TextView bienvenue, nom, prenom, age, taille, poids;
 
     private Spinner spinner_genre;
@@ -52,16 +48,15 @@ public class ActivityMesInformations extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("user");
 
         // Initialiser l'accès à la base de données
-        databaseAccess = DatabaseAccess.getInstance(this);
         db_helper = new DatabaseOpenhelper(this);
 
         /*------------------Avec pop-up-------------------*/
 
-        layout_age = findViewById(R.id.layout_age);
-        layout_nom = findViewById(R.id.layout_nom);
-        layout_prenom = findViewById(R.id.layout_prenom);
-        layout_taille = findViewById(R.id.layout_taille);
-        layout_poids = findViewById(R.id.layout_poids);
+        ConstraintLayout layout_age = findViewById(R.id.layout_age);
+        ConstraintLayout layout_nom = findViewById(R.id.layout_nom);
+        ConstraintLayout layout_prenom = findViewById(R.id.layout_prenom);
+        ConstraintLayout layout_taille = findViewById(R.id.layout_taille);
+        ConstraintLayout layout_poids = findViewById(R.id.layout_poids);
 
         // Référence au Spinner
         spinner_genre = findViewById(R.id.spinner_genre);
@@ -130,15 +125,15 @@ public class ActivityMesInformations extends AppCompatActivity {
         });
 
         age = layout_age.findViewById(R.id.age);
-        bouton_age = layout_age.findViewById(R.id.bouton_age);
+        ImageButton bouton_age = layout_age.findViewById(R.id.bouton_age);
         taille = layout_taille.findViewById(R.id.taille);
-        bouton_taille = layout_taille.findViewById(R.id.bouton_taille);
+        ImageButton bouton_taille = layout_taille.findViewById(R.id.bouton_taille);
         nom = layout_nom.findViewById(R.id.nom);
-        bouton_nom = layout_nom.findViewById(R.id.bouton_nom);
+        ImageButton bouton_nom = layout_nom.findViewById(R.id.bouton_nom);
         prenom = layout_prenom.findViewById(R.id.prenom);
-        bouton_prenom = layout_prenom.findViewById(R.id.bouton_prenom);
+        ImageButton bouton_prenom = layout_prenom.findViewById(R.id.bouton_prenom);
         poids = layout_poids.findViewById(R.id.poids);
-        bouton_poids = layout_poids.findViewById(R.id.bouton_poids);
+        ImageButton bouton_poids = layout_poids.findViewById(R.id.bouton_poids);
 
         bienvenue = findViewById(R.id.text_welcome).findViewById(R.id.welcome);
 

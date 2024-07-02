@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -221,7 +220,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
-        String explication = "Voici votre métabolisme de base.\nSi vous dépensez plus de " + calories_depense + ", vous allez maigrir.\nSi vous dépensez moins de " + calories_depense + ", vous allez grossir";
+        String explication = "Voici votre métabolisme de base.\n\nSi vous ingérez plus de " + calories_depense + ", vous allez grossir.\nSi vous dépensez moins de " + calories_depense + ", vous allez maigrir";
         textExplication.setText(explication);
     }
 
@@ -242,14 +241,12 @@ public class CaloriesActivity extends AppCompatActivity {
             if(Regex.estCaloriesSaisieValide(affichage)) {
                 calories_consomme = Float.parseFloat(affichage);
                 affichage = saisie.getText() + " kcal";
-                choix.setText(affichage);
-                choix.setTextColor(Color.BLACK);
             }else {
                 calories_consomme = 0;
                 affichage = "0 kcal";
-                choix.setText(affichage);
-                choix.setTextColor(Color.BLACK);
             }
+            choix.setText(affichage);
+            choix.setTextColor(Color.BLACK);
 
             pop_up.dismiss();
         });
@@ -296,6 +293,7 @@ public class CaloriesActivity extends AppCompatActivity {
             String choix = getChoixListeDeroulanteActivite(view1, liste_deroulante_choix_activite);
 
             calories_activite = items_choix_activite.get(choix);
+
             pop_up_choix_activite.dismiss();
         });
         liste_deroulante.setAdapter(adapter);

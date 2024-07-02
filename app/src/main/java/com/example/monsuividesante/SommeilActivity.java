@@ -23,7 +23,6 @@ import java.util.Random;
 public class SommeilActivity extends AppCompatActivity {
 
     private ConstraintLayout objectif_sommeil;
-    private ConstraintLayout info_sommeil;
     private TextView objectif_heure_reveil;
     private TextView heure_reveil;
     private TextView heure_coucher;
@@ -63,7 +62,7 @@ public class SommeilActivity extends AppCompatActivity {
         mes_info.setAlpha(0.4F);
         calories.setAlpha(0.4F);
 
-        info_sommeil = findViewById(R.id.info_sommeil);
+        ConstraintLayout info_sommeil = findViewById(R.id.info_sommeil);
         objectif_heure_reveil = info_sommeil.findViewById(R.id.layout_objectif_heure_reveil).findViewById(R.id.objectif_heure_reveil);
         heure_reveil = info_sommeil.findViewById(R.id.layout_heure_reveil).findViewById(R.id.heure_reveil);
         heure_coucher = info_sommeil.findViewById(R.id.layout_heure_coucher).findViewById(R.id.heure_coucher);
@@ -176,7 +175,7 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
+        bouton_annuler.setOnClickListener(v -> pop_up.dismiss());
     }
 
     public void onClickListenerHeureReveil(View view){
@@ -260,7 +259,7 @@ public class SommeilActivity extends AppCompatActivity {
         });
 
         Button bouton_annuler = pop_up.findViewById(R.id.bouton_annuler);
-        bouton_annuler.setOnClickListener(v -> { pop_up.dismiss(); });
+        bouton_annuler.setOnClickListener(v -> pop_up.dismiss());
     }
 
     public void onClickListenerBoutonMesInfo(View view){

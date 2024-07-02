@@ -11,7 +11,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +27,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
@@ -51,7 +49,7 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
     private int mois;
     private Runnable runner;
     private Handler handler;
-    private final long delai = 5000; //quand ca va marcher on remplace 5000 par 60000
+    private final long delai = 5000;
 
     private User user;
 
@@ -124,9 +122,9 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         if (stepCounterSensor == null) {
             String msg="Le capteur de pas n'est pas disponible";
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-            TextView txtJour = (TextView) layout_journalier.findViewById(R.id.textPasFaitJournalier);
-            TextView txtHebd = (TextView) layout_hebdomadaire.findViewById(R.id.editHebdo);
-            TextView txtMens = (TextView) layout_mensuelle.findViewById(R.id.editmensuel);
+            TextView txtJour = layout_journalier.findViewById(R.id.textPasFaitJournalier);
+            TextView txtHebd = layout_hebdomadaire.findViewById(R.id.editHebdo);
+            TextView txtMens = layout_mensuelle.findViewById(R.id.editmensuel);
 
             txtMens.setText(msg);
             txtMens.setTextColor(Color.RED);
@@ -262,14 +260,18 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             TextView choix = objectif_journalier.findViewById(R.id.val_objectif_journalier);
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
             String affichage = saisie.getText().toString();
-            pas_journalier_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifJournalier(user.getId(), Integer.parseInt(affichage));
+            if(Regex.estNombrePasSaisieValide(affichage)) {
+                pas_journalier_objectif = Integer.parseInt(affichage);
 
-            pourcentage_journalier=setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
-            setTextViewPourcentage();
+                db_helper.updateObjectifJournalier(user.getId(), Integer.parseInt(affichage));
 
-            choix.setText(affichage);
+                pourcentage_journalier = setProgressBar(bar_journalier, pas_journalier_fait, pas_journalier_objectif);
+                setTextViewPourcentage();
+
+                choix.setText(affichage);
+            }
+
             pop_up.dismiss();
         });
 
@@ -290,14 +292,18 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             TextView choix = objectif_hebdomadaire.findViewById(R.id.val_objectif_hebdomadaire);
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
             String affichage = saisie.getText().toString();
-            pas_hebdomadaire_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifHebdomadaire(user.getId(), Integer.parseInt(affichage));
+            if(Regex.estNombrePasSaisieValide(affichage)){
+                pas_hebdomadaire_objectif = Integer.parseInt(affichage);
 
-            pourcentage_hebdomadaire = setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
-            setTextViewPourcentage();
+                db_helper.updateObjectifHebdomadaire(user.getId(), Integer.parseInt(affichage));
 
-            choix.setText(affichage);
+                pourcentage_hebdomadaire = setProgressBar(bar_hebdomadaire, pas_hebdomadaire_fait, pas_hebdomadaire_objectif);
+                setTextViewPourcentage();
+
+                choix.setText(affichage);
+            }
+
             pop_up.dismiss();
         });
 
@@ -318,14 +324,18 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             TextView choix = objectif_mensuelle.findViewById(R.id.val_objectif_mensuelle);
             EditText saisie = pop_up.findViewById(R.id.saisie_user);
             String affichage = saisie.getText().toString();
-            pas_mensuelle_objectif = Integer.parseInt(affichage);
 
-            db_helper.updateObjectifMensuelle(user.getId(), Integer.parseInt(affichage));
+            if(Regex.estNombrePasSaisieValide(affichage)){
+                pas_mensuelle_objectif = Integer.parseInt(affichage);
 
-            pourcentage_mensuelle = setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
-            setTextViewPourcentage();
+                db_helper.updateObjectifMensuelle(user.getId(), Integer.parseInt(affichage));
 
-            choix.setText(affichage);
+                pourcentage_mensuelle = setProgressBar(bar_mensuelle, pas_mensuelle_fait, pas_mensuelle_objectif);
+                setTextViewPourcentage();
+
+                choix.setText(affichage);
+            }
+
             pop_up.dismiss();
         });
 
@@ -376,15 +386,6 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
-
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        if (stepCounterSensor != null) {
-            sensorManager.unregisterListener(this, stepCounterSensor);
-        }
-        callBack();
-    }*/
 
     @Override
     protected void onPause() {
