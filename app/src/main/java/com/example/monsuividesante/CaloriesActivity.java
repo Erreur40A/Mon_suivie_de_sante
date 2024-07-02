@@ -136,7 +136,7 @@ public class CaloriesActivity extends AppCompatActivity {
         String date = db.getDateApportEnEnergie(user.getId());
         db.close();
 
-        if(date == null || !Regex.estDateDuJour(date)){
+        if(date==null || !Regex.estDateDuJour(date)){
             db_helper.addLigneActiviteCalorie(user.getId());
         }
 

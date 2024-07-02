@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -40,7 +41,6 @@ public class Notifications {
     public void showNotification() {
         createNotificationChannel();
 
-        /*Changer SommeilActivity.class par Connexion.class*/
         Intent intent = new Intent(context, Connexion.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

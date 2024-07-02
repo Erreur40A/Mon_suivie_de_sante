@@ -4,12 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 
 public class Rappel {
     public static void setRappel(Context context, int heure, int minute){
         Intent intent = new Intent(context, NotificationsBroadcast.class);
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -34,6 +36,8 @@ public class Rappel {
         calendrier.set(Calendar.HOUR_OF_DAY, heure);
         calendrier.set(Calendar.SECOND, 0);
         calendrier.set(Calendar.MILLISECOND, 0);
+
+        Log.d("AlarmTime", "Heure: " + heure + " Minute: " + minute + " Calendrier: " + calendrier.getTime());
 
         return calendrier;
     }

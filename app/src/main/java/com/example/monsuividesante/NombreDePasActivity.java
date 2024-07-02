@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -150,6 +151,15 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
         pas_hebdomadaire_objectif = db.getObjectifHedbomadaire(user.getId());
         pas_mensuelle_objectif = db.getObjectifMensuelle(user.getId());
 
+        if(pas_journalier_objectif!=0)
+            objectif_journalier.setText(String.format(Locale.FRANCE, "%d", pas_journalier_objectif));
+
+        if(pas_hebdomadaire_objectif!=0)
+            objectif_hebdomadaire.setText(String.format(Locale.FRANCE, "%d", pas_hebdomadaire_objectif));
+
+        if(pas_mensuelle_objectif!=0)
+            objectif_mensuelle.setText(String.format(Locale.FRANCE, "%d", pas_mensuelle_objectif));
+
         db.close();
     }
 
@@ -199,12 +209,10 @@ public class NombreDePasActivity extends AppCompatActivity implements SensorEven
             db_helper.updateLigneJournalier(user.getId(),date);
             date = db.getDateJournalier(user.getId());
         }
-
         if(!Regex.estMoisCourant(mois)){
             db_helper.updateLigneMensuelle(user.getId(),mois);
             mois = db.getMoisMensuelle(user.getId());
         }
-
         if(!Regex.estSemaineCourante(semaine)){
             db_helper.updateLigneHebdomadaire(user.getId(),semaine);
             semaine = db.getSemaineHebdomadaire(user.getId());

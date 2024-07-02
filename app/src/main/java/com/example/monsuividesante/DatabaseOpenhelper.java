@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -205,7 +206,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
     public void addLigneActiviteCalorie(int user_id){
         try(SQLiteDatabase db = getWritableDatabase()){
 
-            String nouvelle_date = null;
+            String nouvelle_date = "";
 
             Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
             int jour = calendrier.get(Calendar.DAY_OF_MONTH);
@@ -219,6 +220,8 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             else nouvelle_date += mois + "/";
 
             nouvelle_date += annee;
+
+            Log.println(Log.INFO, "database", nouvelle_date);
 
             ContentValues ligne = new ContentValues();
             ligne.put(APPORT_EN_ENERGIE$USER_ID, user_id);
@@ -263,7 +266,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
             int mois = calendrier.get(Calendar.MONTH);
             int annee = calendrier.get(Calendar.YEAR);
 
-            String dateAujourdhui=null;
+            String dateAujourdhui="";
 
             if(jour<10) dateAujourdhui += "0" + jour + "/";
             else dateAujourdhui = jour + "/";
@@ -401,7 +404,7 @@ public class DatabaseOpenhelper extends SQLiteAssetHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        String nouvelle_date=null;
+        String nouvelle_date="";
         Calendar calendrier = Calendar.getInstance(Locale.FRANCE);
 
         int jour = calendrier.get(Calendar.DAY_OF_MONTH);

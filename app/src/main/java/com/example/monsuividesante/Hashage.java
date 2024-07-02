@@ -1,5 +1,7 @@
 package com.example.monsuividesante;
 
+import android.util.Log;
+
 import java.security.MessageDigest;
 
 
@@ -14,7 +16,7 @@ public class Hashage {
             md.update(pwByte);
             pwByte = md.digest();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("hasherMdpByte", e.getMessage(), e);
         }
 
         return pwByte;

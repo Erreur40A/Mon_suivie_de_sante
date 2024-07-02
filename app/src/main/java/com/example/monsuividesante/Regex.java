@@ -34,7 +34,7 @@ public class Regex {
         calendrier1.set(Calendar.SECOND, 0);
         calendrier1.set(Calendar.MILLISECOND, 0);
         calendrier1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tab[0]));
-        calendrier1.set(Calendar.MONTH, Integer.parseInt(tab[1])-1);
+        calendrier1.set(Calendar.MONTH, Integer.parseInt(tab[1]));
         calendrier1.set(Calendar.YEAR, Integer.parseInt(tab[2]));
 
         Calendar calendrier2 = Calendar.getInstance(Locale.FRANCE);
