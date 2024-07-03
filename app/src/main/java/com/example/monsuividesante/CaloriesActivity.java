@@ -33,8 +33,8 @@ public class CaloriesActivity extends AppCompatActivity {
 
     /*Correspond à variation
     * en kcal a afficher dans le rectangle rouge*/
-    private float calories_perdue;
-    private float calories_depense; //en kcal a afficher dans le rectangle vert
+    private float calories_ingere;
+    private float metabolisme_de_base; //en kcal a afficher dans le rectangle vert
     private float calories_consomme;
     private float calories_activite;
     private String duree_activite;
@@ -67,12 +67,12 @@ public class CaloriesActivity extends AppCompatActivity {
         db_helper = new DatabaseOpenhelper(this);
 
         textViewCalDepReel = findViewById(R.id.calories_depense_reel).findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_perdue = setTextViewAndCalorieDepenseReel(textViewCalDepReel);
+        calories_ingere = setTextViewAndCalorieDepenseReel(textViewCalDepReel);
 
         ConstraintLayout tmp_CL = findViewById(R.id.calories_depense);
 
         TextView textViewCalDep = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.text_calorie_depense_reel);
-        calories_depense = setTextViewAndCalorieDepense(textViewCalDep);
+        metabolisme_de_base = setTextViewAndCalorieDepense(textViewCalDep);
 
         ImageButton bouton_explication = tmp_CL.findViewById(R.id.val_calories_depense).findViewById(R.id.bouton_explication);
         bouton_explication.setOnClickListener(this::onClickListenerBoutonExplication);
@@ -220,7 +220,7 @@ public class CaloriesActivity extends AppCompatActivity {
 
         TextView textExplication = pop_up.findViewById(R.id.text_pop_up_explication);
 
-        String explication = "Voici votre métabolisme de base.\n\nSi vous ingérez plus de " + calories_depense + ", vous allez grossir.\nSi vous dépensez moins de " + calories_depense + ", vous allez maigrir";
+        String explication = "Voici votre métabolisme de base.\n\nSi vous ingérez plus de " + metabolisme_de_base + ", vous allez grossir.\nSi vous ingérez moins de " + metabolisme_de_base + ", vous allez maigrir";
         textExplication.setText(explication);
     }
 
@@ -351,7 +351,7 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonConsommeOK(View view){
-        calories_perdue += calories_consomme;
+        calories_ingere += calories_consomme;
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
@@ -362,7 +362,7 @@ public class CaloriesActivity extends AppCompatActivity {
         }
         db.close();
 
-        db_helper.updateCaloriesVariation(calories_perdue, date);
+        db_helper.updateCaloriesVariation(calories_ingere, date);
 
         setTextViewAndCalorieDepenseReel(textViewCalDepReel);
     }
@@ -382,7 +382,7 @@ public class CaloriesActivity extends AppCompatActivity {
     }
 
     public void onClickListenerBoutonActiviteOK(View view){
-        calories_perdue -= calories_activite * user.getPoids() * dureeStringToFloat(duree_activite);
+        calories_ingere -= calories_activite * user.getPoids() * dureeStringToFloat(duree_activite);
 
         db.open();
         String date = db.getDateApportEnEnergie(user.getId());
@@ -393,7 +393,7 @@ public class CaloriesActivity extends AppCompatActivity {
         }
         db.close();
 
-        db_helper.updateCaloriesVariation(calories_perdue, date);
+        db_helper.updateCaloriesVariation(calories_ingere, date);
 
         setTextViewAndCalorieDepenseReel(textViewCalDepReel);
     }

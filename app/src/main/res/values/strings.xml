@@ -26,7 +26,7 @@
     <string name="calorie_depense">Mes calories ingéré aujourd’hui</string>
     <string name="desc_image_flamme">image flamme</string>
     <string name="calorie_en_kcal"> kcal</string>
-    <string name="calories_depense_activite">Selon votre type d’activité physique vous devez dépenser</string>
+    <string name="calories_depense_activite">Selon votre type d’activité physique voici votre métabolisme de base</string>
     <string name="demande_calories_consomme">Combien de calories avez-vous consommées lors de votre repas ?</string>
     <string name="calorie_consome">200 kcal</string>
     <string name="demande_activite">Quelle activité avez vous faites ?</string>
